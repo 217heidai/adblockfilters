@@ -1,6 +1,6 @@
 # 217heidai DNS Filters
 适用于AdGuard的去广告合并规则，每8个小时更新一次。
-个人收藏了不少广告过滤规则，但是每次往新设备添加的时候都很头疼，于是写了这个项目，定时自动获取各规则源更新，生成合并规则库。
+个人收藏了不少广告过滤规则，但是每次往新设备添加的时候很是头疼，于是写了这个项目，定时自动获取各规则源更新，生成合并规则库。
 ## 订阅链接
 - 原始链接:<https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfulters.txt>
 - 加速链接:<https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfulters.txt>
