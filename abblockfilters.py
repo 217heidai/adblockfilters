@@ -83,15 +83,13 @@ def Entry():
 
     ruleList = GetRuleList(ruleFile)
     isUpdate = False
-    '''
     lastUpdate = time.strftime("%Y/%m/%d", time.localtime())
     for i in range(0, len(ruleList)):
         relue = Rule(ruleList[i][0], ruleList[i][1])
         if relue.Update():
             isUpdate = True
             ruleList[i][2] = lastUpdate
-    '''
-    isUpdate = True
+
     if isUpdate:
         blockList = []
         unblockList = []
