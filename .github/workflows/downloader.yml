@@ -1,0 +1,57 @@
+name: Update Filters
+on: 
+  push:
+    branches: [ main ]
+  schedule:
+  - cron: 0 */8 * * *
+
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  Update_Filters:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@main
+
+      - name: Setup Python 3.9.x
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9.x'
+
+      - name: Install Dependencies
+        run: |
+          sudo timedatectl set-timezone "$TZ"
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Download Filters
+        run: python abblockfilters.py
+
+      - name: Commit Changes
+        id: commit
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then 
+              exit 0
+          else
+            echo "::set-output name=status::success"
+            git add .
+            git config --local user.email "217heidai@gmail.com"
+            git config --local user.name "217heidai"
+            git commit -m "Updated at $(date)" -a
+          fi
+            
+      - name: GitHub Push
+        if: steps.commit.outputs.status == 'success' && !cancelled()
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          
+      - name: Delete Workflow Runs
+        uses: GitRML/delete-workflow-runs@main
+        with:
+          retain_days: 30
+          keep_minimum_runs: 10
