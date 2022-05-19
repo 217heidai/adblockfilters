@@ -41,8 +41,8 @@ def CreatReadme(ruleList, fileName):
     f.write("适用于AdGuard的去广告合并规则，每8个小时更新一次。\n")
     f.write("个人收藏了不少广告过滤规则，但是每次往新设备添加的时候很是头疼，于是写了这个项目，定时自动获取各规则源更新，生成合并规则库。\n")
     f.write("## 订阅链接\n")
-    f.write("- 原始链接:<https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt>\n")
-    f.write("- 加速链接:<https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt>\n")
+    f.write("- [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt)\n")
+    f.write("- [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt)\n")
     f.write("## 规则源\n")
     f.write("| 规则 | 原始链接 | 加速链接 | 更新日期 |\n")
     f.write("|:-|:-|:-|:-|\n")
@@ -64,12 +64,13 @@ def CreatFiters(blockList, unblockList, fileName):
     
     f = open(fileName, 'a')
     f.write("!\n")
-    f.write("! AdBlock DNS Filters\n")
-    f.write("! 适用于AdGuard的去广告合并规则，每8个小时更新一次\n")
-    f.write("! 规则源：ADgk Filters、AdGuard DNS Filters、anti-AD Filters、NEO DEV HOST Filters、Hblock Filters、1024 hosts、ad-wars hosts、StevenBlack hosts、yhosts hosts\n")
-    f.write("! 规则条数：%s\n"%(len(blockList) + len(unblockList)))
-    f.write("! 更新时间：%s\n"%(time.strftime("%Y/%m/%d %H:%M:%S", time.localtime())))
-    f.write("! 项目信息：https://github.com/217heidai/adblockfilters\n")
+    f.write("! Title: AdBlock DNS Filters\n")
+    f.write("! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：ADgk Filters、AdGuard DNS Filters、anti-AD Filters、NEO DEV HOST Filters、Hblock Filters、1024 hosts、ad-wars hosts、StevenBlack hosts、yhosts hosts\n")
+    f.write("! Homepage: https://github.com/217heidai/adblockfilters\n")
+    f.write("! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt\n")
+    f.write("! Version: %s\n"%(time.strftime("%Y%m%d%H%M%S", time.localtime())))
+    f.write("! Last modified: %s\n"%(time.strftime("%Y/%m/%d %H:%M:%S", time.localtime())))
+    f.write("! Blocked domains: %s\n"%(len(blockList)+len(unblockList)))
     f.write("!\n")
     for fiter in blockList:
         f.write("%s\n"%(fiter))
@@ -89,7 +90,7 @@ def Entry():
         if relue.Update():
             isUpdate = True
             ruleList[i][2] = lastUpdate
-
+    isUpdate = True
     if isUpdate:
         blockList = []
         unblockList = []
