@@ -90,7 +90,7 @@ def Entry():
         if relue.Update():
             isUpdate = True
             ruleList[i][2] = lastUpdate
-    isUpdate = True
+    #isUpdate = True
     if isUpdate:
         blockList = []
         unblockList = []
