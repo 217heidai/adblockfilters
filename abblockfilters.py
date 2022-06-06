@@ -44,6 +44,8 @@ def CreatReadme(ruleList, fileName):
     f.write("- [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt)\n")
     f.write("- [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt)\n")
     f.write("## 规则源\n")
+    f.write("1. 不再引用[anti-AD](https://anti-ad.net/adguard.txt)、[yhosts](https://raw.githubusercontent.com/VeleSila/yhosts/master/hosts.txt)，具体原因见[Mosney/anti-anti-AD](https://github.com/Mosney/anti-anti-AD)。\n")
+    f.write("\n")
     f.write("| 规则 | 原始链接 | 加速链接 | 更新日期 |\n")
     f.write("|:-|:-|:-|:-|\n")
     for rule in ruleList:
@@ -65,7 +67,7 @@ def CreatFiters(blockList, unblockList, fileName):
     f = open(fileName, 'a')
     f.write("!\n")
     f.write("! Title: AdBlock DNS Filters\n")
-    f.write("! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：ADgk Filters、AdGuard DNS Filters、anti-AD Filters、NEO DEV HOST Filters、Hblock Filters、1024 hosts、ad-wars hosts、StevenBlack hosts、yhosts hosts\n")
+    f.write("! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：ADgk Filters、AdGuard DNS Filters、Hblock Filters、NEO DEV HOST Filters、OISD Filters、Notracking blocklist Filters、1Hosts (Lite) Filters、AdRules AdGuard Full Filters、1024 hosts、ad-wars hosts、StevenBlack hosts\n")
     f.write("! Homepage: https://github.com/217heidai/adblockfilters\n")
     f.write("! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt\n")
     f.write("! Version: %s\n"%(time.strftime("%Y%m%d%H%M%S", time.localtime())))
