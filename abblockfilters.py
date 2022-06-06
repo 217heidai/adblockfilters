@@ -72,7 +72,8 @@ def CreatFiters(blockList, unblockList, fileName):
     f.write("! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt\n")
     f.write("! Version: %s\n"%(time.strftime("%Y%m%d%H%M%S", time.localtime())))
     f.write("! Last modified: %s\n"%(time.strftime("%Y/%m/%d %H:%M:%S", time.localtime())))
-    f.write("! Blocked domains: %s\n"%(len(blockList)+len(unblockList)))
+    f.write("! Blocked domains: %s\n"%(len(blockList)))
+    f.write("! unBlocked domains: %s\n"%(len(unblockList)))
     f.write("!\n")
     for fiter in blockList:
         f.write("%s\n"%(fiter))
