@@ -67,7 +67,7 @@ def CreatFiters(blockList, unblockList, fileName):
     f = open(fileName, 'a')
     f.write("!\n")
     f.write("! Title: AdBlock DNS Filters\n")
-    f.write("! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：ADgk Filters、AdGuard DNS Filters、Hblock Filters、NEO DEV HOST Filters、OISD Filters、Notracking blocklist Filters、1Hosts (Lite) Filters、AdRules AdGuard Full Filters、1024 hosts、ad-wars hosts、StevenBlack hosts\n")
+    f.write("! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：1Hosts (Lite)、ADgk、AdGuard DNS filter、AdRules DNS List、Hblock、NEO DEV HOST、OISD Basic、Notracking blocklist、1024 hosts、ad-wars hosts、StevenBlack hosts\n")
     f.write("! Homepage: https://github.com/217heidai/adblockfilters\n")
     f.write("! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt\n")
     f.write("! Version: %s\n"%(time.strftime("%Y%m%d%H%M%S", time.localtime())))
