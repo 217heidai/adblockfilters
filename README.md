@@ -9,14 +9,14 @@
 
 | 规则 | 原始链接 | 加速链接 | 更新日期 |
 |:-|:-|:-|:-|
+| 1Hosts (Lite) Filters | [原始链接](https://raw.githubusercontent.com/badmojr/1Hosts/master/Lite/adblock.txt) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/1Hosts_(Lite)_Filters.txt) | 2022/06/09 |
 | ADgk Filters | [原始链接](https://raw.githubusercontent.com/banbendalao/ADgk/master/ADgk.txt) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/ADgk_Filters.txt) | 2022/06/02 |
 | AdGuard DNS Filters | [原始链接](https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/AdGuard_DNS_Filters.txt) | 2022/06/09 |
+| AdRules DNS Filters | [原始链接](https://raw.githubusercontent.com/Cats-Team/AdRules/main/dns.txt) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/AdRules_DNS_Filters.txt) | 2022/06/09 |
 | Hblock Filters | [原始链接](https://hblock.molinero.dev/hosts_adblock.txt) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/Hblock_Filters.txt) | 2022/06/08 |
 | NEO DEV HOST Filters | [原始链接](https://raw.githubusercontent.com/neodevpro/neodevhost/master/lite_adblocker) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/NEO_DEV_HOST_Filters.txt) | 2022/06/09 |
-| OISD Filters | [原始链接](https://abp.oisd.nl/) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/OISD_Filters.txt) | 2022/06/09 |
+| OISD Basic Filters | [原始链接](https://abp.oisd.nl/basic/) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/OISD_Basic_Filters.txt) | 2022/06/09 |
 | Notracking blocklist Filters | [原始链接](https://raw.githubusercontent.com/notracking/hosts-blocklists/master/adblock/adblock.txt) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/Notracking_blocklist_Filters.txt) | 2022/06/09 |
-| 1Hosts (Lite) Filters | [原始链接](https://raw.githubusercontent.com/badmojr/1Hosts/master/Lite/adblock.txt) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/1Hosts_(Lite)_Filters.txt) | 2022/06/09 |
-| AdRules AdGuard Full Filters | [原始链接](https://raw.githubusercontent.com/Cats-Team/AdRules/main/adguard-full.txt) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/AdRules_AdGuard_Full_Filters.txt) | 2022/06/09 |
 | 1024 hosts | [原始链接](https://raw.githubusercontent.com/Goooler/1024_hosts/master/hosts) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/1024_hosts.txt) | 2022/05/18 |
 | ad-wars hosts | [原始链接](https://raw.githubusercontent.com/jdlingyu/ad-wars/master/hosts) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/ad-wars_hosts.txt) | 2022/05/18 |
 | StevenBlack hosts | [原始链接](https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/StevenBlack_hosts.txt) | 2022/06/08 |
