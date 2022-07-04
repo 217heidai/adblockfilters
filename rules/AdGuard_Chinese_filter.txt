@@ -723,11 +723,16 @@ lnk2.cc#%#//scriptlet("set-constant", "adblock", "false")
 @@||static.youranshare.com/*/adsbygoogle_adview_pic_cpc_cpm_cpa_guanggao_gg_ads_300x250.js
 youranshare.com#%#//scriptlet("abort-current-inline-script", "$", "adskilltest")
 ! https://github.com/AdguardTeam/AdguardFilters/issues/61563
-tsubasa.im#%#//scriptlet("set-constant", "compare_post", "noopFunc")
-tsubasa.im#%#//scriptlet('remove-class', 'd-none', 'body')
-tsubasa.im#?#.alert-adblock
-!#if (adguard_ext_safari || adguard_app_ios || adguard_ext_android_cb)
+tsubasa.im#%#//scriptlet('prevent-setTimeout', '/home/?adblock=')
+tsubasa.im#%#//scriptlet('prevent-setInterval', '/home/?adblock=')
+!#if (adguard_app_ios || adguard_ext_android_cb)
+tsubasa.im#$#.adsbygoogle { position: absolute!important; left: -3000px!important; }
+@@||googleads.g.doubleclick.net/pagead/html/*/zrt_lookup.html$domain=tsubasa.im
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=tsubasa.im
+@@||pagead2.googlesyndication.com/pagead/managed/js/adsense/*/show_ads_impl_*.js$domain=tsubasa.im
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=tsubasa.im
+tsubasa.im#@#.adsbygoogle
+tsubasa.im#@#.adsbygoogle-noablate
 tsubasa.im#@#.ad_container
 tsubasa.im#@#.adholder2
 tsubasa.im#@#.pub_130x10
@@ -889,6 +894,8 @@ rjno1.com#?#.sidebar > div[class^="ivo"]:has(> .space > script:contains(slotbydu
 cartoon18.com#?#.container-fluid > .row > .item:has(> .card > .card-body > .lines > span.badge:contains(/^ad$/))
 ! https://github.com/AdguardTeam/AdguardFilters/issues/90640
 segmentfault.com#?##question-wrap > .row > .col-xl-auto:has(> #first-ad:first-child + #gridAd + #second-ad:last-child)
+! https://github.com/AdguardTeam/AdguardFilters/issues/123472
+bbs.pcbeta.com#?##toptb ~ #wp > div[class]:matches-css(height : /170px/)
 ! https://github.com/AdguardTeam/AdguardFilters/issues/88392
 bbs.pcbeta.com#?##toptb ~ #wp > div[class] > ul ~ div[class]:has(> div[class] > div > .adsbygoogle)
 ! https://github.com/AdguardTeam/AdguardFilters/issues/76857
@@ -4482,6 +4489,12 @@ ubmcmm.baidustatic.com
 ||neornad.cn^
 ||wchh.online^
 ||666649.xyz^
+||csztzc.com^
+||zgcydvu.cn^
+||tmrhoe2.com^
+##img[onclick*="/kk80.cc"]
+##a[href*="/kk80.cc"]
+||cheynewalk.com^
 .8ox.cn
 ##a[href$=".120ydrayy.com"]
 ##a[href*=".1956hl.com/"]
@@ -13093,7 +13106,8 @@ hxsame.hexun.com$domain=~quote.hexun.com
 ||centurys.net/promo_
 ||cfzhushou.com^*/King_Chance_Layer.js
 ||cgfdjz.net/xia.js
-||cgown.com^*/peiyinquan
+||cdncg.com^*/Aepku
+||cdncg.com^*/peiyinquan
 ||chahua.org/aimg/
 ||chakd.com/images/xitie160x60.gif
 ||changsha.cn/front_js/site_ad/4/site_ad_284.js
@@ -15617,7 +15631,7 @@ hxsame.hexun.com$domain=~quote.hexun.com
 ||ssp.kdnet.net^
 ||ssp.njxzwh.com^
 ||ssp.zf313.com^
-||sspai.com/api/v1/recommends?*=article_
+||sspai.com/api/v1/recommend*=article_
 ||sspai.com/attachment/sponsor/
 ||sss777.net/Alove-A/
 ||sssvd.china.com^
@@ -16508,6 +16522,7 @@ hxsame.hexun.com$domain=~quote.hexun.com
 ||zzzyk.com/js/
 ||xonlines.com/yyh_qp_200_200.png
 szxx.com.cn###A0
+msn.com###displayAdCard
 dmh8.com##div[style="width:300px;height:300px;position:fixed;bottom:0;left:0;z-index:2147483647;"]
 hsex.men##.col-xs-12 > a[target="_blank"]
 v2rayssr.com##.slider-4-box1
