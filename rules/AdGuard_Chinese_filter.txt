@@ -871,6 +871,8 @@ nfmovies.com#$#a[onclick*="openurl"][target="_blank"] img[src^="/static/"] { pos
 ! Good: example.org#?#main > div.row:has(> div.ad)
 ! Bad: example.org##main > div.ad (should be in specific.txt)
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/128111
+bilibili.com#?#.bili-video-card:has(span.bili-video-card__info--author:contains(/^广告/))
 ! https://github.com/AdguardTeam/AdguardFilters/issues/111510
 zhidao.baidu.com#?#.wgt-ads
 ! https://github.com/AdguardTeam/AdguardFilters/issues/105485
@@ -1041,9 +1043,7 @@ goodav17.com#%#//scriptlet("abort-on-property-read", "popunder")
 ! https://github.com/AdguardTeam/AdguardFilters/issues/54359
 ! https://github.com/AdguardTeam/AdguardFilters/issues/26318
 ! https://forum.adguard.com/index.php?threads/youku-com-v-qq-com.30749/
-! TODO: use scriptlet when this issue - https://github.com/AdguardTeam/Scriptlets/issues/221 will be fixed
-! youku.com#%#//scriptlet("adjust-setTimeout", "r--", "", "0.02")
-youku.com#%#(function(){window.setTimeout=new Proxy(window.setTimeout,{apply:(a,b,c)=>(c&&c[0]&&/r--/.test(c[0].toString())&&c[1]&&1e3===c[1]&&(c[1]*=.01),Reflect.apply(a,b,c))})})();
+youku.com#%#//scriptlet("adjust-setTimeout", "r--", "", "0.02")
 m.youku.com,v.youku.com#%#//scriptlet('set-constant', 'Object.prototype._adData', 'emptyObj')
 ! https://github.com/AdguardTeam/AdguardFilters/issues/109897
 iyf.tv#%#//scriptlet('set-constant', 'Object.prototype.ShouldPlayAds', '0')
@@ -5572,6 +5572,11 @@ ubmcmm.baidustatic.com
 ||gbpofla.cn^
 ||sifang.info^
 ||xxrsxs.cn^
+||whxva.com^
+||zykwnj.cn^
+||yleaxs.cn^
+||ecudsc.cn^
+||arlbper.cn^
 .8ox.cn
 ##a[href$=".120ydrayy.com"]
 ##a[href*=".1956hl.com/"]
@@ -23629,7 +23634,6 @@ ipv6.baidu.com,www.baidu.com,www1.baidu.com,xueshu.baidu.com#?#div[id$="_canvas"
 ipv6.baidu.com,xueshu.baidu.com,www.baidu.com,www1.baidu.com#?#.c-container:-abp-has(.t > a[data-landurl])
 ipv6.baidu.com,xueshu.baidu.com,www.baidu.com,www1.baidu.com#?#div:not([id]) > style[id^="s-"] + style + div + div[id]
 ipv6.baidu.com,xueshu.baidu.com,www.baidu.com,www1.baidu.com#?#div:not([id]) > style[id^="s-"] + style + div[id]
-ipv6.baidu.com,www.baidu.com,www1.baidu.com,xueshu.baidu.com###con-ar > .result-op[mu*="nourl.ubs.baidu.com"]
 ipv6.baidu.com,www.baidu.com,www1.baidu.com,xueshu.baidu.com###content_left > [class] > [id*="00"] > div
 ipv6.baidu.com,www.baidu.com,www1.baidu.com,xueshu.baidu.com###content_left > [class] > [id*="00"] > tbody
 ipv6.baidu.com,www.baidu.com,www1.baidu.com,xueshu.baidu.com###content_left > [class] > [id*="00"] > ul
