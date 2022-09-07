@@ -375,6 +375,19 @@
 ! Bad: ||ad.doubleclick.net^ (should be in adservers.txt)
 !
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/128817
+!#if (adguard_app_ios || adguard_ext_safari || adguard_ext_android_cb)
+winwk.com#@#.adBanner
+winwk.com#@#.pub_300x250
+winwk.com#@#.pub_300x250m
+winwk.com#@#.pub_728x90
+winwk.com#@#.text-ad
+winwk.com#@#.textAd
+winwk.com#@#.text_ad
+winwk.com#@#.text_ads
+winwk.com#@#.text-ads
+winwk.com#@#.text-ad-links
+!#endif
 ! https://github.com/uBlockOrigin/uAssets/issues/14652
 ||manwa.fun/static/upload/ads/$image,redirect=1x1-transparent.gif,important
 @@||manwa.fun/static/upload/ads/*.gif?$image,~third-party
@@ -2616,6 +2629,7 @@ nfmovies.com#@?#div[id]:-abp-has(>img[onclick="openurl()"])
 !--------------- EasyList China rules --------------------------------------!
 !---------------------------------------------------------------------------!
 -*-*-*-*.panda^$script,third-party
+/\.(com|cn|top)\/k\/[0-9]{6}$/$third-party,script
 -1688-wp-media/ads/
 -880-80-4.jpg
 -90mh-gg.
@@ -5808,6 +5822,12 @@ ubmcmm.baidustatic.com
 ||epdchc.cn^
 ||wujrx.xyz^
 ||dqh.ink^
+||ptzkjko.cn^
+||showcoopdb.xyz^
+||7v46.icu^
+||ykg5.cn^
+||9as3.xyz^
+||lxlidl.ink^
 .8ox.cn
 ##a[href$=".120ydrayy.com"]
 ##a[href*=".1956hl.com/"]
@@ -23110,6 +23130,7 @@ gohome.com.hk#@#div[id^="div-gpt-ad"]
 @@||ads.cdn.tvb.com^*.key
 @@||ads.privacy.qq.com^$domain=privacy.qq.com
 @@||ads.tiktok.com^$generichide
+@@||winwk.com^$generichide
 @@||ads.tiktok.com^$~third-party
 @@||adsense.woso.cn^$~third-party
 @@||adserver.juicyads.com/js/jads.js$domain=netflav.com
