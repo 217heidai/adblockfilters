@@ -782,20 +782,20 @@ game735.com#$#div[id^="gklobl"] { height: 1px!important; }
 @@||www.ruanyifeng.com^$csp=script-src 'self' * 'sha256-0McqMM66/wAVZmxF6zXpjNsb1UMbTl4LXBXdhqPKxws='
 ruanyifeng.com#@#a > img[src*="wangbase.com/blogimg/asset/"]
 ! https://github.com/AdguardTeam/AdguardFilters/issues/46061#issuecomment-601842012
-t66y.com#%#//scriptlet('adjust-setTimeout', 'adhtml', '10005')
-t66y.com#%#//scriptlet('adjust-setTimeout', 'blockText', '1005')
+t66y.com#%#//scriptlet('abort-current-inline-script', '$', 'adhtml')
+!#if (adguard_app_ios || adguard_ext_android_cb)
+t66y.com#@#.tips
+t66y.com#@#.sptable_do_not_remove
+!#endif
 !#if (adguard_app_windows || adguard_app_mac || adguard_app_android || adguard_ext_chromium || adguard_ext_edge)
 t66y.com$$script[tag-content="adhtml"][max-length="10000"]
-!t66y.com#%#//scriptlet("abort-current-inline-script", "$", "do_not_remove")
-t66y.com##.tips
-t66y.com##.sptable_do_not_remove
 !#endif
 !+ PLATFORM(windows, mac, android)
 t66y.com#%#AG_onLoad(function(){var a=document.querySelector(".tpc_content img");if(a){a=a.attributes;for(var c=0;c<a.length;c++)if(a[c].name.match("ess-data")){var b=a[c].name;break}}$("img["+b+"]").each(function(){0<$(this).attr(b).indexOf("sinaimg")&&$(this).attr(b,$(this).attr(b).replace(/https:/,"http:"));$(this).attr("src",$(this).attr(b));$(this).css("cursor","pointer");$(this).click(function(){window.open($(this).attr("src"));return!1})})});
 !+ NOT_PLATFORM(windows, mac, android)
 t66y.com#%#AG_onLoad(function(){var a=document.querySelector(".tpc_content img");if(a){a=a.attributes;for(var b=0;b<a.length;b++)if(!a[b].name.startsWith("data-link")&&!a[b].name.match(/data-.?(h|i|s)|(a|o|f|b|c|d|v|\d)s?\d?z?t?-data/)&&!a[b].value.match(/:\/\/[\s\S]*?a\.?d?\/.?.?b(_)?l(0|o|)ck\.jpg/i)){var c=a[b].name;break}}$("img["+c+"]").each(function(){0<$(this).attr(c).indexOf("sinaimg")&&$(this).attr(c,$(this).attr(c).replace(/https:/,"http:"));$(this).attr("src",$(this).attr(c));$(this).css("cursor","pointer");$(this).click(function(){window.open($(this).attr("src"));return!1})})});
 !+ NOT_PLATFORM(windows, mac, android, ext_chromium, ext_edge)
-t66y.com#$?#.sptable_do_not_remove { visibility: hidden !important; }
+t66y.com#$?#.sptable_do_not_remove { display: block !important; visibility: hidden !important; }
 ||alicdn.com^$domain=t66y.com
 ||dioimg.net^$domain=t66y.com
 ||sinaimg.cn^$domain=t66y.com
@@ -2915,6 +2915,7 @@ nfmovies.com#@?#div[id]:-abp-has(>img[onclick="openurl()"])
 !---------------------------------------------------------------------------!
 -*-*-*-*.panda^$script,third-party
 -1316632262.cos.
+/Runtime/Js/haojio_
 -1688-wp-media/ads/
 -90mh-gg.
 .bid/ads/
@@ -4556,6 +4557,13 @@ newduba.cn###jq_youxi
 ||xlxknf.xyz^
 ||cnmmcjn.cn^
 ||yingnanyyds.com^
+||excfig.xyz^
+||jeedi.xyz^
+||yingce.asia^
+||52qd.club^
+||39nw.com^
+||vel7.xyz^
+||nqyz.tw^
 ##.btn[href*="/viphktv.com/"]
 ##[class][onclick*=".ununxsxs.top"]
 ##a[href$=".120ydrayy.com"]
