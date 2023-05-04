@@ -971,6 +971,10 @@ nfmovies.com#$#a[onclick*="openurl"][target="_blank"] img[src^="/static/"] { pos
 ! Good: example.org#?#main > div.row:has(> div.ad)
 ! Bad: example.org##main > div.ad (should be in specific.txt)
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/149414
+nivod5.tv,nivod4.tv#?#.img-list > .img-item:has(> a[href*=".ad_click"])
+nivod5.tv,nivod4.tv#$?#.img-list > .img-item:has(> a[href*=".ad_click"]) { remove: true; }
+nivod5.tv,nivod4.tv#$?#a.focus_title_inner[href*=".ad_click"] { remove: true; }
 ! https://github.com/AdguardTeam/AdguardFilters/issues/147512
 hdmoli.com#?#.row > div.myui-panel:has(div[style^="text-align:"] > a[href][target="_blank"] > img#index_banner)
 ! https://github.com/AdguardTeam/AdguardFilters/issues/134240
@@ -1123,6 +1127,13 @@ csdn.net#?##feedlist_id > li:has(> div[id^="kp_box_"])
 !--------------------------------------!
 ! SECTION: Chinese - JS
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/149414
+nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.0.commercial.mediaUrl', '')
+nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.0.commercial.jumpUrl', '')
+nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.0.commercial.title', '')
+nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.1.commercial.mediaUrl', '')
+nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.1.commercial.jumpUrl', '')
+nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.1.commercial.title', '')
 ! https://github.com/AdguardTeam/AdguardFilters/issues/147985
 ! https://github.com/AdguardTeam/AdguardFilters/issues/146359
 nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'detailParams.is_ad_play', 'false')
@@ -1416,6 +1427,8 @@ $script,xmlhttprequest,third-party,domain=00ksw.com|01zww.com|0biquge.com|114zw.
 !
 !
 !
+||api.nivodz.com/commercial/incr/
+nivod5.tv,nivod4.tv##a.focus_title_inner[href*=".ad_click"]
 newmobilelife.com###ATS_sticky
 tieba.baidu.com##.top_toutu_admarks
 ||statics.123pan.com/static-by-custom/web-banner
@@ -4942,6 +4955,14 @@ newduba.cn###jq_youxi
 ||gorpgeu.xyz^
 ||lxyl66.cn^
 ||eciea.xyz^
+||poppy.fit^
+||lcjyll.xyz^
+||x4csq.top^
+||ifeurcw.cn^
+||nsfdsa.xyz^
+||fangguanjia.xyz^
+||grxwqq.com^
+||yikucdn.com^
 ##.btn[href*="/viphktv.com/"]
 ##[class][onclick*=".ununxsxs.top"]
 ##a[href$=".120ydrayy.com"]
@@ -23131,6 +23152,8 @@ smjb.net##div[style*="height: 50%"]
 ||ttzw.tv/tz/true.js
 ||weiyuedu.cc/skin/v3/js/dibu.js
 ||wwzw.cc/img/
+||kanshushi.com/js/nxnhsqe.
+||kanshushi.com/yyddssdd.
 ||wzjs1.oss-accelerate.aliyuncs.com^
 ||x81zw.co/js/dsnmd.
 ||xbiqugela.com/js/basisc.
