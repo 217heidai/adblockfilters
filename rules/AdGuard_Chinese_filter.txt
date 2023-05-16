@@ -80,6 +80,7 @@
 ! Bad: ||adssubdomain.legitwebsite.com^ (should be in adservers_firstparty.txt)
 !
 !
+||jp.twww.sbs^
 ||002777.xyz^
 ||app2.10090dfs.com^
 ||w94.1qlgi.top^
@@ -1136,6 +1137,8 @@ csdn.net#?##feedlist_id > li:has(> div[id^="kp_box_"])
 !--------------------------------------!
 ! SECTION: Chinese - JS
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/150757
+m.91zww.com#%#//scriptlet('abort-on-property-write', 'delCookie')
 ! https://github.com/AdguardTeam/AdguardFilters/issues/150387
 pornbest.org#%#//scriptlet('abort-current-inline-script', 'jQuery', 'injectPops')
 ! https://github.com/AdguardTeam/AdguardFilters/issues/150150
@@ -1437,9 +1440,12 @@ $script,xmlhttprequest,third-party,domain=00ksw.com|01zww.com|0biquge.com|114zw.
 ! For URL shorteners or simple sites with frequently changed ad servers.
 ! Incorrectly blocked domains can be excluded using regex(synchronize this regexp in all filters)
 /^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|cdn.staticfile.org|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$/$third-party,script,domain=yemancomic.com|qimiaoxiaoshuo.com|gaofuwu.org|nxpaaq.com|dengbi2.com|92hm.top
+! Similar to regexp above, but using the denyallow modifier
+$script,third-party,denyallow=bunnycdn.ru|bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|cdn.staticfile.org|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yastatic.net|ytimg.com|zencdn.net|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com|fastcomments.com,domain=m.91zww.com
 !
 !
 !
+5dy15.cc##div[id][class^="is_"][style^="margin"]
 /images/friend/*.webp?$domain=pornbest.org|pornlulu.com
 pornlulu.com,pornbest.org###fullPageModal
 jxnlz.xyz##a[target="_blank"] > img
@@ -2778,8 +2784,6 @@ adguard.com,adguard.app##.hello_from_adguard_chinese
 ! Bad:  @@||example.org^$stealth (should be in AdGuard Base - allowlist_stealth.txt)
 !
 !
-! https://github.com/AdguardTeam/AdguardFilters/issues/149925
-pcbeta.com#@?##toptb ~ #wp > *:not(div):not(style):not(ul):not(script) + div[class][id]:-abp-has(div[style="display:none"])
 ! https://github.com/AdguardTeam/AdguardFilters/issues/150114
 ||lensdump.com/i/*.gif$badfilter
 ! https://github.com/AdguardTeam/AdguardFilters/issues/149526
@@ -5130,6 +5134,8 @@ newduba.cn###jq_youxi
 ||radish-cake.xyz^
 ||zldzbr.xyz^
 ||iwdvvoc.cn^
+||1385a.xyz^
+||z11011.com^
 ##[class][onclick*=".ununxsxs.top"]
 ##a[href$=".120ydrayy.com"]
 ##a[href$="/1c626.com"]
@@ -15733,6 +15739,7 @@ hxsame.hexun.com$domain=~quote.hexun.com
 ||zzz4.com/JS_AD/
 ||zzzyk.com/js/
 szxx.com.cn###A0
+qq.com,sogou.com##.daohang-gamecenter
 downza.cn##.down-item-2
 szxx.com.cn###A1
 szxx.com.cn###A2
