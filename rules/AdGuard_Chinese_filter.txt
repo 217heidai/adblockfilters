@@ -1188,6 +1188,8 @@ nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.0.commerci
 nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.1.commercial.mediaUrl', '')
 nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.1.commercial.jumpUrl', '')
 nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.1.commercial.title', '')
+! Temorary solution, remove when https://github.com/AdguardTeam/Scriptlets/issues/330 will be resolved
+nivod5.tv,nivod4.tv#%#(function(){window.eval=new Proxy(eval,{apply:(e,c,n)=>{const o=Reflect.apply(e,c,n);if("object"==typeof o&&o.banners)try{o.banners.forEach(((e,c)=>{e.commercial&&(e.commercial={})}))}catch(e){console.debug(e)}return o}})})();
 ! https://github.com/AdguardTeam/AdguardFilters/issues/147985
 ! https://github.com/AdguardTeam/AdguardFilters/issues/146359
 nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'detailParams.is_ad_play', 'false')
@@ -1490,6 +1492,7 @@ $script,third-party,denyallow=bunnycdn.ru|bootstrapcdn.com|cdn.ampproject.org|cl
 !
 !
 !
+sports.sohu.com##.allsee-list > .bd-wrap
 naifei.im##div[class^="wp-none"]
 cloud.tencent.com##.mod-commercial
 pc.yiyouliao.com##.yyl-weiruan-ads-swiper
@@ -5749,6 +5752,7 @@ newduba.cn###jq_youxi
 ||zppfjh.xyz^
 ||cifyeldf.top^
 ||ymhyw6.lol^
+||efvsyhbf.xyz^
 ##a[href$="/1c626.com"]
 ##a[href$="/77adc.com"]
 ##a[href$="/aa8a1j.com"]
@@ -15243,6 +15247,8 @@ hxsame.hexun.com$domain=~quote.hexun.com
 ||zzz4.com/JS_AD/
 ||zzzyk.com/js/
 szxx.com.cn###A0
+naifei.im##DIV[style="position: fixed;bottom: -10px;right:0;z-index:999;width:250px"]
+naifei.im##.tg_w
 szxx.com.cn###A1
 szxx.com.cn###A2
 gpcxw.com###AA2
