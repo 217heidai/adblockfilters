@@ -617,7 +617,7 @@ yodu.org#$#body[style] { overflow: auto !important; }
 linovelib.com#$##byspider { display: none !important; }
 linovelib.com#$#body[style] { overflow: auto !important; }
 ||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,redirect=noopjs,domain=linovelib.com,important
-linovelib.com#%#//scriptlet('abort-current-inline-script', 'document.createElement', 'b.onerror')
+linovelib.com#%#//scriptlet('set-constant', 'adblock', '0')
 !+ PLATFORM(ios, ext_android_cb)
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=linovelib.com
 ! https://github.com/uBlockOrigin/uAssets/issues/10953
@@ -1007,6 +1007,12 @@ nfmovies.com#$#a[onclick*="openurl"][target="_blank"] img[src^="/static/"] { pos
 ! Good: example.org#?#main > div.row:has(> div.ad)
 ! Bad: example.org##main > div.ad (should be in specific.txt)
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/154672
+wealth.com.tw#?##root > div[class] > div[class]:matches-css(z-index: 4):has(> div[class]:matches-css(height: 250px))
+wealth.com.tw#?##root > div[class] > div[class]:matches-css(z-index: 4):has(> button path[d^="M16 4c6.627 0 12 5.373"])
+wealth.com.tw#?##root div[class]:matches-css(row-gap: 13px) > div[class]:matches-css(row-gap: 6px):has(> div[class]:matches-css(width: 300px))
+wealth.com.tw#?##root div[class]:matches-css(position: relative) > div[class]:matches-css(justify-content: center):has(> div[class]:matches-css(width: 300px))
+wealth.com.tw#?##root div[class]:matches-css(padding-left: 70px) > div[class]:matches-css(column-gap: 30px):has(> div[class]:matches-css(align-items: center))
 ! https://github.com/AdguardTeam/AdguardFilters/issues/154174
 9xav.cc#?#div[class]:not([class*=" "]):has(> span[class*=" "] > a[href^="https://"][target="_blank"])
 ! https://github.com/AdguardTeam/AdguardFilters/issues/149414
@@ -1068,6 +1074,7 @@ nfmovies.com#$?#body > .hidden-xs > div[id]:has(> img[src^="/static/"][onclick*=
 nfmovies.com#$?#div[id^="aaaDiv"] { remove: true; }
 !
 !
+sohu.com#?#.news-wrapper > div.news-box.clear:has(> [data-ad-format])
 military.china.com#$?#.slide_doubleimg > .baiBox { remove: true; }
 zh.moegirl.org.cn#?#.swiper-slide:has(> a[href^="https://m.tb.cn/"])
 myfreax.com#?#main > div.w-full:has(> ins.adsbygoogle)
@@ -2790,6 +2797,10 @@ csdn.net###footerRightAds
 ||mycodes.net/js/*.js
 !
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/154676
+! Website shows "Request failed with status code 500" error when request is blocked by apps
+!+ PLATFORM(windows, mac, android)
+||adpai.thepaper.cn^$xmlhttprequest,redirect-rule=nooptext,domain=thepaper.cn
 ! https://github.com/AdguardTeam/AdguardFilters/issues/138700
 !+ PLATFORM(ios, ext_android_cb)
 manwa.me##.ad-area > a[target="_blank"]
@@ -2871,6 +2882,7 @@ adguard.com,adguard.app##.hello_from_adguard_chinese
 ! Bad:  ||example.org/video-links (should be in specific.txt)
 !
 ! https://github.com/AdguardTeam/AdguardFilters/issues/114470
+!+ PLATFORM(windows, mac, android)
 ||101.qq.com/js/base.js$replace=/(el\.getAttribute\("type"\) === "text\/javascript")/\(\$1 && !el\.getAttribute\("nonce"\)\)/
 ! https://github.com/AdguardTeam/AdguardFilters/issues/87176
 ! https://github.com/AdguardTeam/AdguardFilters/issues/54359
@@ -5825,6 +5837,11 @@ newduba.cn###jq_youxi
 ||xnzetb.xyz^
 ||moead.xyz^
 ||zrgbh6bm.icu^
+||baidubdvjssv.com^
+||goxob6wo.icu^
+||yupov6ks.icu^
+||atbdkmt.xyz^
+||01v62.xyz^
 ##a[href$="/1c626.com"]
 ##a[href$="/77adc.com"]
 ##a[href$="/aa8a1j.com"]
