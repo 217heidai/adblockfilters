@@ -1052,7 +1052,8 @@ hdmoli.com#?#.row > div.myui-panel:has(div[style^="text-align:"] > a[href][targe
 ! https://github.com/AdguardTeam/AdguardFilters/issues/134240
 ! Do not hide .bili-video-card container to not mess up content, related - https://github.com/AdguardTeam/AdguardFilters/issues/147194#issuecomment-1500803042
 ! bilibili.com#?#.bili-video-card.is-rcmd > div > a[href*="cm.bilibili.com"][data-target-url]:not([data-target-url*=".bili"]) + .bili-video-card__info:upward(2)
-bilibili.com#?#.container > div[class*="-card"]:has(div[style="display: none !important;"])
+bilibili.com#$?#.container > div.floor-single-card:has(> div.skeleton) { remove: true; }
+bilibili.com#$?#.container > div[class*="-card"]:has(div[style="display: none !important;"]) { remove: true; }
 bilibili.com#?#.bili-video-card:has(.bili-video-card__info--ad) > .bili-video-card__wrap
 bilibili.com#?#.bili-video-card:has(.bili-video-card__info--creative-ad) > .bili-video-card__wrap
 bilibili.com#$?#.bili-video-card:has(.bili-video-card__info--ad) > .bili-video-card__skeleton { visibility: visible !important; }
@@ -1223,7 +1224,8 @@ csdn.net#?##feedlist_id > li:has(> div[id^="kp_box_"])
 !--------------------------------------!
 ! SECTION: Chinese - JS
 !
-! aiyifan.tv, iyf.tv
+! https://github.com/AdguardTeam/AdguardFilters/issues/158639
+aiyifan.tv,iyf.tv#%#//scriptlet('abort-on-property-read', 'Object.prototype.ShouldPlayAds')
 aiyifan.tv,iyf.tv#%#//scriptlet('set-constant', 'Object.prototype.captions', 'emptyObj')
 ! https://github.com/uBlockOrigin/uAssets/issues/19027
 datapps.org#%#//scriptlet('remove-attr', 'onclick', 'a[href][onclick^="setpos"]')
@@ -2967,6 +2969,9 @@ adguard.info,adguard.com,adguard.app##.hello_from_adguard_chinese
 ! Good: ||example.org/video-links$replace=/vast":/vast_":/
 ! Bad:  ||example.org/video-links (should be in specific.txt)
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/158639
+||iyf.tv/app/*.js$replace=/this\.shouldSkipAds\|\|/!0||/
+||aiyifan.tv/app/*.js$replace=/this\.shouldSkipAds\|\|/!0||/
 ! https://github.com/AdguardTeam/AdguardFilters/issues/114470
 !+ PLATFORM(windows, mac, android)
 ||101.qq.com/js/base.js$replace=/(el\.getAttribute\("type"\) === "text\/javascript")/\(\$1 && !el\.getAttribute\("nonce"\)\)/
@@ -5239,6 +5244,11 @@ newduba.cn###jq_youxi
 ||dqjojx.xyz^
 ||tknkfd.xyz^
 ||ygzqlnt.cn^
+||aqvwn18102h.com^
+||b4g7k9d2.com^
+||xn--jvrp4x1zyfta.net^
+||aaenv48847h.com^
+||ebscb0l.xyz^
 ||zxrcfw.com^
 ||zypzzv.xyz^
 ##a[href$="/1c626.com"]
