@@ -1,57 +1,23 @@
 import os
+import sys
 import re
+
+from tld import get_tld
 
 class Resolver(object):
     def __init__(self, fileName):
         self.__fileName = fileName
 
-    def Resolve(self):
+    # host 模式
+    def __ResolveHost(self, line):
         def match(pattern, string):
-            matchObj = re.match(pattern, string)
-            if matchObj:
-                    #print(matchObj.group())
-                    return True
-            return False
-
-        blockList = []
-        unblockList = []
-        if not os.path.exists(self.__fileName):
-            return blockList,unblockList
-        with open(self.__fileName, "r") as f:
-            for line in f:
-                # 去掉换行符
-                line = line.replace('\r', '').replace('\n', '').strip()
-                # 去掉空行
-                if len(line) < 1:
-                    continue
-                # 跳过注释! #
-                if match('^!.*', line) or match('^#.*', line):
-                    continue
-                # 跳过注释[]
-                if line.find('[') == 0 and line.rfind(']')== len(line)-1:
-                    continue
-                # ||
-                if match('^\|\|.*', line):
-                    #print(line)
-                    blockList.append(line)
-                    continue
-                # /REGEX/
-                if match('^/.*', line):
-                    #print(line)
-                    blockList.append(line)
-                    continue
-                # @@
-                if match('^@@.*', line):
-                    #print(line)
-                    unblockList.append(line)
-                    continue
-
-                # @ 注释
-                if match('^@.*', line):
-                    #print(line)
-                    continue
-
-                # host 模式
+            return True if re.match(pattern, string) else False
+        try:
+            block,unblock,filter=None,None,None
+            while True:
+                # #* 注释
+                if match('^#.*', line):
+                    break
                 if line.find('0.0.0.0')==0 or line.find('127.0.0.1') == 0:
                     row = line.split(' ')
                     row = list(map(lambda x: x.strip(), row)) # 字段去空格
@@ -59,23 +25,160 @@ class Resolver(object):
                         if len(row[i]) == 0:
                             row.pop(i)
                     domain = row[1]
-                    if domain in ['localhost', 'localhost.localdomain', 'local', '0.0.0.0']:
-                        continue
-                    domain = '||%s^'%(domain)
-                    blockList.append(domain)
+                    if domain not in ['localhost', 'localhost.localdomain', 'local', '0.0.0.0']:
+                        res = get_tld(domain, fix_protocol=True, as_object=True)
+                        block = res.fld, res.subdomain
+                        break
+                    print("无法识别的规则：%s"%(line))
+                    break
+                print("无法识别的规则：%s"%(line))
+                break
+        except Exception as e:
+            print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
+        finally:
+            return block,unblock,filter
+        
+    # dns 模式
+    def __ResolveDNS(self, line):
+        def match(pattern, string):
+            return True if re.match(pattern, string) else False
+        try:
+            block,unblock,filter=None,None,None
+            while True:
+                # !* 注释
+                if match('^!.*', line):
+                    break
+                # [*] 注释
+                if match('^\[.*\]$', line):
+                    break
+                # #* 注释
+                if match('^#.*', line):
+                    break
+
+                # ||example.org^: block access to the example.org domain and all its subdomains, like www.example.org.
+                if match('^\|\|.*\^$', line):
+                    domain = line[2:-1]
+                    if domain.find('*') >= 0 or domain.find('/') >= 0:
+                        filter = line
+                        break
+                    res = get_tld(domain, fix_protocol=True, as_object=True)
+                    block = res.fld, res.subdomain
+                    break
+                # @@||example.org^: unblock access to the example.org domain and all its subdomains.
+                if match('^@@\|\|.*\^$', line):
+                    domain = line[4:-1]
+                    if domain.find('*') >= 0 or domain.find('/') >= 0:
+                        filter = line
+                        break
+                    res = get_tld(domain, fix_protocol=True, as_object=True)
+                    unblock = res.fld, res.subdomain
+                    break
+                # /REGEX/: block access to the domains matching the specified regular expression
+                if match('^/.*/$', line):
+                    filter = line
+                    break
+                # other
+                print("无法识别的规则：%s"%(line))
+                break
+        except Exception as e:
+            print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
+        finally:
+            return block,unblock,filter
+        
+    # filter 模式
+    def __ResolveFilter(self, line):
+        def match(pattern, string):
+            return True if re.match(pattern, string) else False
+        try:
+            block,unblock,filter=None,None,None
+            while True:
+                # !* 注释
+                if match('^!.*', line):
+                    break
+                # [*] 注释
+                if match('^\[.*\]$', line):
+                    break
+                # #* 注释
+                if match('^#.*', line):
+                    break
+
+                # ||example.org^: block access to the example.org domain and all its subdomains, like www.example.org.
+                if match('^\|\|.*\^$', line):
+                    domain = line[2:-1]
+                    if domain.find('*') >= 0 or domain.find('/') >= 0:
+                        filter = line
+                        break
+                    res = get_tld(domain, fix_protocol=True, as_object=True)
+                    block = res.fld, res.subdomain
+                    break
+                # @@||example.org^: unblock access to the example.org domain and all its subdomains.
+                if match('^@@\|\|.*\^$', line):
+                    domain = line[4:-1]
+                    if domain.find('*') >= 0 or domain.find('/') >= 0:
+                        filter = line
+                        break
+                    res = get_tld(domain, fix_protocol=True, as_object=True)
+                    unblock = res.fld, res.subdomain
+                    break
+                # /REGEX/: block access to the domains matching the specified regular expression
+                if match('^/.*/$', line):
+                    filter = line
+                    break
+                # other
+                filter = line
+                break
+        except Exception as e:
+            print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
+        finally:
+            return block,unblock,filter
+
+    def Resolve(self, type):
+        blockDict = dict()
+        unblockDict = dict()
+        filterList = []
+
+        if not os.path.exists(self.__fileName):
+            return blockDict,unblockDict,filterList
+        
+        with open(self.__fileName, "r") as f:
+            for line in f:
+                # 去掉换行符
+                line = line.replace('\r', '').replace('\n', '').strip()
+                # 去掉空行
+                if len(line) < 1:
                     continue
 
-                # 过滤无效的hosts
-                if line.replace(' ', '') in ['::1localhost','255.255.255.255broadcasthost','::1ip6-localhost','::1ip6-loopback','fe80::1%lo0localhost','ff00::0ip6-localnet','ff00::0ip6-mcastprefix','ff02::1ip6-allnodes','ff02::2ip6-allrouters','ff02::3ip6-allhosts','255.255.255.255\tbroadcasthost']:
-                    continue
+                block,unblock,filter=None,None,None
+                if type == "host":
+                    block,unblock,filter = self.__ResolveHost(line)
 
-                blockList.append(line)
-                pass
-        return blockList,unblockList        
+                if type == "dns":
+                    block,unblock,filter = self.__ResolveDNS(line)
+
+                if type == "filter":
+                    block,unblock,filter = self.__ResolveFilter(line)
+                
+                if block:
+                    if block[0] not in blockDict:
+                        blockDict[block[0]] = [block[1]]
+                    else:
+                        blockDict[block[0]].append(block[1])
+                if unblock:
+                    if unblock[0] not in unblockDict:
+                        unblockDict[unblock[0]] = [unblock[1]]
+                    else:
+                        unblockDict[unblock[0]].append(unblock[1])
+                if filter:
+                    filterList.append(filter)
+        return blockDict,unblockDict,filterList
+
 if __name__ == '__main__':
     pwd = os.getcwd()
-    file = pwd + '/rules/Hblock_Filters.txt'
+    file = pwd + '/rules/1024_hosts.txt' 
     resolver = Resolver(file)
-    blockList, unblockList = resolver.Resolve()
+    blockList, unblockList, filterList = resolver.Resolve("host") #1024_hosts、ad-wars_hosts、StevenBlack_hosts
+    #blockList, unblockList, filterList = resolver.Resolve("dns") #1Hosts_(Lite)、AdRules_DNS_List、Hblock、NEO_DEV_HOST、Notracking_blocklist、OISD_Basic
+    #blockList, unblockList, filterList = resolver.Resolve("filter") #ADgk、AdGuard_Base_filter、AdGuard_Chinese_filter、AdGuard_DNS_filter
     print('blockList: %s'%(len(blockList)))
     print('unblockList: %s'%(len(unblockList)))
+    print('filterList: %s'%(len(filterList)))
