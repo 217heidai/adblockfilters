@@ -104,21 +104,11 @@ class Resolver(object):
 
                 # ||example.org^: block access to the example.org domain and all its subdomains, like www.example.org.
                 if match('^\|\|.*\^$', line):
-                    domain = line[2:-1]
-                    if domain.find('*') >= 0 or domain.find('/') >= 0:
-                        filter = line
-                        break
-                    res = get_tld(domain, fix_protocol=True, as_object=True)
-                    block = res.fld, res.subdomain
+                    filter = line
                     break
                 # @@||example.org^: unblock access to the example.org domain and all its subdomains.
                 if match('^@@\|\|.*\^$', line):
-                    domain = line[4:-1]
-                    if domain.find('*') >= 0 or domain.find('/') >= 0:
-                        filter = line
-                        break
-                    res = get_tld(domain, fix_protocol=True, as_object=True)
-                    unblock = res.fld, res.subdomain
+                    filter = line
                     break
                 # /REGEX/: block access to the domains matching the specified regular expression
                 if match('^/.*/$', line):
@@ -174,10 +164,10 @@ class Resolver(object):
 
 if __name__ == '__main__':
     pwd = os.getcwd()
-    file = pwd + '/rules/1024_hosts.txt' 
+    file = pwd + '/rules/ADgk.txt' 
     resolver = Resolver(file)
-    blockList, unblockList, filterList = resolver.Resolve("host") #1024_hosts、ad-wars_hosts、StevenBlack_hosts
-    #blockList, unblockList, filterList = resolver.Resolve("dns") #1Hosts_(Lite)、AdRules_DNS_List、Hblock、NEO_DEV_HOST、Notracking_blocklist、OISD_Basic
+    #blockList, unblockList, filterList = resolver.Resolve("host") #1024_hosts、ad-wars_hosts、StevenBlack_hosts
+    blockList, unblockList, filterList = resolver.Resolve("dns") #1Hosts_(Lite)、AdRules_DNS_List、Hblock、NEO_DEV_HOST、Notracking_blocklist、OISD_Basic
     #blockList, unblockList, filterList = resolver.Resolve("filter") #ADgk、AdGuard_Base_filter、AdGuard_Chinese_filter、AdGuard_DNS_filter
     print('blockList: %s'%(len(blockList)))
     print('unblockList: %s'%(len(unblockList)))
