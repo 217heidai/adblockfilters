@@ -41,8 +41,8 @@ def CreatReadme(ruleList, fileName):
     f.write("适用于AdGuard的去广告合并规则，每8个小时更新一次。\n")
     f.write("个人收藏了不少广告过滤规则，但是每次往新设备添加的时候很是头疼，于是写了这个项目，定时自动获取各规则源更新，生成合并规则库。\n")
     f.write("## 订阅链接\n")
-    f.write("1. AdGuard Home 等，使用规则1\n")
-    f.write("2. AdGuard 等，使用规则1 + 规则2\n\n")
+    f.write("1. AdGuard Home 等DNS拦截服务使用规则1\n")
+    f.write("2. AdGuard 等浏览器插件使用规则1 + 规则2\n\n")
     f.write("| 规则 | 原始链接 | 加速链接 |\n")
     f.write("|:-|:-|:-|\n")
     f.write("| 规则1：DNS 拦截 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdns.txt) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdns.txt) |\n")
@@ -148,10 +148,10 @@ def Entry():
     isUpdate = False
     lastUpdate = time.strftime("%Y/%m/%d", time.localtime())
     for i in range(0, len(ruleList)):
-        relue = Rule(ruleList[i][0], ruleList[i][1])
+        relue = Rule(ruleList[i][0], ruleList[i][2])
         if relue.Update():
             isUpdate = True
-            ruleList[i][2] = lastUpdate
+            ruleList[i][3] = lastUpdate
     
     if isUpdate:
         blockDict = dict()
