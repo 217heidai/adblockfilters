@@ -65,7 +65,10 @@ def CreatDNS(blockDict, unblockDict, fileName):
             fldList.append(item)
         fldList.sort() # 排序
         for fld in fldList:
-            subdomainList = list(set(filter(None, domainDict[fld]))) # 去重
+            subdomainList = list(set(domainDict[fld])) # 去重
+            if '' in subdomainList and len(subdomainList) > 1: # 二级域名已被拦截，则干掉所有子域名
+                subdomainList = ['']
+            subdomainList = list(filter(None, subdomainList)) # 去空
             if len(subdomainList) > 0:
                 subdomainList.sort() # 排序
                 for subdomain in subdomainList:
@@ -102,7 +105,6 @@ def CreatDNS(blockDict, unblockDict, fileName):
     for fiter in unblockList:
         f.write("%s\n"%(fiter))
     f.close()
-
 def CreatFiter(filterList, fileName):
     # 去重、排序
     def sort(L):

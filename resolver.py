@@ -104,11 +104,21 @@ class Resolver(object):
 
                 # ||example.org^: block access to the example.org domain and all its subdomains, like www.example.org.
                 if match('^\|\|.*\^$', line):
-                    filter = line
+                    domain = line[2:-1]
+                    if domain.find('*') >= 0 or domain.find('/') >= 0:
+                        filter = line
+                        break
+                    res = get_tld(domain, fix_protocol=True, as_object=True)
+                    block = res.fld, res.subdomain
                     break
                 # @@||example.org^: unblock access to the example.org domain and all its subdomains.
                 if match('^@@\|\|.*\^$', line):
-                    filter = line
+                    domain = line[4:-1]
+                    if domain.find('*') >= 0 or domain.find('/') >= 0:
+                        filter = line
+                        break
+                    res = get_tld(domain, fix_protocol=True, as_object=True)
+                    unblock = res.fld, res.subdomain
                     break
                 # /REGEX/: block access to the domains matching the specified regular expression
                 if match('^/.*/$', line):
