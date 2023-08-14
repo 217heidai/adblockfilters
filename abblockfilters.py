@@ -49,6 +49,7 @@ def CreatReadme(ruleList, fileName):
     f.write("| 规则2：插件拦截 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt) |\n")
     f.write("## 规则源\n")
     f.write("1. 不再引用[anti-AD](https://anti-ad.net/adguard.txt)、[yhosts](https://raw.githubusercontent.com/VeleSila/yhosts/master/hosts.txt)，具体原因见[Mosney/anti-anti-AD](https://github.com/Mosney/anti-anti-AD)。\n")
+    f.write("2. 移除[Notracking blocklist](https://raw.githubusercontent.com/notracking/hosts-blocklists/master/adblock/adblock.txt)，源项目[已停止维护](https://github.com/notracking/hosts-blocklists/issues/900)。\n")
     f.write("\n")
     f.write("| 规则 | 类型 | 原始链接 | 加速链接 | 更新日期 |\n")
     f.write("|:-|:-|:-|:-|:-|\n")
