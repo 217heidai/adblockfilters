@@ -57,9 +57,18 @@ def CreatReadme(ruleList, fileName):
         f.write("| %s | %s | [原始链接](%s) | [加速链接](https://ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/%s.txt) | %s |\n" % (rule[0],rule[1],rule[2],rule[0].replace(' ', '_'),rule[3]))
     f.close()
 
+def GetBlackList():
+    blackList = []
+    fileName = os.getcwd() + "/rules/black.txt"
+    if os.path.exists(fileName):
+        with open(fileName, 'r') as f:
+            blackList = f.readlines()
+            blackList = list(map(lambda x: x.replace("\n", ""), blackList))
+    return blackList
+
 def CreatDNS(blockDict, unblockDict, fileName):
     # 去重、排序
-    def sort(domainDict, isBlock):
+    def sort(domainDict, isBlock, blackList):
         blockList = []
         fldList = []
         for item in domainDict:
@@ -67,25 +76,30 @@ def CreatDNS(blockDict, unblockDict, fileName):
         fldList.sort() # 排序
         for fld in fldList:
             subdomainList = list(set(domainDict[fld])) # 去重
-            if '' in subdomainList and len(subdomainList) > 1: # 二级域名已被拦截，则干掉所有子域名
+            if '' in subdomainList: # 二级域名已被拦截，则干掉所有子域名
                 subdomainList = ['']
             subdomainList = list(filter(None, subdomainList)) # 去空
             if len(subdomainList) > 0:
                 subdomainList.sort() # 排序
                 for subdomain in subdomainList:
+                    if "%s.%s"%(subdomain, fld) in blackList:
+                        continue
                     if isBlock:
                         blockList.append("||%s.%s^"%(subdomain, fld))
                     else:
                         blockList.append("@@||%s.%s^"%(subdomain, fld))
             else:
+                if fld in blackList:
+                    continue
                 if isBlock:
                     blockList.append("||%s^"%(fld))
                 else:
                     blockList.append("@@||%s^"%(fld))
         return blockList
     
-    blockList = sort(blockDict, True)
-    unblockList = sort(unblockDict, False)
+    blackList = GetBlackList()
+    blockList = sort(blockDict, True, blackList)
+    unblockList = sort(unblockDict, False, blackList)
 
     if os.path.exists(fileName):
         os.remove(fileName)
@@ -106,6 +120,7 @@ def CreatDNS(blockDict, unblockDict, fileName):
     for fiter in unblockList:
         f.write("%s\n"%(fiter))
     f.close()
+
 def CreatFiter(filterList, fileName):
     # 去重、排序
     def sort(L):
