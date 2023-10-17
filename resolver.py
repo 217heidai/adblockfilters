@@ -3,10 +3,27 @@ import sys
 import re
 
 from tld import get_tld
+import IPy
 
 class Resolver(object):
     def __init__(self, fileName):
         self.__fileName = fileName
+
+    def __Analysis(self, address):
+        try:
+            res = get_tld(address, fix_protocol=True, as_object=True)
+            return res.fld, res.subdomain
+        except Exception as e: 
+            ip = address
+            if ip.rfind(":") > 0:
+                ip = ip[:ip.rfind(":")]
+            try:
+                ip_address = IPy.IP(ip)
+            except Exception as e: 
+                raise Exception ("not domain or ip: %s"%(address))
+            if ip_address.iptype() != "PUBLIC":
+                raise Exception ("not public ip: %s"%(address))
+            return address, ""
 
     # host 模式
     def __ResolveHost(self, line):
@@ -26,8 +43,7 @@ class Resolver(object):
                             row.pop(i)
                     domain = row[1]
                     if domain not in ['localhost', 'localhost.localdomain', 'local', '0.0.0.0']:
-                        res = get_tld(domain, fix_protocol=True, as_object=True)
-                        block = res.fld, res.subdomain
+                        block = self.__Analysis(domain)
                         break
                     print("无法识别的规则：%s"%(line))
                     break
@@ -61,8 +77,7 @@ class Resolver(object):
                     if domain.find('*') >= 0 or domain.find('/') >= 0:
                         filter = line
                         break
-                    res = get_tld(domain, fix_protocol=True, as_object=True)
-                    block = res.fld, res.subdomain
+                    block = self.__Analysis(domain)
                     break
                 # @@||example.org^: unblock access to the example.org domain and all its subdomains.
                 if match('^@@\|\|.*\^$', line):
@@ -70,8 +85,7 @@ class Resolver(object):
                     if domain.find('*') >= 0 or domain.find('/') >= 0:
                         filter = line
                         break
-                    res = get_tld(domain, fix_protocol=True, as_object=True)
-                    unblock = res.fld, res.subdomain
+                    unblock = self.__Analysis(domain)
                     break
                 # /REGEX/: block access to the domains matching the specified regular expression
                 if match('^/.*/$', line):
@@ -108,8 +122,7 @@ class Resolver(object):
                     if domain.find('*') >= 0 or domain.find('/') >= 0:
                         filter = line
                         break
-                    res = get_tld(domain, fix_protocol=True, as_object=True)
-                    block = res.fld, res.subdomain
+                    block = self.__Analysis(domain)
                     break
                 # @@||example.org^: unblock access to the example.org domain and all its subdomains.
                 if match('^@@\|\|.*\^$', line):
@@ -117,8 +130,7 @@ class Resolver(object):
                     if domain.find('*') >= 0 or domain.find('/') >= 0:
                         filter = line
                         break
-                    res = get_tld(domain, fix_protocol=True, as_object=True)
-                    unblock = res.fld, res.subdomain
+                    unblock = self.__Analysis(domain)
                     break
                 # /REGEX/: block access to the domains matching the specified regular expression
                 if match('^/.*/$', line):

@@ -1,7 +1,6 @@
 import os
 import sys
 import subprocess as sp
-from queue import Queue
 from concurrent.futures import ThreadPoolExecutor,as_completed
 
 from tcping import Ping
@@ -11,8 +10,8 @@ from resolver import Resolver
 class BlackList(object):
     def __init__(self):
         self.__blacklistFile = os.getcwd() + "/rules/black.txt"
-        self.__domainlistFile = os.getcwd() + "/rules/adblockdns.txt"
-        self.__maxTask = 100
+        self.__domainlistFile = os.getcwd() + "/rules/adblockdns.backup"
+        self.__maxTask = 1000
         self.__thread_pool = ThreadPoolExecutor(max_workers=self.__maxTask)
 
     def GenerateDomainList(self):
@@ -43,6 +42,8 @@ class BlackList(object):
         try:
             blackList = []
             for domain in domainList:
+                if domain.rfind(":") > 0: # 兼容 IP:port格式
+                    domain = domain[:domain.rfind(":")]
                 res = sp.call(['tcping', '-c', '3', '-t', '1', domain], stdout=sp.DEVNULL, stderr=sp.DEVNULL)
                 if res != 0:
                     #print(sys._getframe().f_code.co_name, domain, True if res == 0 else False)
@@ -66,9 +67,11 @@ class BlackList(object):
     def Create(self):
         try:
             domainList = self.GenerateDomainList()
-            taskList = []
             total = len(domainList)
+            if total < 1:
+                return
             count = (total + self.__maxTask - 1) // self.__maxTask
+            taskList = []
             for i in range(self.__maxTask - 1):
                 start = i * count
                 end = start + count
@@ -80,7 +83,9 @@ class BlackList(object):
             for future in as_completed(taskList):
                 tmpList = future.result()
                 blackList += tmpList
-
+            if len(blackList) < 1:
+                return
+            
             self.GenerateBlackList(self.__blacklistFile, blackList)
         except Exception as e:
             print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
