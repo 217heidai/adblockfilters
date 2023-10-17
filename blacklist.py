@@ -12,12 +12,12 @@ class BlackList(object):
     def __init__(self):
         self.__blacklistFile = os.getcwd() + "/rules/black.txt"
         self.__domainlistFile = os.getcwd() + "/rules/adblockdns.txt"
-        self.__queue = Queue()
         self.__maxTask = 100
         self.__thread_pool = ThreadPoolExecutor(max_workers=self.__maxTask)
 
-    def GenerateDNSList(self):
+    def GenerateDomainList(self):
         try:
+            domainList = []
             resolver = Resolver(self.__domainlistFile)
             blockDict,unblockDict,_ = resolver.Resolve("dns")
             for fld,subdomainList in blockDict.items():
@@ -25,23 +25,24 @@ class BlackList(object):
                     domain = fld
                     if len(subdomain):
                         domain = subdomain +"." + domain
-                    self.__queue.put(domain)
+                    domainList.append(domain)
                     #print(sys._getframe().f_code.co_name, domain)
             for fld,subdomainList in unblockDict.items():
                 for subdomain in subdomainList:
                     domain = fld
                     if len(subdomain):
                         domain = subdomain +"." + domain
-                    self.__queue.put(domain)
+                    domainList.append(domain)
                     #print(sys._getframe().f_code.co_name, domain)
         except Exception as e:
             print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
+        finally:
+            return domainList
 
-    def ping(self):
+    def ping(self, domainList):
         try:
             blackList = []
-            while not self.__queue.empty():
-                domain = self.__queue.get()
+            for domain in domainList:
                 res = sp.call(['tcping', '-c', '3', '-t', '1', domain], stdout=sp.DEVNULL, stderr=sp.DEVNULL)
                 if res != 0:
                     #print(sys._getframe().f_code.co_name, domain, True if res == 0 else False)
@@ -64,10 +65,15 @@ class BlackList(object):
 
     def Create(self):
         try:
-            self.GenerateDNSList()
+            domainList = self.GenerateDomainList()
             taskList = []
-            for i in range(self.__maxTask):
-                taskList.append(self.__thread_pool.submit(self.ping))
+            total = len(domainList)
+            count = (total + self.__maxTask - 1) // self.__maxTask
+            for i in range(self.__maxTask - 1):
+                start = i * count
+                end = start + count
+                taskList.append(self.__thread_pool.submit(self.ping, domainList[start : end]))
+            taskList.append(self.__thread_pool.submit(self.ping, domainList[i * count :]))
             
             # 等待所有线程结束
             blackList = []
