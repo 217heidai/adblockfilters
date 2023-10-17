@@ -11,7 +11,7 @@ class BlackList(object):
     def __init__(self):
         self.__blacklistFile = os.getcwd() + "/rules/black.txt"
         self.__domainlistFile = os.getcwd() + "/rules/adblockdns.backup"
-        self.__maxTask = 1000
+        self.__maxTask = 500
         self.__thread_pool = ThreadPoolExecutor(max_workers=self.__maxTask)
 
     def GenerateDomainList(self):
