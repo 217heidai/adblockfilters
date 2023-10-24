@@ -474,6 +474,11 @@
 ! Bad: ||ad.doubleclick.net^ (should be in adservers.txt)
 !
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/164414
+pansearch.me#%#//scriptlet('prevent-element-src-loading', 'script', 'adsbygoogle')
+pansearch.me#%#//scriptlet('prevent-xhr', 'adsbygoogle')
+!+ PLATFORM(ios, ext_android_cb, ext_safari)
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=pansearch.me
 ! https://github.com/AdguardTeam/AdguardFilters/issues/158730
 1keydata.com#%#//scriptlet('abort-current-inline-script', 'document.querySelector', 'window.getComputedStyle')
 1keydata.com#$##detect.ad-placement { display: block !important; }
@@ -1401,6 +1406,8 @@ $script,third-party,denyallow=fastly.net|statically.io|sharecast.ws|bunnycdn.ru|
 !
 !
 !
+||cloud.tencent.com/developer/api/common/getAds
+||cloud.tencent.com/developer/api/common/getOneAds
 iyf.tv#?#.video-player + div.ps > div:has(div.gg-tips-text)
 ||head4.net/ad_
 yiyouliao.com#?#.yyl-weiruan-ads-list-item:has(> div#small1)
@@ -4911,6 +4918,7 @@ newduba.cn###jq_youxi
 ||aueajkn.cn^
 ||awaw.asia^
 ||bbfnrn.xyz^
+||berrynicolo.com^
 ||beste3.icu^
 ||bgbqfqwi.xyz^
 ||bjtgds.xyz^
@@ -4931,6 +4939,7 @@ newduba.cn###jq_youxi
 ||crazyit8.com^
 ||crhabkd.cn^
 ||cuvtnzv.cn^
+||cxpjrqa.cn^
 ||ddvoht.xyz^
 ||dhgfhedxx.xyz^
 ||diaocaixiaq.cn^
@@ -4953,6 +4962,7 @@ newduba.cn###jq_youxi
 ||foizico.cn^
 ||fptdxkm.com^
 ||fzgetdy.cn^
+||gejhhh.cn^
 ||gelbjvl.cn^
 ||gixgav.icu^
 ||gizlnr.com^
@@ -4975,10 +4985,12 @@ newduba.cn###jq_youxi
 ||gmx28.top^
 ||gmx29.top^
 ||gmx30.top^
+||gmx42.top^
 ||gmx45.top^
 ||gmx46.top^
 ||gmx47.top^
 ||gmx48.top^
+||gqleov.icu^
 ||grthhr.xyz^
 ||gslejoki.xyz^
 ||gth112.com^
@@ -4999,8 +5011,10 @@ newduba.cn###jq_youxi
 ||insfengdata.com^
 ||ionjkcj.cn^
 ||iqs871.com^
+||irtefs.xyz^
 ||iujlwn.icu^
 ||jlhlnd.xyz^
+||jmhngn.com^
 ||jndxsuy.xyz^
 ||jnkmhn.com^
 ||jofknbpe.xyz^
@@ -5014,6 +5028,7 @@ newduba.cn###jq_youxi
 ||kwtgntyu.xyz^
 ||kyikdee.cn^
 ||kzprugp.xyz^
+||l404k.com^
 ||ldvnehc.xyz^
 ||lianglili2.cn^
 ||liuyi22.cn^
@@ -5046,6 +5061,7 @@ newduba.cn###jq_youxi
 ||negnixa.cn^
 ||nerydw.xyz^
 ||newpgqnfapkamg.xyz^
+||njppuaj.cn^
 ||njtbiml.xyz^
 ||nofizx.xyz^
 ||nrzzaep.xyz^
@@ -5064,6 +5080,7 @@ newduba.cn###jq_youxi
 ||pqjeoqa.cn^
 ||psroyx.icu^
 ||qauksl.icu^
+||qbhjokk.xyz^
 ||qinjgh.icu^
 ||qmoxxhc.cn^
 ||qmwx4.xyz^
@@ -5115,6 +5132,7 @@ newduba.cn###jq_youxi
 ||vdggsd017.com^
 ||vgjaxnuw.xyz^
 ||vivienjumpe.com^
+||vizhtd.xyz^
 ||vttqld.xyz^
 ||vxdpmxw.xyz^
 ||whdwydt.cn^
@@ -5140,6 +5158,7 @@ newduba.cn###jq_youxi
 ||yepgdita.xyz^
 ||yhlzadr.xyz^
 ||yhtpsy8888.cc^
+||yivkzvog.xyz^
 ||yuanxiaa.cn^
 ||yuanxiab.cn^
 ||yutiqf.icu^
@@ -5154,15 +5173,6 @@ newduba.cn###jq_youxi
 ||zzyy17.top^
 ||zzyy18.top^
 ||zzyy19.top^
-||cxpjrqa.cn^
-||njppuaj.cn^
-||yivkzvog.xyz^
-||irtefs.xyz^
-||qbhjokk.xyz^
-||vizhtd.xyz^
-||jmhngn.com^
-||gqleov.icu^
-||gejhhh.cn^
 ||zzyy20.top^
 ##[style*="sotv.me"]
 ##a[href$="/1c626.com"]
@@ -14117,8 +14127,6 @@ hxsame.hexun.com$domain=~quote.hexun.com
 ||zzz4.com/JS_AD/
 ||zzzyk.com/js/
 szxx.com.cn###A0
-jspoo.com##.g-wznywzjs
-jspoo.com##.apd
 szxx.com.cn###A1
 szxx.com.cn###A2
 gpcxw.com###AA2
@@ -14554,7 +14562,6 @@ hao.360.cn###daily-hotword
 6789.com,hao.360.cn,hao.360.com###daily-hotwords
 iask.sina.com.cn###daily_topic_flnr
 kpw6.com###daojs
-axutongxue.com,axutongxue.net###dasopf
 my0511.com###dbdcc
 ytbbs.com###dd1
 4399.com###defaultbglink
@@ -15436,6 +15443,7 @@ sohu.com###turn-ad
 ziqiangxuetang.com###tutorial_btm
 ali213.net###tv
 jb51.net,makaidong.com###txtlink
+axutongxue.com,axutongxue.net###tyrai
 1111.baidu.com,bdimg.com,tieba.baidu.com,tieba.com,xingqu.baidu.com###union_mod
 v.163.com###v_shapeLeft_divId
 v.163.com###v_shapeRight_divId
@@ -16022,6 +16030,7 @@ gugeys.cc##.am-g
 maguays.cc##.animate-bounce-up
 gufengmh.com##.animated
 cctv.com##.anime_ewm
+jspoo.com##.apd
 qzone.qq.com##.app-recommend
 1111.baidu.com,bdimg.com,tieba.baidu.com,tieba.com,xingqu.baidu.com##.app_forum_top_nav_tab
 fanyi.baidu.com##.appbanner
@@ -16588,6 +16597,7 @@ so.com##.e_idea_wenda_detail_spread
 so.com##.e_idea_wenda_spread
 easou.com##.easou_banner
 360kan.com##.eb-rightbox
+zhujicankao.com##.eboxx
 baidu.com##.ec-ads-container
 baidu.com##.ec-fc-ad-results
 sm.cn##.ec-goods-list
@@ -16742,6 +16752,7 @@ so.com##.g-a-noline[data-md*="sad"]
 onlinedown.net##.g-huodong
 qq.com##.g-qzp-bottom
 weiyun001.com##.g-side-r > a[onclick^="onLogs"]
+jspoo.com##.g-wznywzjs
 360kuai.com##.g4.undefined
 mobanwang.com##.g960
 126.com,163.com##.gWel-promt
