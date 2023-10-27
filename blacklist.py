@@ -37,21 +37,6 @@ class BlackList(object):
             print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
         finally:
             return domainList
-
-    def ping(self, domainList):
-        try:
-            blackList = []
-            for domain in domainList:
-                if domain.rfind(":") > 0: # 兼容 IP:port格式
-                    domain = domain[:domain.rfind(":")]
-                res = sp.call(["tcping", "-c", "3", "-t", "1", domain], stdout=sp.DEVNULL, stderr=sp.DEVNULL)
-                if res != 0:
-                    #print(sys._getframe().f_code.co_name, domain, True if res == 0 else False)
-                    blackList.append(domain)
-        except Exception as e:
-            print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
-        finally:
-            return blackList
     
     async def pingx(self, dnsresolver, domain, semaphore):
         async with semaphore: # 限制并发数，超过系统限制后会报错Too many open files
@@ -98,7 +83,8 @@ class BlackList(object):
     def TestDomain(self, domainList, nameservers):
         # 异步检测
         dnsresolver = DNSResolver()
-        dnsresolver.nameservers = nameservers
+        if len(nameservers):
+            dnsresolver.nameservers = nameservers
         # 启动异步循环
         loop = asyncio.get_event_loop()
         semaphore = asyncio.Semaphore(self.__maxTask) # 限制并发量为500
@@ -124,12 +110,22 @@ class BlackList(object):
                 return
             #domainList = domainList[:self.__maxTask]
 
-            blackDict_cn = self.TestDomain(domainList, ["223.5.5.5", "1.12.12.12", "114.114.114.114"]) # 国内域名解析结果
-            blackDict_os = self.TestDomain(domainList, ["8.8.8.8", "1.1.1.1", "9.9.9.11"]) # 国外域名解析结果
+            blackDict_cn1 = self.TestDomain(domainList, ["223.5.5.5"]) # 国内域名解析结果
+            blackDict_cn2 = self.TestDomain(domainList, ["1.12.12.12"]) # 国内域名解析结果
+            #blackDict_cn3 = self.TestDomain(domainList, ["114.114.114.114"]) # 国内域名解析结果
+            blackDict_os1 = self.TestDomain(domainList, ["8.8.8.8"]) # 国外域名解析结果
+            blackDict_os2 = self.TestDomain(domainList, ["1.1.1.1"]) # 国外域名解析结果
+            #blackDict_os3 = self.TestDomain(domainList, ["9.9.9.11"]) # 国外域名解析结果
 
             blackList = []
             for domain in domainList:
-                if not blackDict_cn.get(domain, True) and not blackDict_os.get(domain, True):
+                cn1 = blackDict_cn1.get(domain, True)
+                cn2 = blackDict_cn2.get(domain, True)
+                #cn3 = blackDict_cn3.get(domain, True)
+                os1 = blackDict_os1.get(domain, True)
+                os2 = blackDict_os2.get(domain, True)
+                #os3 = blackDict_os3.get(domain, True)
+                if not cn1 and not cn2 and not os1 and not os2:
                     blackList.append(domain)
 
             if len(blackList):
