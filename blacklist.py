@@ -2,7 +2,6 @@ import os
 import sys
 import subprocess as sp
 import asyncio
-#from concurrent.futures import ThreadPoolExecutor,as_completed
 
 from dns.asyncresolver import Resolver as DNSResolver
 from tcping import Ping
@@ -14,7 +13,6 @@ class BlackList(object):
         self.__blacklistFile = os.getcwd() + "/rules/black.txt"
         self.__domainlistFile = os.getcwd() + "/rules/adblockdns.backup"
         self.__maxTask = 500
-        #self.__thread_pool = ThreadPoolExecutor(max_workers=self.__maxTask)
 
     def GenerateDomainList(self):
         try:
@@ -59,6 +57,7 @@ class BlackList(object):
         async with semaphore: # 限制并发数，超过系统限制后会报错Too many open files
             host = domain
             port = None
+            isAvailable = True
             if domain.rfind(":") > 0: # 兼容 host:port格式
                 offset = domain.rfind(":")
                 host = domain[ : offset]
@@ -68,10 +67,10 @@ class BlackList(object):
                     _, writer = await asyncio.open_connection(host, port)
                     writer.close()
                     await writer.wait_closed()
-                    return None
+                    isAvailable = True
                 except Exception as e:
                     print("%s[%s]" % (domain, e if e else "Connect failed"))
-                    return domain
+                    isAvailable = False
             else:
                 try:
                     query_object = await dnsresolver.resolve(qname=host, rdtype="A")
@@ -79,10 +78,11 @@ class BlackList(object):
                     #for item in query_item:
                     #    print('{}: {}'.format(host, item))
                     #    break
-                    return None
+                    isAvailable = True
                 except Exception as e:
                     print("%s[%s]" % (domain, e if e else "Resolver failed"))
-                    return domain
+                    isAvailable = False
+            return domain, isAvailable
 
     def GenerateBlackList(self, fileName, blackList):
         try:
@@ -95,51 +95,45 @@ class BlackList(object):
         except Exception as e:
             print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
 
+    def TestDomain(self, domainList, nameservers):
+        # 异步检测
+        dnsresolver = DNSResolver()
+        dnsresolver.nameservers = nameservers
+        # 启动异步循环
+        loop = asyncio.get_event_loop()
+        semaphore = asyncio.Semaphore(self.__maxTask) # 限制并发量为500
+        # 添加异步任务
+        taskList = []
+        for domain in domainList:
+            task = asyncio.ensure_future(self.pingx(dnsresolver, domain, semaphore))
+            taskList.append(task)
+        # 等待异步任务结束
+        loop.run_until_complete(asyncio.wait(taskList))
+        # 获取异步任务结果
+        blackDict = {}
+        for task in taskList:
+            domain, isAvailable = task.result()
+            blackDict[domain] = isAvailable
+        return blackDict
+
     def Create(self):
         try:
             domainList = self.GenerateDomainList()
             total = len(domainList)
             if total < 1:
                 return
-            # 异步检测
             #domainList = domainList[:self.__maxTask]
-            dnsresolver = DNSResolver()
-            dnsresolver.nameservers = ["223.5.5.5", "1.12.12.12", "8.8.8.8", "1.1.1.1", "9.9.9.11"] # 设置5组DNS服务器，3组国外，2组国内
-            #dnsresolver.nameservers = ["223.5.5.5", "1.12.12.12", "114.114.114.114"]
-            # 启动异步循环
-            loop = asyncio.get_event_loop()
-            semaphore = asyncio.Semaphore(self.__maxTask) # 限制并发量为500
-            # 添加异步任务
-            taskList = []
+
+            blackDict_cn = self.TestDomain(domainList, ["223.5.5.5", "1.12.12.12", "114.114.114.114"]) # 国内域名解析结果
+            blackDict_os = self.TestDomain(domainList, ["8.8.8.8", "1.1.1.1", "9.9.9.11"]) # 国外域名解析结果
+
+            blackList = []
             for domain in domainList:
-                task = asyncio.ensure_future(self.pingx(dnsresolver, domain, semaphore))
-                taskList.append(task)
-            # 等待异步任务结束
-            loop.run_until_complete(asyncio.wait(taskList))
-            # 获取异步任务结果
-            blackList = []
-            for task in taskList:
-                domain = task.result()
-                if domain:
-                   blackList.append(domain)
-            '''多线程
-            count = (total + self.__maxTask - 1) // self.__maxTask
-            taskList = []
-            for i in range(self.__maxTask - 1):
-                start = i * count
-                end = start + count
-                taskList.append(self.__thread_pool.submit(self.ping, domainList[start : end]))
-            taskList.append(self.__thread_pool.submit(self.ping, domainList[i * count :]))
-            
-            # 等待所有线程结束
-            blackList = []
-            for future in as_completed(taskList):
-                tmpList = future.result()
-                blackList += tmpList
-            if len(blackList) < 1:
-                return
-            '''
-            self.GenerateBlackList(self.__blacklistFile, blackList)
+                if not blackDict_cn.get(domain, True) and not blackDict_os.get(domain, True):
+                    blackList.append(domain)
+
+            if len(blackList):
+                self.GenerateBlackList(self.__blacklistFile, blackList)
         except Exception as e:
             print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
 
