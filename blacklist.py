@@ -102,7 +102,7 @@ class BlackList(object):
             if total < 1:
                 return
             # 异步检测
-            domainList = domainList[:self.__maxTask]
+            #domainList = domainList[:self.__maxTask]
             dnsresolver = DNSResolver()
             dnsresolver.nameservers = ["8.8.8.8", "1.1.1.1", "9.9.9.11", "223.5.5.5", "1.12.12.12"] # 设置5组DNS服务器，3组国外，2组国内
             #dnsresolver.nameservers = ["223.5.5.5", "1.12.12.12", "114.114.114.114"]
