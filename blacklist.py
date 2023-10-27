@@ -1,10 +1,10 @@
 import os
 import sys
 import subprocess as sp
-from concurrent.futures import ThreadPoolExecutor,as_completed
 import asyncio
+#from concurrent.futures import ThreadPoolExecutor,as_completed
 
-import httpx
+from dns.asyncresolver import Resolver as DNSResolver
 from tcping import Ping
 
 from resolver import Resolver
@@ -14,9 +14,7 @@ class BlackList(object):
         self.__blacklistFile = os.getcwd() + "/rules/black.txt"
         self.__domainlistFile = os.getcwd() + "/rules/adblockdns.backup"
         self.__maxTask = 500
-        self.__thread_pool = ThreadPoolExecutor(max_workers=self.__maxTask)
-        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0"}
-        self.__client = httpx.AsyncClient(headers=headers)
+        #self.__thread_pool = ThreadPoolExecutor(max_workers=self.__maxTask)
 
     def GenerateDomainList(self):
         try:
@@ -48,7 +46,7 @@ class BlackList(object):
             for domain in domainList:
                 if domain.rfind(":") > 0: # 兼容 IP:port格式
                     domain = domain[:domain.rfind(":")]
-                res = sp.call(['tcping', '-c', '3', '-t', '1', domain], stdout=sp.DEVNULL, stderr=sp.DEVNULL)
+                res = sp.call(["tcping", "-c", "3", "-t", "1", domain], stdout=sp.DEVNULL, stderr=sp.DEVNULL)
                 if res != 0:
                     #print(sys._getframe().f_code.co_name, domain, True if res == 0 else False)
                     blackList.append(domain)
@@ -57,34 +55,41 @@ class BlackList(object):
         finally:
             return blackList
     
-    async def pingx(self, domain):
-        try:
-            url = "http://%s"%(domain)
-            response1 = await self.__client.get(url)
-            #print("1[%s]: %s"%(url, response1.status_code))
-        except Exception as e:
-            #print("2[%s]: %s"%(url, e))
-            response1 = None
-        try:
-            url = "https://%s"%(domain)
-            response2 = await self.__client.get(url)
-            #print("3[%s]: %s"%(url, response1.status_code))
-        except Exception as e:
-            #print("4[%s]: %s"%(url, e))
-            response2 = None
-        
-        if not response1 and not response2:
-            #print("5[%s]: Fail"%(domain))
-            return domain
-        else:
-            return None
+    async def pingx(self, dnsresolver, domain, semaphore):
+        async with semaphore: # 限制并发数，超过系统限制后会报错Too many open files
+            host = domain
+            port = None
+            if domain.rfind(":") > 0: # 兼容 host:port格式
+                offset = domain.rfind(":")
+                host = domain[ : offset]
+                port = int(domain[offset + 1 : ])
+            if port:
+                try:
+                    _, writer = await asyncio.open_connection(host, port)
+                    writer.close()
+                    await writer.wait_closed()
+                    return None
+                except Exception as e:
+                    print("%s[%s]" % (domain, e if e else "Connect failed"))
+                    return domain
+            else:
+                try:
+                    query_object = await dnsresolver.resolve(qname=host, rdtype="A")
+                    #query_item = query_object.response.answer[0]
+                    #for item in query_item:
+                    #    print('{}: {}'.format(host, item))
+                    #    break
+                    return None
+                except Exception as e:
+                    print("%s[%s]" % (domain, e if e else "Resolver failed"))
+                    return domain
 
     def GenerateBlackList(self, fileName, blackList):
         try:
             if os.path.exists(self.__blacklistFile):
                 os.remove(self.__blacklistFile)
             
-            with open(fileName, 'a') as f:
+            with open(fileName, "a") as f:
                 for domain in blackList:
                     f.write("%s\n"%(domain))
         except Exception as e:
@@ -96,13 +101,18 @@ class BlackList(object):
             total = len(domainList)
             if total < 1:
                 return
-            
+            # 异步检测
+            domainList = domainList[:self.__maxTask]
+            dnsresolver = DNSResolver()
+            dnsresolver.nameservers = ["8.8.8.8", "1.1.1.1", "9.9.9.11", "223.5.5.5", "1.12.12.12"] # 设置5组DNS服务器，3组国外，2组国内
+            #dnsresolver.nameservers = ["223.5.5.5", "1.12.12.12", "114.114.114.114"]
             # 启动异步循环
             loop = asyncio.get_event_loop()
+            semaphore = asyncio.Semaphore(self.__maxTask) # 限制并发量为500
             # 添加异步任务
             taskList = []
             for domain in domainList:
-                task = asyncio.ensure_future(self.pingx(domain))
+                task = asyncio.ensure_future(self.pingx(dnsresolver, domain, semaphore))
                 taskList.append(task)
             # 等待异步任务结束
             loop.run_until_complete(asyncio.wait(taskList))
@@ -111,7 +121,7 @@ class BlackList(object):
             for task in taskList:
                 domain = task.result()
                 if domain:
-                   blackList.append(domain) 
+                   blackList.append(domain)
             '''多线程
             count = (total + self.__maxTask - 1) // self.__maxTask
             taskList = []
@@ -129,11 +139,10 @@ class BlackList(object):
             if len(blackList) < 1:
                 return
             '''
-            
             self.GenerateBlackList(self.__blacklistFile, blackList)
         except Exception as e:
             print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     blackList = BlackList()
     blackList.Create()
