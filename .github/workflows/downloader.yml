@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@main
 
       - name: Setup Python 3.9.x
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@main
         with:
           python-version: '3.9.x'
 
@@ -38,7 +38,7 @@ jobs:
           if [ -z "$(git status --porcelain)" ]; then 
               exit 0
           else
-            echo "::set-output name=status::success"
+            echo "{status}={success}" >> $GITHUB_OUTPUT
             git add .
             git config --local user.email "217heidai@gmail.com"
             git config --local user.name "217heidai"
