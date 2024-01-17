@@ -480,12 +480,17 @@
 ! Bad: ||ad.doubleclick.net^ (should be in adservers.txt)
 !
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/170879
+noy1.top#%#//scriptlet('prevent-xhr', '/api/ads')
+!+ PLATFORM(ios, ext_android_cb, ext_safari)
+@@||noy1.top/api/ads_v2$~third-party
 ! https://github.com/AdguardTeam/AdguardFilters/issues/170075
 caq98i.top#%#//scriptlet('abort-on-property-read', 'alertadmodal')
+! https://github.com/AdguardTeam/AdguardFilters/issues/170882
 ! https://github.com/AdguardTeam/AdguardFilters/issues/169925
-playwright.nodejs.cn#%#//scriptlet('set-constant', '_AdBlockInit', 'noopFunc')
+nodejs.cn#%#//scriptlet('set-constant', '_AdBlockInit', 'noopFunc')
 !+ PLATFORM(ios, ext_android_cb, ext_safari)
-@@||cdn.wwads.cn/js/makemoney.js$domain=playwright.nodejs.cn
+@@||cdn.wwads.cn/js/makemoney.js$domain=nodejs.cn
 ! https://github.com/AdguardTeam/AdguardFilters/issues/169356
 docsmall.com#@##google-ads
 ! https://github.com/AdguardTeam/AdguardFilters/issues/168132
@@ -1439,7 +1444,7 @@ _click*(com?
 ! This section contains the list of domain-specific rules that block ads.
 !
 ! Good: example.org###rek; ||example.com/ads/
-! Bad: example.org#$##rek { display: none !important; } (for instance, should be in general_extensions.txt)
+! Bad: example.org#@##banner_ad (for instance, should be in allowlist.txt or in antiadblock.txt)
 !
 ! https://github.com/AdguardTeam/AdguardFilters/issues/158406
 ||creative.141live.com/widgets/Spot/
@@ -1481,7 +1486,7 @@ hk01.com###debug-0-ad-outer-container
 hk01.com##div[class^="Box-v"] > .enterviewport__wrapper:has(> div[data-id="lazyload-placeholder"]:only-child)
 hk01.com##.article-grid__desktop-rhs-section > .items-center:has(> div[class^="sc-"] > div[data-id="lazyload-placeholder"])
 ipcelou.com##.MODBanana
-playwright.nodejs.cn###pagead
+nodejs.cn###pagead
 3dmgame.com##.addownbox_gaosu
 3dmgame.com#?#.Gmaeinfobtn_tab > a.patchshow[style]:has(> span:contains(/^广告$/))
 gvm.com.tw##.promotion_ad
@@ -6539,6 +6544,7 @@ newduba.cn###jq_youxi
 ||mec9k.com^
 ||wfpjeul.cn^
 ||yxptcrss.xyz^
+||qsfbmol.cn^
 ||zzyy19.top^
 ||zzyy20.top^
 ##[style*="sotv.me"]
