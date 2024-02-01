@@ -114,7 +114,7 @@ def CreatDNS(blockDict, unblockDict, fileName):
             f.write("%s\n"%(fiter)) 
 
     blackList = GetBlackList()
-    blockList = sort(blockDict, True, blackList)
+    blockList = sort(blockDict, True, blackList + ["360.cn"]) # 解决 1024hosts 拦截 360 问题
     unblockList = sort(unblockDict, False, blackList)
     if os.path.exists(fileName):
         os.remove(fileName)
