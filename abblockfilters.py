@@ -70,10 +70,20 @@ def GetBlackList():
             blackList = list(map(lambda x: x.replace("\n", ""), blackList))
     return blackList
 
+def GetWhiteList():
+    whiteList = []
+    fileName = os.getcwd() + "/rules/white.txt"
+    if os.path.exists(fileName):
+        with open(fileName, 'r') as f:
+            whiteList = f.readlines()
+            whiteList = list(map(lambda x: x.replace("\n", ""), whiteList))
+    return whiteList
+
 def CreatDNS(blockDict, unblockDict, fileName):
     # 去重、排序
-    def sort(domainDict, isBlock, blackList):
+    def sort(domainDict, isBlock, blackList, whiteList):
         blockList = []
+        blockList_all = []
         fldList = []
         for item in domainDict:
             fldList.append(item)
@@ -86,39 +96,50 @@ def CreatDNS(blockDict, unblockDict, fileName):
             if len(subdomainList) > 0:
                 subdomainList.sort() # 排序
                 for subdomain in subdomainList:
-                    if "%s.%s"%(subdomain, fld) in blackList:
-                        continue
+                    item = "%s.%s"%(subdomain, fld)
                     if isBlock:
-                        blockList.append("||%s.%s^"%(subdomain, fld))
+                        blockList_all.append("||%s^"%(item))
                     else:
-                        blockList.append("@@||%s.%s^"%(subdomain, fld))
+                        blockList_all.append("@@||%s^"%(item))
+                    
+                    if item not in blackList and item not in whiteList:
+                        if isBlock:
+                            blockList.append("||%s^"%(item))
+                        else:
+                            blockList.append("@@||%s^"%(item))
             else:
-                if fld in blackList:
-                    continue
+                item = "%s"%(fld)
                 if isBlock:
-                    blockList.append("||%s^"%(fld))
+                    blockList_all.append("||%s^"%(item))
                 else:
-                    blockList.append("@@||%s^"%(fld))
-        return blockList
+                    blockList_all.append("@@||%s^"%(item))
+                
+                if item not in blackList and item not in whiteList:
+                    if isBlock:
+                        blockList.append("||%s^"%(item))
+                    else:
+                        blockList.append("@@||%s^"%(item))
+        
+        return blockList,blockList_all
     
+    blackList = GetBlackList()
+    whiteList = GetWhiteList()
+    blockList,blockList_all = sort(blockDict, True, blackList, whiteList)
+    unblockList,unblockList_all = sort(unblockDict, False, blackList, whiteList)
+
     # 备份全量域名，用于检查域名有效性生成黑名单
-    blockList = sort(blockDict, True, [])
-    unblockList = sort(unblockDict, False, [])
     backupName = fileName[:-len("txt")] + "backup"
     if os.path.exists(backupName):
         os.remove(backupName)
     with open(backupName, 'a') as f:
-        for fiter in blockList:
+        for fiter in blockList_all:
             f.write("%s\n"%(fiter))
-        for fiter in unblockList:
-            f.write("%s\n"%(fiter)) 
+        for fiter in unblockList_all:
+            f.write("%s\n"%(fiter))
 
-    blackList = GetBlackList()
-    blockList = sort(blockDict, True, blackList + ["360.cn"]) # 解决 1024hosts 拦截 360 问题
-    unblockList = sort(unblockDict, False, blackList)
+    # 生成规则文件
     if os.path.exists(fileName):
-        os.remove(fileName)
-    
+        os.remove(fileName)    
     with open(fileName, 'a') as f:
         f.write("!\n")
         f.write("! Title: AdBlock DNS\n")
