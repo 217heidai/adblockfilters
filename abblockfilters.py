@@ -90,8 +90,8 @@ def CreatDNS(blockDict, unblockDict, fileName):
         fldList.sort() # 排序
         for fld in fldList:
             subdomainList = list(set(domainDict[fld])) # 去重
-            if '' in subdomainList: # 二级域名已被拦截，则干掉所有子域名
-                subdomainList = ['']
+            #if '' in subdomainList: # 二级域名已被拦截，则干掉所有子域名
+            #    subdomainList = ['']
             subdomainList = list(filter(None, subdomainList)) # 去空
             if len(subdomainList) > 0:
                 subdomainList.sort() # 排序
