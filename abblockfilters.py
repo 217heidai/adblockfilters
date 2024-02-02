@@ -79,36 +79,33 @@ def GetWhiteList():
             whiteList = list(map(lambda x: x.replace("\n", ""), whiteList))
     return whiteList
 
-def CreatDNS(blockDict, unblockDict, fileName):
-    # 去重、排序
-    def sort(domainDict, isBlock, blackList, whiteList):
-        blockList = []
-        blockList_all = []
-        fldList = []
-        for item in domainDict:
-            fldList.append(item)
-        fldList.sort() # 排序
-        for fld in fldList:
-            subdomainList = list(set(domainDict[fld])) # 去重
-            if '' in subdomainList and fld not in whiteList: # 二级域名已被拦截，则干掉所有子域名
-                subdomainList = ['']
-            subdomainList = list(filter(None, subdomainList)) # 去空
-            if len(subdomainList) > 0:
-                subdomainList.sort() # 排序
-                for subdomain in subdomainList:
-                    item = "%s.%s"%(subdomain, fld)
-                    if isBlock:
-                        blockList_all.append("||%s^"%(item))
-                    else:
-                        blockList_all.append("@@||%s^"%(item))
-                    
-                    if item not in blackList and item not in whiteList:
-                        if isBlock:
-                            blockList.append("||%s^"%(item))
-                        else:
-                            blockList.append("@@||%s^"%(item))
-            else:
-                item = "%s"%(fld)
+# 去重、排序
+def sort(domainDict, isBlock, blackList, whiteList):
+    def repetition(l):
+        tmp = []
+        for i in l:
+            for j in l:
+                if len(i) > len(j) and i.rfind("." + j) == len(i) - len(j) - 1:
+                    tmp.append(i)
+                    break
+        return list(set(l)-set(tmp))
+    blockList = []
+    blockList_all = []
+    fldList = []
+    for item in domainDict:
+        fldList.append(item)
+    fldList.sort() # 排序
+    for fld in fldList:
+        subdomainList = list(set(domainDict[fld])) # 去重
+        if '' in subdomainList and fld not in whiteList: # 二级域名已被拦截，则干掉所有子域名
+            subdomainList = ['']
+        subdomainList = list(filter(None, subdomainList)) # 去空
+        if len(subdomainList) > 0:
+            if len(subdomainList) > 2:
+                subdomainList = repetition(subdomainList) # 短域名已被拦截，则干掉所有长域名。如'a.exampal'、'b.exampal'、'exampal'，则只保留'exampal'
+            subdomainList.sort() # 排序
+            for subdomain in subdomainList:
+                item = "%s.%s"%(subdomain, fld)
                 if isBlock:
                     blockList_all.append("||%s^"%(item))
                 else:
@@ -119,9 +116,22 @@ def CreatDNS(blockDict, unblockDict, fileName):
                         blockList.append("||%s^"%(item))
                     else:
                         blockList.append("@@||%s^"%(item))
-        
-        return blockList,blockList_all
+        else:
+            item = "%s"%(fld)
+            if isBlock:
+                blockList_all.append("||%s^"%(item))
+            else:
+                blockList_all.append("@@||%s^"%(item))
+            
+            if item not in blackList and item not in whiteList:
+                if isBlock:
+                    blockList.append("||%s^"%(item))
+                else:
+                    blockList.append("@@||%s^"%(item))
     
+    return blockList,blockList_all
+
+def CreatDNS(blockDict, unblockDict, fileName):
     blackList = GetBlackList()
     whiteList = GetWhiteList()
     blockList,blockList_all = sort(blockDict, True, blackList, whiteList)
