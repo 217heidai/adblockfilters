@@ -102,7 +102,7 @@ def sort(domainDict, isBlock, blackList, whiteList):
         subdomainList = list(filter(None, subdomainList)) # 去空
         if len(subdomainList) > 0:
             if len(subdomainList) > 2:
-                subdomainList = repetition(subdomainList) # 短域名已被拦截，则干掉所有长域名。如'a.exampal'、'b.exampal'、'exampal'，则只保留'exampal'
+                subdomainList = repetition(subdomainList) # 短域名已被拦截，则干掉所有长域名。如'a.example'、'b.example'、'example'，则只保留'example'
             subdomainList.sort() # 排序
             for subdomain in subdomainList:
                 item = "%s.%s"%(subdomain, fld)

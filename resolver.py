@@ -152,7 +152,7 @@ class Resolver(object):
         if not os.path.exists(self.__fileName):
             return blockDict,unblockDict,filterList
         
-        print("解析：%s..."%(os.path.basename(self.__fileName)))
+        print("解析：%s..."%(os.path.basename(self.__fileName))) # 处理信息输出
         with open(self.__fileName, "r") as f:
             for line in f:
                 # 去掉换行符
