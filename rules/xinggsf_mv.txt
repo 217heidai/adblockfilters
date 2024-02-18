@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
 ! Title: 乘风 视频过滤规则
-! Version: 202312171
+! Version: 202402181
 ! Expires: 1 day
 ! Homepage: https://github.com/xinggsf/Adblock-Plus-Rule/issues
 
@@ -10,7 +10,6 @@ yy.com,le.com##+js(nowebrtc)
 ||p2p.$xhr,websocket,ping,domain=~huya.com|~binance.com
 
 v.youku.com##.control-phonewatch,#right-title-ad-banner, .kui-watermark-0
-!m.youku.com,v.youku.com##+js(nano-stb,,,0)
 !m.youku.com,v.youku.com##+js(m3u-prune,'',/^https:\/\/[\w\.]+ott\.cibntv\.net.+?\.m3u8\?/)
 atm.youku.com
 cad.youku.com
@@ -19,16 +18,15 @@ cad.youku.com
 ||valipl.cp31.ott.cibntv.net/$media
 ||alicdn.com/*yksdk/*sdk.js$script,domain=youku.com
 ||alicdn.com/awsc/et/
-!|https://static.youku.com/index/js/ikuAdapterNew.js
 ||sealine.youku.com/yk/*callback=adpagesdk$script
 
-iqiyi.com##.black-screen[data-cupid=adblock-blackscreen]
+iqiyi.com##.black-screen[data-cupid=adblock-blackscreen], .qy-plist-ad
 iqiyi.com##.cupid-panel + div, div[data-adzone],#block-V
-iqiyi.com##+js(set, Object.prototype.parseXML, noopFunc)
-iqiyi.com##+js(set, Object.prototype.blackscreenDuration, 1)
-iqiyi.com##+js(set, QiyiPlayerProphetData.a.data, {})
-||iqiyi.com/videos/other/202$xmlhttprequest
-||71edge.com/videos/other/202$xmlhttprequest
+!iqiyi.com##+js(set, Object.prototype.parseXML, noopFunc)
+!iqiyi.com##+js(set, Object.prototype.blackscreenDuration, 1)
+!iqiyi.com##+js(set, QiyiPlayerProphetData.a.data, {})
+!||iqiyi.com/videos/other/202$xmlhttprequest
+!||71edge.com/videos/other/202$xmlhttprequest
 ||iqiyipic.com/image/20*_100000$image
 apisgame.iqiyi.com
 static.g.iqiyi.com
@@ -36,12 +34,11 @@ static.g.iqiyi.com
 ||ssports.iqiyi.com/app/$media,object-subrequest
 show.ssports.com
 
-v.qq.com##.quick_games.quick_item
+v.qq.com##.quick_games.quick_item, div.game-switch-ad
 !qq.com##.mod_ad, .txp_ad, .txp_ad_link, .adWrap
-! qq.com##+js(json-prune,ads ad.pause adList.item)
 qq.com##+js(json-prune, ads ad material.video)
 !qq.com##+js(no-xhr-if,/trace\.|\/collect/)
-!qq.com##+js(no-fetch-if,/trace\.|beacon\./)
+qq.com##+js(no-fetch-if, beacon.)
 !qq.com##+js(nano-sib, \u5012\u8ba1\u65f6)
 !qq.com##+js(aopr, Beacon.prototype.fail)
 @@||union.video.qq.com/fcgi-bin/$script,domain=qq.com
@@ -86,6 +83,7 @@ de.as.pptv.com
 pub.funshion.com
 
 ||relive.vodfile.m1905.com/video/qiantie202$media
+1905.com##.pauseInfoWrap:remove()
 
 @@||tb.mgtv.com/sdk/*/ad-sdk.
 ad-survey.com
@@ -107,7 +105,8 @@ tv.sohu.com##.x-dl-shake.x-download-panel, #playerBar > div.area ~a
 ||17173.com/if/$script,subdocument
 
 le.com##+js(set, isAdLoaded, true)
-*/letv-gug/$media,object-subrequest,xhr
+||ott.cibntv.net/*/letv-wzgug/$media
+*/letv-gug/$media
 ||letvimg.com/$object,xhr
 ||letvimg.com/*_gugwl/$image
 ||js.letvcdn.com/*_banner_$script
@@ -158,36 +157,25 @@ youtube.com,youtube-nocookie.com##+js(set, playerResponse.adPlacements, undefine
 91p20.space
 waust.at
 
-||btsow.mom/app/jav$image
+||btsow.motorcycles/app/javu$image
 jads.co
 |https://tellme.pw/go/jav$popup
-|https://$script,subdocument,popup,3p,domain=btsow.mom|rarbgprx.org
+!|https://$script,subdocument,popup,3p,domain=btsow.motorcycles|rarbgprx.org
 !btsow.mom##+js(aeld, click, popunder)
-!btsow.*##body>div[id]:last-child>a:only-child
-! 2022 https://rarbgprx.org
-statsy.net
-||dyncdn.me/static/20/js/showads.js$script
-||dyncdn.me/static/20/js/expla$script
 
 age.tv,agedm.org##+js(noeval-if, devtoolsDetector)
 ||toutiaoimg.com/origin/$image,domain=agedm.org|acgndmku.com|subaibaiys.com
 
-dandanzan.com,dandanzan10.top,nunuyy5.org##+js(set,RTCPeerConnection,null)
 dandanzan.com,dandanzan10.top,nunuyy5.org##+js(set,webkitRTCPeerConnection,null)
-dandanzan.com,dandanzan10.top,nunuyy5.org##+js(set,mozRTCPeerConnection,null)
-dandanzan.com,dandanzan10.top,nunuyy5.org#@#+js(nowebrtc)
 dandanzan.com,dandanzan10.top,nunuyy5.org##.gm-fp-body video:style(max-height:100%!important)
 
 ! mikudm.com##.dplayer-web-fullscreen-fix .billhao-head-image, .dplayer-web-fullscreen-fix #topnav
 aqours.today
-chushoushijian.cn
+2qpqwkx.cn
 z4a.net
 |https://dd-static.jd.com/ddimg/jfs/t1/173245/15/28822/346324/62fcb4b0Eb437d047/136a1e04890320b8.jpg$image,domain=subaibaiys.com
 yatu.tv##.dplayer-web-fullscreen-fix #tburl,#loadtop,[id^=myas],#myds1,#daohang
 yatu.tv,yhdm15.com##+js(set,document.oncontextmenu,trueFunc)
-onenews.vip
-quickapp.cn
-v4dwkcv.com
 weizhenwx.com
 youle55.com
 ||www.yatu.tv:2082/image/*.gif^$image
