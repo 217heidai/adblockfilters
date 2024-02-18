@@ -19,7 +19,7 @@ class Downloader(object):
         def isConfigFile(filename):
             filestats = os.stat(filename)
             #print(f'File Size in Bytes is {filestats.st_size}')
-            if filestats.st_size < 1024 * 6:
+            if filestats.st_size < 1024 * 4:
                 return False
             return True
         
