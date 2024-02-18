@@ -37,8 +37,7 @@ class Resolver(object):
                     break
                 if line.find('0.0.0.0')==0 or line.find('127.0.0.1') == 0:
                     row = line.split(' ')
-                    row = list(map(lambda x: x.strip(), row)) # 字段去空格
-                    for i in range(len(row)-1):
+                    for i in range(len(row)-1, -1, -1):
                         if len(row[i]) == 0:
                             row.pop(i)
                     domain = row[1]
@@ -112,10 +111,12 @@ class Resolver(object):
                 # [*] 注释
                 if match('^\[.*\]$', line):
                     break
+                if match('^##.*', line):
+                    filter = line
+                    break
                 # #* 注释
                 if match('^#.*', line):
                     break
-
                 # ||example.org^: block access to the example.org domain and all its subdomains, like www.example.org.
                 if match('^\|\|.*\^$', line):
                     domain = line[2:-1]
