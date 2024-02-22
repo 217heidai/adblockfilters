@@ -161,7 +161,7 @@ class Resolver(object):
                     filter = line
                     break
                 # 判断是否为单纯的域名
-                if line.find('.')>0 and line.find('*.')!=0 and line.find('=')<0 and line.find(':')<0 and line.find('*')<0 and line.find('_')<0 and line.find('?')<0 and line.find(';')<0 and line.find('-')<0 and line.find('|')<0 and line.find('$')<0 and line.find('#')<0 and line.find('/')<0:
+                if line.find('.')>0 and not line.startswith('*.') and not line.startswith('-') and line.find('=')<0 and line.find(':')<0 and line.find('*')<0 and line.find('_')<0 and line.find('?')<0 and line.find(';')<0 and line.find('|')<0 and line.find('$')<0 and line.find('#')<0 and line.find('/')<0:
                     if line[len(line) - 1] == '^':
                         domain = line[:-1]
                     else:
@@ -219,11 +219,11 @@ class Resolver(object):
 
 if __name__ == '__main__':
     pwd = os.getcwd()
-    file = pwd + "/rules/SmartTV_Blocklist.txt"
+    file = pwd + "/rules/xinggsf_rule.txt"
     resolver = Resolver(file)
     #blockList, unblockList, filterList = resolver.Resolve("host") #1024_hosts、ad-wars_hosts、StevenBlack_hosts
-    blockList, unblockList, filterList = resolver.Resolve("dns") #1Hosts_(Lite)、AdRules_DNS_List、AWAvenue_Ads_Rule、Hblock、NEO_DEV_HOST、OISD_Basic、SmartTV_Blocklist
-    #blockList, unblockList, filterList = resolver.Resolve("filter") #ADgk、AdGuard_Base_filter、AdGuard_Chinese_filter、AdGuard_DNS_filter、CJX's_Annoyance_List、EasyList_China、EasyList、EasyPrivacy、xinggsf_mv、xinggsf_rule
+    #blockList, unblockList, filterList = resolver.Resolve("dns") #1Hosts_(Lite)、AdRules_DNS_List、AWAvenue_Ads_Rule、Hblock、NEO_DEV_HOST、OISD_Basic、SmartTV_Blocklist
+    blockList, unblockList, filterList = resolver.Resolve("filter") #ADgk、AdGuard_Base_filter、AdGuard_Chinese_filter、AdGuard_DNS_filter、CJX's_Annoyance_List、EasyList_China、EasyList、EasyPrivacy、xinggsf_mv、xinggsf_rule
     print('blockList: %s'%(len(blockList)))
     print('unblockList: %s'%(len(unblockList)))
     print('filterList: %s'%(len(filterList)))
