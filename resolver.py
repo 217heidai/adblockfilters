@@ -35,7 +35,7 @@ class Resolver(object):
                 # #* 注释
                 if match('^#.*', line):
                     break
-                if line.find('0.0.0.0')==0 or line.find('127.0.0.1') == 0:
+                if line.startswith('0.0.0.0') or line.startswith('127.0.0.1'):
                     row = line.split(' ')
                     for i in range(len(row)-1, -1, -1):
                         if len(row[i]) == 0:
@@ -44,9 +44,9 @@ class Resolver(object):
                     if domain not in ['localhost', 'localhost.localdomain', 'local', '0.0.0.0']:
                         block = self.__Analysis(domain)
                         break
-                    print("无法识别的规则：%s"%(line))
+                    print("无需保留的规则：%s"%(line))
                     break
-                print("无法识别的规则：%s"%(line))
+                print("无需保留的规则：%s"%(line))
                 break
         except Exception as e:
             print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
@@ -70,12 +70,23 @@ class Resolver(object):
                 if match('^#.*', line):
                     break
 
+                if line.find(' ') > 0:
+                    line = line[:line.find(' ')]
+
                 # ||example.org^: block access to the example.org domain and all its subdomains, like www.example.org.
                 if match('^\|\|.*\^$', line):
                     domain = line[2:-1]
-                    if domain.find('*') >= 0 or domain.find('/') >= 0:
+                    if domain.find('/') >= 0:
                         filter = line
                         break
+                    if domain.find('*') >= 0:
+                        if domain.startswith('*.') and domain[2:].find('*')<0:
+                            domain = domain[2:]
+                            block = self.__Analysis(domain)
+                            break
+                        else:
+                            filter = line
+                            break
                     block = self.__Analysis(domain)
                     break
                 # @@||example.org^: unblock access to the example.org domain and all its subdomains.
@@ -88,6 +99,9 @@ class Resolver(object):
                     break
                 # /REGEX/: block access to the domains matching the specified regular expression
                 if match('^/.*/$', line):
+                    filter = line
+                    break
+                if line.find('$') > 0 or match('^\|\|.*', line):
                     filter = line
                     break
                 # other
@@ -117,12 +131,21 @@ class Resolver(object):
                 # #* 注释
                 if match('^#.*', line):
                     break
+
                 # ||example.org^: block access to the example.org domain and all its subdomains, like www.example.org.
                 if match('^\|\|.*\^$', line):
                     domain = line[2:-1]
-                    if domain.find('*') >= 0 or domain.find('/') >= 0:
+                    if domain.find('/') >= 0:
                         filter = line
                         break
+                    if domain.find('*') >= 0:
+                        if domain.startswith('*.') and domain[2:].find('*')<0:
+                            domain = domain[2:]
+                            block = self.__Analysis(domain)
+                            break
+                        else:
+                            filter = line
+                            break
                     block = self.__Analysis(domain)
                     break
                 # @@||example.org^: unblock access to the example.org domain and all its subdomains.
@@ -136,6 +159,14 @@ class Resolver(object):
                 # /REGEX/: block access to the domains matching the specified regular expression
                 if match('^/.*/$', line):
                     filter = line
+                    break
+                # 判断是否为单纯的域名
+                if line.find('.')>0 and line.find('*.')!=0 and line.find('=')<0 and line.find(':')<0 and line.find('*')<0 and line.find('_')<0 and line.find('?')<0 and line.find(';')<0 and line.find('-')<0 and line.find('|')<0 and line.find('$')<0 and line.find('#')<0 and line.find('/')<0:
+                    if line[len(line) - 1] == '^':
+                        domain = line[:-1]
+                    else:
+                        domain = line
+                    block = self.__Analysis(domain)
                     break
                 # other
                 filter = line
@@ -188,11 +219,12 @@ class Resolver(object):
 
 if __name__ == '__main__':
     pwd = os.getcwd()
-    file = pwd + '/rules/ADgk.txt' 
+    file = pwd + "/rules/SmartTV_Blocklist.txt"
     resolver = Resolver(file)
     #blockList, unblockList, filterList = resolver.Resolve("host") #1024_hosts、ad-wars_hosts、StevenBlack_hosts
-    blockList, unblockList, filterList = resolver.Resolve("dns") #1Hosts_(Lite)、AdRules_DNS_List、Hblock、NEO_DEV_HOST、Notracking_blocklist、OISD_Basic
-    #blockList, unblockList, filterList = resolver.Resolve("filter") #ADgk、AdGuard_Base_filter、AdGuard_Chinese_filter、AdGuard_DNS_filter
+    blockList, unblockList, filterList = resolver.Resolve("dns") #1Hosts_(Lite)、AdRules_DNS_List、AWAvenue_Ads_Rule、Hblock、NEO_DEV_HOST、OISD_Basic、SmartTV_Blocklist
+    #blockList, unblockList, filterList = resolver.Resolve("filter") #ADgk、AdGuard_Base_filter、AdGuard_Chinese_filter、AdGuard_DNS_filter、CJX's_Annoyance_List、EasyList_China、EasyList、EasyPrivacy、xinggsf_mv、xinggsf_rule
     print('blockList: %s'%(len(blockList)))
     print('unblockList: %s'%(len(unblockList)))
     print('filterList: %s'%(len(filterList)))
+    print('complete')
