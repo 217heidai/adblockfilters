@@ -110,22 +110,11 @@ class BlackList(object):
                 return
             #domainList = domainList[:self.__maxTask]
 
-            blackDict_cn1 = self.TestDomain(domainList, ["223.5.5.5"]) # 国内域名解析结果
-            blackDict_cn2 = self.TestDomain(domainList, ["1.12.12.12"]) # 国内域名解析结果
-            #blackDict_cn3 = self.TestDomain(domainList, ["114.114.114.114"]) # 国内域名解析结果
-            blackDict_os1 = self.TestDomain(domainList, ["8.8.8.8"]) # 国外域名解析结果
-            blackDict_os2 = self.TestDomain(domainList, ["1.1.1.1"]) # 国外域名解析结果
-            #blackDict_os3 = self.TestDomain(domainList, ["9.9.9.11"]) # 国外域名解析结果
+            blackDict = self.TestDomain(domainList, ["127.0.0.1"]) # 使用本地 smartdns 进行域名解析，配置3组国内、3组国际域名解析服务器，提高识别效率
 
             blackList = []
             for domain in domainList:
-                cn1 = blackDict_cn1.get(domain, True)
-                cn2 = blackDict_cn2.get(domain, True)
-                #cn3 = blackDict_cn3.get(domain, True)
-                os1 = blackDict_os1.get(domain, True)
-                os2 = blackDict_os2.get(domain, True)
-                #os3 = blackDict_os3.get(domain, True)
-                if not cn1 and not cn2 and not os1 and not os2:
+                if not blackDict.get(domain, True):
                     blackList.append(domain)
 
             if len(blackList):

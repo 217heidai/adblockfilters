@@ -6,6 +6,9 @@ on:
 
 env:
   TZ: Asia/Shanghai
+  SMARTDNS_VERSION: Release45
+  SMARTDNS_URL: https://github.com/pymumu/smartdns/releases/download/$SMARTDNS_VERSION/smartdns-x86_64
+  SMARTDNS_PATH: /tmp/smartdns
 
 jobs:
   Generate_Blacklist:
@@ -25,6 +28,13 @@ jobs:
           sudo timedatectl set-timezone "$TZ"
           python -m pip install --upgrade pip
           pip install -U requests tld tcping IPy dnspython
+      
+      - name: Setup SmartDNS
+        run: |
+          mkdir -p $SMARTDNS_PATH
+          curl $SMARTDNS_URL > $SMARTDNS_PATH/smartdns
+          cp smartdns.conf $SMARTDNS_PATH/smartdns.conf
+          nohup $SMARTDNS_PATH/smartdns -f -x -c $SMARTDNS_PATH/smartdns.conf > /dev/null 2>&1 &
 
       - name: Generate Blacklist
         run: |
