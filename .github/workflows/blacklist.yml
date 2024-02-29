@@ -6,8 +6,7 @@ on:
 
 env:
   TZ: Asia/Shanghai
-  SMARTDNS_VERSION: Release45
-  SMARTDNS_URL: https://github.com/pymumu/smartdns/releases/download/$SMARTDNS_VERSION/smartdns-x86_64
+  SMARTDNS_URL: https://github.com/pymumu/smartdns/releases/download/Release45/smartdns-x86_64
   SMARTDNS_PATH: /tmp/smartdns
 
 jobs:
@@ -32,7 +31,7 @@ jobs:
       - name: Setup SmartDNS
         run: |
           mkdir -p $SMARTDNS_PATH
-          curl $SMARTDNS_URL > $SMARTDNS_PATH/smartdns
+          wget $SMARTDNS_URL -O $SMARTDNS_PATH/smartdns
           chmod +x $SMARTDNS_PATH/smartdns
           cp smartdns.conf $SMARTDNS_PATH/smartdns.conf
           #nohup $SMARTDNS_PATH/smartdns -f -x -c $SMARTDNS_PATH/smartdns.conf > /dev/null 2>&1 &
