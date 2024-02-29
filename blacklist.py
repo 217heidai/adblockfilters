@@ -80,11 +80,11 @@ class BlackList(object):
         except Exception as e:
             print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
 
-    def TestDomain(self, domainList, nameservers):
+    def TestDomain(self, domainList, nameservers, port=53):
         # 异步检测
         dnsresolver = DNSResolver()
-        if len(nameservers):
-            dnsresolver.nameservers = nameservers
+        dnsresolver.nameservers = nameservers
+        dnsresolver.port = port
         # 启动异步循环
         loop = asyncio.get_event_loop()
         semaphore = asyncio.Semaphore(self.__maxTask) # 限制并发量为500
@@ -110,7 +110,7 @@ class BlackList(object):
                 return
             #domainList = domainList[:self.__maxTask]
 
-            blackDict = self.TestDomain(domainList, ["127.0.0.1"]) # 使用本地 smartdns 进行域名解析，配置3组国内、3组国际域名解析服务器，提高识别效率
+            blackDict = self.TestDomain(domainList, "127.0.0.1", 5053) # 使用本地 smartdns 进行域名解析，配置3组国内、3组国际域名解析服务器，提高识别效率
 
             blackList = []
             for domain in domainList:
