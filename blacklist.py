@@ -74,7 +74,7 @@ class BlackList(object):
             if os.path.exists(self.__blacklistFile):
                 os.remove(self.__blacklistFile)
             
-            with open(fileName, "a") as f:
+            with open(fileName, "w") as f:
                 for domain in blackList:
                     f.write("%s\n"%(domain))
         except Exception as e:
