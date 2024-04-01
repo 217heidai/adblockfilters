@@ -211,8 +211,8 @@ def Entry():
     isUpdate = False
     lastUpdate = time.strftime("%Y/%m/%d", time.localtime())
     for i in range(0, len(ruleList)):
-        relue = Rule(ruleList[i][0], ruleList[i][2])
-        if relue.Update():
+        rule = Rule(ruleList[i][0], ruleList[i][2])
+        if rule.Update():
             isUpdate = True
             ruleList[i][3] = lastUpdate
     
