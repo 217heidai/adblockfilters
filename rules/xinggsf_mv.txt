@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
 ! Title: 乘风 视频过滤规则
-! Version: 202404191
+! Version: 202404222
 ! Expires: 1 day
 ! Homepage: https://github.com/xinggsf/Adblock-Plus-Rule/issues
 
@@ -26,11 +26,11 @@ iqiyi.com##.cupid-panel + div, div[data-adzone],#block-V
 iqiyi.com##+js(set, Object.prototype.blackscreenDuration, 1)
 iqiyi.com##+js(set, QiyiPlayerProphetData.a.data, {})
 t7z.cupid.iqiyi.com
-||mesh.if.iqiyi.com/player/pcw/update/commonAppDownloadData^$xhr
 ||static.iqiyi.com/js/common/mars_v.js^$script
 ! 以下二条规则禁用P2P
 ||video.iqiyi.com/ws$websocket
 ||www.iqiyi.com/service-worker.js
+||mesh.if.iqiyi.com/player/pcw/update/commonAppDownloadData^$xhr
 ||127.0.0.1^$script,domain=iqiyi.com
 !||iqiyi.com/videos/other/202$xmlhttprequest
 !||71edge.com/videos/other/202$xmlhttprequest
@@ -69,6 +69,7 @@ xtgreat.com
 bilibili.com##.ad-report, .ad-floor
 bilibili.com##.gg-floor-module,#slide_ad,a[href^="//cm.bilibili.com"]
 ||api.bilibili.com/x/web-show/res/loc?pf=$~script
+||hdslb.com/bfs/cm/cm-sdk/static/js/bili-collect.js^$script,redirect=noop.js
 ||hdslb.com/bfs/sycp/creative_img/$image
 cm.bilibili.com
 
@@ -91,6 +92,7 @@ pub.funshion.com
 
 ||relive.vodfile.m1905.com/video/qiantie202$media
 1905.com##.pauseInfoWrap:remove()
+sobot.com
 
 @@||tb.mgtv.com/sdk/*/ad-sdk.
 ad-survey.com
@@ -135,16 +137,23 @@ le.com##.min_pause_img
 le.com##.hv_wm_logo
 
 cctv.com,www.douyu.com##+js(aeld,/visibilitychange|pagehide/)
-douyu.com##+js(set, RTCPeerConnection.prototype.addTrack, noopFunc)
+!douyu.com##+js(set, RTCPeerConnection.prototype.addTrack, noopFunc)
 ||douyucdn.cn/adxdsp/$image
+! 二条禁用P2P
+||www.douyu.com/webSocket.worker_$script
+||shark2.douyucdn.cn/front-publish/live-master/js/player_first/qvbp2p_douyu$script
 wan.douyu.com
+||shark2.douyucdn.cn/front-publish/live-master/js/room/topBanner_$script
+||shark2.douyucdn.cn/front-publish/live-master/js/room/ScreenBannerAd_$script
+||shark2.douyucdn.cn/front-publish/live-master/js/room/CloseVideoAd_$script
+||shark2.douyucdn.cn/front-publish/live-master/js/room/FreeTimeAd_$script
+||shark2.douyucdn.cn/front-publish/live-master/js/room/SuspendedBallAd_$script
 douyu.com##.Title-ad, .DropMenuList-ad, .DropPane-ad
 douyu.com##a[href^="https://g.wan."]
 
 huya.com##a[href^="https://wan."]
 huya.com###hy-ad,#hy-ab,#huya-ab
 www.huya.com##.sidebar-banner
-!www.huya.com##.ab-main
 www.huya.com##.duya-header-right,#public-screen-ab
 ||business.msstatic.com/advertiser/$image
 ||midext2.cdn.huya.com/ext-web-mid/ext-web-sub-frame/$subdocument
@@ -186,7 +195,7 @@ age.tv,agedm.org##+js(noeval-if, devtoolsDetector)
 ||toutiaoimg.com/origin/$image,domain=agedm.org|acgndmku.com|subaibaiys.com
 
 dandanzan.com,dandanzan10.top,nunuyy5.org##+js(set,webkitRTCPeerConnection,null)
-dandanzan.com,dandanzan10.top,nunuyy5.org##.gm-fp-body video:style(max-height:100%!important)
+dandanzan.com,nnyy.in##.gm-fp-body video:style(max-height:100%!important)
 
 ! mikudm.com##.dplayer-web-fullscreen-fix .billhao-head-image, .dplayer-web-fullscreen-fix #topnav
 aqours.today
