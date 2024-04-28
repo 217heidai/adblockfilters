@@ -1,24 +1,17 @@
 [Adblock Plus 2.0]
 ! Title: 乘风 视频过滤规则
-! Version: 202404251
+! Version: 202404281
 ! Expires: 1 day
 ! Homepage: https://github.com/xinggsf/Adblock-Plus-Rule/issues
 
-! 屏蔽P2P
-yy.com,le.com##+js(nowebrtc)
-||tracker.$xhr,websocket,script,ping
-||p2p.$xhr,websocket,ping,domain=~huya.com|~binance.com
-
 v.youku.com##.control-phonewatch,#right-title-ad-banner, .kui-watermark-0
-!m.youku.com,v.youku.com##+js(m3u-prune,'',/^https:\/\/[\w\.]+ott\.cibntv\.net.+?\.m3u8\?/)
 atm.youku.com
 cad.youku.com
-@@||mmstat.com^$domain=youku.com
+@@||log.mmstat.com/eg.js^$script
 ||cibntv.net/youku/$media
 ||valipl.cp31.ott.cibntv.net/$media
 ||alicdn.com/*yksdk/*sdk.js$script,domain=youku.com
 ||alicdn.com/awsc/et/
-||sealine.youku.com/yk/*callback=adpagesdk$script
 
 iqiyi.com##.black-screen[data-cupid=adblock-blackscreen], .qy-plist-ad
 iqiyi.com##.cupid-panel + div, div[data-adzone],#block-V
@@ -79,6 +72,7 @@ synacast.com
 de.as.pptv.com
 ||g.pptv.com/game/$subdocument
 ||osswc.pplive.cn/cccms/$image
+||mediamax.suning.com/adssp/sdk/$script
 
 ||cmvideo.cn/v1/iflyad/$media,image,domain=miguvideo.com
 ! 风行网： fun.tv
@@ -88,10 +82,11 @@ pub.funshion.com
 1905.com##.pauseInfoWrap:remove()
 sobot.com
 
-@@||tb.mgtv.com/sdk/*/ad-sdk.
-ad-survey.com
+@@||tb.mgtv.com/sdk/*/ad-sdk.js^$script
 ||video.da.mgtv.com/$media
 ||da.mgtv.com/mediafiles/wiad_creative/$image
+!ad-survey.com
+miaozhen.com
 
 @@||js.tv.itc.cn/gg.seed.js
 ||css.tv.itc.cn/m/img/player/dlBanner.$image
@@ -175,10 +170,6 @@ youtube.com,youtube-nocookie.com##+js(set, playerResponse.adPlacements, undefine
 ||google.*/pagead/
 ||gstatic.com/shopping?
 
-*/preroll/$media,domain=91porn.com
-91p20.space
-waust.at
-
 ||btsow.motorcycles/app/javu$image
 jads.co
 |https://tellme.pw/go/jav$popup
@@ -188,23 +179,18 @@ jads.co
 age.tv,agedm.org##+js(noeval-if, devtoolsDetector)
 ||toutiaoimg.com/origin/$image,domain=agedm.org|acgndmku.com|subaibaiys.com
 
-dandanzan.com,dandanzan10.top,nunuyy5.org##+js(set,webkitRTCPeerConnection,null)
-dandanzan.com,nnyy.in##.gm-fp-body video:style(max-height:100%!important)
+!dandanzan.com,dandanzan10.top,nunuyy5.org##+js(set,webkitRTCPeerConnection,null)
+nnyy.in##.gm-fp-body video:style(max-height:100%!important)
 
-! mikudm.com##.dplayer-web-fullscreen-fix .billhao-head-image, .dplayer-web-fullscreen-fix #topnav
-aqours.today
-2qpqwkx.cn
-z4a.net
-|https://dd-static.jd.com/ddimg/jfs/t1/173245/15/28822/346324/62fcb4b0Eb437d047/136a1e04890320b8.jpg$image,domain=subaibaiys.com
 yatu.tv##.dplayer-web-fullscreen-fix #tburl,#loadtop,[id^=myas],#myds1,#daohang
 yatu.tv,yhdm15.com##+js(set,document.oncontextmenu,trueFunc)
-weizhenwx.com
-youle55.com
 ||www.yatu.tv:2082/image/*.gif^$image
 ||www.yatu.tv:2082/m/images/$image
 
-||nooen.com^$popup
+||tracker.$xhr,websocket,script,ping
+aqours.today
 bixinlive.com
-orgaorg.com
 quandangdang.net
 stgowan.com
+youle55.com
+z4a.net
