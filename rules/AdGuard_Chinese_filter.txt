@@ -928,9 +928,6 @@ m.lwxs.com#%#//scriptlet('abort-current-inline-script', 'eval', '_0x')
 m.lwxs.com#%#//scriptlet('abort-current-inline-script', 'document.write', '_0x')
 ! https://github.com/AdguardTeam/AdguardFilters/issues/168280
 ofiii.com#%#//scriptlet('trusted-replace-fetch-response', '"play_ads":true', '"play_ads":false')
-! https://github.com/AdguardTeam/AdguardFilters/issues/163538
-v.qq.com#%#//scriptlet('set-constant', 'CreativePlayerwebPlugin.AD_EVENT.AD_DESTROY', '')
-v.qq.com#%#//scriptlet('set-constant', 'CreativePlayerwebPlugin.AD_EVENT.AD_LOAD_START', '')
 ! https://github.com/AdguardTeam/AdguardFilters/issues/163589
 jmcomic1.me#%#//scriptlet('remove-node-text', '#text', '中間廣告')
 ! https://github.com/AdguardTeam/AdguardFilters/issues/162373
@@ -1013,11 +1010,6 @@ qciss.net#%#//scriptlet("prevent-window-open", "0", "qciss.net")
 subhd.com#%#//scriptlet('set-session-storage-item', 'hassession', '1')
 ! https://github.com/AdguardTeam/AdguardFilters/issues/31004
 m.86kl.com#%#//scriptlet('abort-on-property-read', 'akumtagcc')
-! https://github.com/AdguardTeam/AdguardFilters/issues/168881
-! https://github.com/AdguardTeam/AdguardFilters/issues/166649
-v.qq.com,new.qq.com#%#//scriptlet('json-prune', 'ads')
-! https://github.com/AdguardTeam/AdguardFilters/issues/30701
-~work.weixin.qq.com,qq.com#%#//scriptlet('json-prune', 'ad')
 ! https://github.com/AdguardTeam/AdguardFilters/issues/33510
 ! https://github.com/AdguardTeam/AdguardFilters/issues/33458
 axjbt.com,avcao.cc#%#//scriptlet('abort-on-property-read', 'myclick')
@@ -1264,6 +1256,8 @@ $script,third-party,denyallow=fastly.net|statically.io|sharecast.ws|b-cdn.net|bu
 !
 !
 !
+hao.360.com##.right-nav-bar-hd
+hao.360.com##div[id^="rightBottom_"]
 lzcfz2.com##body > div.wp.cl
 ablesci.com##.able-container-body-right > div.fly-panel:has(> div[style="text-align: center; padding: 5px"] > img[src$="-alipay-hongbao.png"])
 ||rou.video/js/exo.js
@@ -2796,6 +2790,16 @@ csdn.net###footerRightAds
 ||c.mipcdn.com/static/*/mip-ad/mip-ad.js
 ||mycodes.net/js/*.js
 !
+! qq.com
+! https://github.com/AdguardTeam/AdguardFilters/issues/163538
+lpl.qq.com,v.qq.com#%#//scriptlet('set-constant', 'CreativePlayerwebPlugin.AD_EVENT.AD_DESTROY', '')
+lpl.qq.com,v.qq.com#%#//scriptlet('set-constant', 'CreativePlayerwebPlugin.AD_EVENT.AD_LOAD_START', '')
+! https://github.com/AdguardTeam/AdguardFilters/issues/168881
+! https://github.com/AdguardTeam/AdguardFilters/issues/166649
+v.qq.com,new.qq.com#%#//scriptlet('json-prune', 'ads')
+! https://github.com/AdguardTeam/AdguardFilters/issues/30701
+~work.weixin.qq.com,qq.com#%#//scriptlet('json-prune', 'ad')
+!
 ! 51cg1
 51cg1.com,h3ugz0.arwiotgiy.com,h3ugz1.biyuhcltj.com,h3ugz2.lrjhvntu.net,h3ugz3.ogvoxarpd.com,h3ugz4.uovxifzj.com,h3uaz0.ogvoxarpd.com##.post-card-ads
 51cg1.com,h3ugz0.arwiotgiy.com,h3ugz1.biyuhcltj.com,h3ugz2.lrjhvntu.net,h3ugz3.ogvoxarpd.com,h3ugz4.uovxifzj.com,h3uaz0.ogvoxarpd.com##article:has(> a > div.post-card > div[style^="background-image: url(\"data:image/gif;base64"])
@@ -2925,6 +2929,12 @@ adguard.info,adguard.com,adguard.app##.hello_from_adguard_chinese
 adguard.info,adguard.com,adguard.app##.hello_from_adguard_apps
 !+ NOT_PLATFORM(windows, mac, android, ios, ext_ublock) NOT_OPTIMIZED
 adguard.info,adguard.com,adguard.app##.hello_from_adguard_ext
+! Detect HTTPS filtering
+!+ PLATFORM(windows, mac, android) NOT_OPTIMIZED
+||https-filtering-check.adtidy.org^
+! Detect Advanced Protection of AdGuard for iOS
+!+ PLATFORM(ios) NOT_OPTIMIZED
+adguard.info,adguard.com,adguard.app#$#.hello_from_adguard_advanced_protection_ios { display: none !important; }
 !
 
 !---------------------------------------------------------------------------!
@@ -5684,6 +5694,9 @@ newduba.cn###jq_youxi
 ||rczudr.xyz^
 ||tquspo.com^
 ||wwerioe.top^
+||qescaen.com^
+||rxfygd.cn^
+||ringingneo.com^
 ||zuvbzl.xyz^
 ||zwxxcb.icu^
 ||zxfdbr.xyz^
