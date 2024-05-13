@@ -921,6 +921,10 @@ nfmovies.com#$#a[onclick*="openurl"][target="_blank"] img[src^="/static/"] { pos
 !--------------------------------------!
 ! SECTION: Chinese - JS
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/178988
+now.com#%#//scriptlet('set-constant', 'preBid', 'emptyObj')
+now.com#%#//scriptlet('set-constant', 'preBid.displayAd', 'noopFunc')
+now.com#%#//scriptlet('set-constant', 'preBid.getPrerollVASTUrl', 'noopFunc')
 ! https://github.com/AdguardTeam/AdguardFilters/issues/169652
 3dmgame.com#%#//scriptlet('abort-on-property-write', 'adStart')
 ! https://github.com/AdguardTeam/AdguardFilters/issues/168192
@@ -1256,7 +1260,7 @@ $script,third-party,denyallow=fastly.net|statically.io|sharecast.ws|b-cdn.net|bu
 !
 !
 !
-$script,third-party,denyallow=myqcloud.com|bytecdntp.com|pddpic.com|googletagmanager.com,domain=yjys.me
+hkepc.com###headBanner
 speedtest.cn##.speedtest-recommend
 tsdm39.com###ct > div > a[target="_blank"] > img
 ||img.mikudm.net/img01/MP3/GG/20240415_CPS_960X75_general.gif
@@ -2881,6 +2885,9 @@ jable.tv##a[href="http://uus52.com/"]
 jable.tv##.badge
 jable.tv##a[href*="?banner="]
 jable.tv##.uu-ads
+! https://github.com/AdguardTeam/AdguardFilters/issues/178577
+!+ NOT_PLATFORM(ext_ublock)
+$script,third-party,denyallow=myqcloud.com|bytecdntp.com|pddpic.com|googletagmanager.com,domain=yjys.me
 ! https://github.com/AdguardTeam/AdguardForWindows/issues/4227
 !+ PLATFORM(windows, mac, android)
 doubibackup.com##body div.guangg
@@ -2976,6 +2983,10 @@ adguard.info,adguard.com,adguard.app#$#.hello_from_adguard_advanced_protection_i
 ! Bad:  @@||example.org^$stealth (should be in AdGuard Base - allowlist_stealth.txt)
 !
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/178988
+||imasdk.googleapis.com/js/sdkloader/ima3.js$script,redirect=google-ima3,domain=now.com,important
+!+ PLATFORM(ios, ext_safari, ext_android_cb)
+@@||now.com/*/js/dfpAsset_prebid.js
 ! https://github.com/AdguardTeam/AdguardFilters/issues/174552
 @@||api.val.qq.com/go/agame/resource/banner?bannerid=aclos_website_banner$domain=val.qq.com
 ! https://github.com/AdguardTeam/AdguardFilters/issues/170147
