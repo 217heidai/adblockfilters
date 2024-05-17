@@ -1260,6 +1260,7 @@ $script,third-party,denyallow=fastly.net|statically.io|sharecast.ws|b-cdn.net|bu
 !
 !
 !
+myqqjd.com##.cms-news-normal-box > article:has(span.merge-cat > a[href$="/activity/"])
 udn.com##.inline-ads
 upsangel.com##a[href="https://upsangel.com/check/surfsharkvpn/"]
 popdaily.com.tw##div[class^="ad-delimiter-"]
@@ -2845,29 +2846,30 @@ bilibili.com#$?#.carousel-container > .carousel-transform > div[class^="carousel
 !+ NOT_PLATFORM(ext_ublock)
 bilibili.com#%#//scriptlet('spoof-css', '.__adblockhidden > a', 'display', 'block')
 ! https://github.com/AdguardTeam/AdguardFilters/issues/149414
-nivod8.tv,nivod7.tv##.nav-ads
+nivod9.tv,nivod8.tv,nivod7.tv##.nav-ads
 ||api.nivodz.com/commercial/incr/
-nivod5.tv,nivod4.tv#$?#.img-list > .img-item:has(> a[href*=".ad_click"]) { remove: true; }
-nivod5.tv,nivod4.tv##.img-list > .img-item:has(> a[href*=".ad_click"])
-nivod5.tv,nivod4.tv#$?#a.focus_title_inner[href*=".ad_click"] { remove: true; }
-nivod5.tv,nivod4.tv##a.focus_title_inner[href*=".ad_click"]
-m.nivod8.tv,m.nivod7.tv,m.nivod5.tv,m.nivod4.tv#?##hellBoy > li[track-by="$index"] > div[style] > .show-div:has(> .show-card > .update-play:contains(/^AD$/))
-m.nivod8.tv,m.nivod7.tv,m.nivod5.tv,m.nivod4.tv#?#.slider-group > .nut-swiper > .nut-swiper-inner > .nut-swiper-item:has(> .swiper-page > span:contains(/^AD/))
-m.nivod8.tv,m.nivod7.tv,m.nivod4.tv,m.nivod5.tv###hellBoy > li:not([track-by]) > img
-m.nivod8.tv,m.nivod7.tv,m.nivod4.tv,m.nivod5.tv###video-container + ul[style^="width:"] > li > img
+nivod9.tv,nivod8.tv,nivod7.tv,nivod5.tv,nivod4.tv#$?#.img-list > .img-item:has(> a[href*=".ad_click"]) { remove: true; }
+nivod9.tv,nivod8.tv,nivod7.tv,nivod5.tv,nivod4.tv##.img-list > .img-item:has(> a[href*=".ad_click"])
+nivod9.tv,nivod8.tv,nivod7.tv,nivod5.tv,nivod4.tv#$?#a.focus_title_inner[href*=".ad_click"] { remove: true; }
+nivod9.tv,nivod8.tv,nivod7.tv,nivod5.tv,nivod4.tv##a.focus_title_inner[href*=".ad_click"]
+m.nivod9.tv,m.nivod8.tv,m.nivod7.tv,m.nivod4.tv,m.nivod5.tv##.v-ad
+m.nivod9.tv,m.nivod8.tv,m.nivod7.tv,m.nivod5.tv,m.nivod4.tv#?##hellBoy > li[track-by="$index"] > div[style] > .show-div:has(> .show-card > .update-play:contains(/^AD$/))
+m.nivod9.tv,m.nivod8.tv,m.nivod7.tv,m.nivod5.tv,m.nivod4.tv#?#.slider-group > .nut-swiper > .nut-swiper-inner > .nut-swiper-item:has(> .swiper-page > span:contains(/^AD/))
+m.nivod9.tv,m.nivod8.tv,m.nivod7.tv,m.nivod4.tv,m.nivod5.tv###hellBoy > li:not([track-by]) > img
+m.nivod9.tv,m.nivod8.tv,m.nivod7.tv,m.nivod4.tv,m.nivod5.tv###video-container + ul[style^="width:"] > li > img
 ! https://github.com/AdguardTeam/AdguardFilters/issues/149414
-nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.0.commercial.mediaUrl', '')
-nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.0.commercial.jumpUrl', '')
-nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.0.commercial.title', '')
-nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.1.commercial.mediaUrl', '')
-nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.1.commercial.jumpUrl', '')
-nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.1.commercial.title', '')
+nivod9.tv,nivod8.tv,nivod7.tv,nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.0.commercial.mediaUrl', '')
+nivod9.tv,nivod8.tv,nivod7.tv,nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.0.commercial.jumpUrl', '')
+nivod9.tv,nivod8.tv,nivod7.tv,nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.0.commercial.title', '')
+nivod9.tv,nivod8.tv,nivod7.tv,nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.1.commercial.mediaUrl', '')
+nivod9.tv,nivod8.tv,nivod7.tv,nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.1.commercial.jumpUrl', '')
+nivod9.tv,nivod8.tv,nivod7.tv,nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'pageData.__banners.1.commercial.title', '')
 ! Temorary solution, remove when https://github.com/AdguardTeam/Scriptlets/issues/330 will be resolved
-nivod5.tv,nivod4.tv#%#(function(){window.eval=new Proxy(eval,{apply:(e,c,n)=>{const o=Reflect.apply(e,c,n);if("object"==typeof o&&o.banners)try{o.banners.forEach(((e,c)=>{e.commercial&&(e.commercial={})}))}catch(e){console.debug(e)}return o}})})();
+nivod9.tv,nivod8.tv,nivod7.tv,nivod5.tv,nivod4.tv#%#(function(){window.eval=new Proxy(eval,{apply:(e,c,n)=>{const o=Reflect.apply(e,c,n);if("object"==typeof o&&o.banners)try{o.banners.forEach(((e,c)=>{e.commercial&&(e.commercial={})}))}catch(e){console.debug(e)}return o}})})();
 ! https://github.com/AdguardTeam/AdguardFilters/issues/147985
 ! https://github.com/AdguardTeam/AdguardFilters/issues/146359
-nivod8.tv,nivod7.tv,nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'detailParams.is_ad_play', 'false')
-m.nivod8.tv,m.nivod7.tv,m.nivod5.tv,m1.nivod.tv,m.nivod4.tv#%#//scriptlet('evaldata-prune', 'entity.commercial')
+nivod9.tv,nivod8.tv,nivod7.tv,nivod5.tv,nivod4.tv#%#//scriptlet('set-constant', 'detailParams.is_ad_play', 'false')
+m.nivod9.tv,m.nivod8.tv,m.nivod7.tv,m.nivod5.tv,m1.nivod.tv,m.nivod4.tv#%#//scriptlet('evaldata-prune', 'entity.commercial')
 ! https://github.com/AdguardTeam/AdguardFilters/issues/154676
 ! Website shows "Request failed with status code 500" error when request is blocked by apps
 !+ PLATFORM(windows, mac, android)
@@ -5843,6 +5845,14 @@ newduba.cn###jq_youxi
 ||mgidskix.top^
 ||sfkldbkldgdgh.com^
 ||ssestherssa.com^
+||nclljn.xyz^
+||imawwq.xyz^
+||qgidskiy.top^
+||txmeeqz.icu^
+||ilvqyya.cn^
+||88tm6.cc^
+||jgntjtyf.icu^
+||cqpph.cn^
 ||hphvd.cn^
 ||bpxbzps.xyz^
 ||zuvbzl.xyz^
