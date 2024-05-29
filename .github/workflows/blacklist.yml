@@ -37,29 +37,16 @@ jobs:
           nohup $SMARTDNS_PATH/smartdns -f -x -c $SMARTDNS_PATH/smartdns.conf > /dev/null 2>&1 &
 
       - name: Generate Blacklist
+        id: update
         run: |
           python blacklist.py
           rm -rf __pycache__
+          echo "message=$(date)" >> $GITHUB_OUTPUT
 
       - name: Commit Changes
-        id: commit
-        run: |
-          if [ -z "$(git status --porcelain)" ]; then 
-              exit 0
-          else
-            echo "status=success" >> $GITHUB_OUTPUT
-            git add .
-            git config --local user.email "217heidai@gmail.com"
-            git config --local user.name "217heidai"
-            git commit -m "Updated at $(date)" -a
-          fi
-            
-      - name: GitHub Push
-        if: steps.commit.outputs.status == 'success' && !cancelled()
-        uses: ad-m/github-push-action@master
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          commit_message: ${{ steps.update.outputs.message }}
           
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@main
