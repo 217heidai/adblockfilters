@@ -325,6 +325,14 @@
 ! Bad: ||ad.doubleclick.net^ (should be in adservers.txt)
 !
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/182204
+manwa.fun#%#//scriptlet("prevent-setTimeout", "/alert\('请关闭.*Chrome/")
+!#if (adguard_app_ios || adguard_ext_safari || adguard_ext_android_cb)
+manwa.fun#@#.ad-area
+manwa.fun##.ad-area > a[target="_blank"]
+!#endif
+!+ PLATFORM(ios, ext_safari)
+manwa.fun#$#.ad-area { position: absolute !important; left: -3000px !important; }
 ! https://github.com/AdguardTeam/AdguardFilters/issues/180010
 sports.qq.com#@#.txp_ad_center
 ! https://github.com/AdguardTeam/AdguardFilters/issues/179693
@@ -431,11 +439,6 @@ yaociyuan.bid#%#//scriptlet('set-constant', 'killads', 'true')
 !#if (adguard_app_ios || adguard_ext_android_cb)
 @@||520cc.cc/ad/ads.php?$script
 !#endif
-! https://github.com/AdguardTeam/AdguardFilters/issues/138700
-manwa.me#@#.ad-area
-manwa.me#$#.ad-area { position: absolute !important; left: -3000px !important; }
-||manwa.me/static/custom/files/300X250.gif$image,redirect=1x1-transparent.gif,important
-@@||manwa.me/static/custom/files/300X250.gif
 ! https://github.com/uBlockOrigin/uAssets/issues/16111
 colamanga.com#%#//scriptlet("prevent-setTimeout", "loadErrorTip")
 ! https://github.com/AdguardTeam/AdguardFilters/issues/135719
@@ -460,9 +463,6 @@ ekamus.info#$#.adsbygoogle { height: 1px !important; }
 !#if (adguard_app_ios || adguard_ext_android_cb)
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=ekamus.info
 !#endif
-! https://github.com/uBlockOrigin/uAssets/issues/14652
-||manwa.fun/static/upload/ads/$image,redirect=1x1-transparent.gif,important
-@@||manwa.fun/static/upload/ads/*.gif?$image,~third-party
 ! https://github.com/AdguardTeam/AdguardFilters/issues/151297
 ! https://github.com/AdguardTeam/AdguardFilters/issues/127739
 dyxs23.com,dyxs20.com,dyxs15.com,dyxs14.com,dyxs13.com,dyxs12.com,dyxs11.com##.popupicon
@@ -1275,6 +1275,8 @@ $script,third-party,denyallow=fastly.net|statically.io|sharecast.ws|b-cdn.net|bu
 !
 !
 !
+manwa.fun#%#//scriptlet('remove-attr', 'style', '.two-ad-area')
+manwa.fun###detail > div:has(> div.ad-area-close)
 pan.baidu.com##.wp-side-options
 mydown.yesky.com##.rightGg
 mydown.yesky.com##.main_left_advertisement
@@ -2937,9 +2939,6 @@ m.nivod2.com,m.nivod2.tv,m.nivod4.com,m.nivod4.tv,m.nivod5.com,m.nivod5.tv,m.niv
 ! Website shows "Request failed with status code 500" error when request is blocked by apps
 !+ PLATFORM(windows, mac, android)
 ||adpai.thepaper.cn^$xmlhttprequest,redirect-rule=nooptext,domain=thepaper.cn
-! https://github.com/AdguardTeam/AdguardFilters/issues/138700
-!+ PLATFORM(ios, ext_android_cb)
-manwa.me##.ad-area > a[target="_blank"]
 ! yeyemo4.com
 ! frequently changed domain
 yeyemo4.com,yeyemo5.com,yeyemo6.com,yeyemo7.com,yeyemo8.com,yeyemo9.com,yeyemo10.com##center > a[target="_blank"] > img
@@ -4990,6 +4989,7 @@ newduba.cn###jq_youxi
 ||baijs03.xyz^
 ||google-js-01.xyz^
 ||google-js-02.xyz^
+||ryhuzj.xyz^
 ||afopr.cn^
 ||qdoshby.top^
 ||eyislow.top^
