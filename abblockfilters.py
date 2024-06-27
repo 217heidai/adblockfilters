@@ -76,8 +76,9 @@ def GetWhiteList():
     fileName = os.getcwd() + "/rules/white.txt"
     if os.path.exists(fileName):
         with open(fileName, 'r') as f:
-            whiteList = f.readlines()
-            whiteList = list(map(lambda x: x.replace("\n", ""), whiteList))
+            for line in f.readlines():
+                if not line.startswith("#") and len(line.replace("\n", "")) > 4:
+                    whiteList.append(line.replace("\n", ""))
     return whiteList
 
 # 去重、排序
