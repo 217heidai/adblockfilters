@@ -3,7 +3,7 @@
 ! Description: Filter composed of several other filters (AdGuard Base filter, Social media filter, Tracking Protection filter, Mobile ads filter, EasyList, EasyPrivacy, etc) and simplified specifically to be better compatible with DNS-level ad blocking.
 ! Homepage: https://github.com/AdguardTeam/AdguardSDNSFilter
 ! License: https://github.com/AdguardTeam/AdguardSDNSFilter/blob/master/LICENSE
-! Last modified: 2024-07-26T06:01:15.233Z
+! Last modified: 2024-07-26T12:01:18.190Z
 !
 ! Compiled by @adguard/hostlist-compiler v1.0.24
 !
@@ -11,6 +11,19 @@
 ! Source name: AdGuard Base filter ad servers
 ! Source: https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/BaseFilter/sections/adservers.txt
 !
+!
+! This section contains the list of third-party advertising networks domains.
+! Note, that we only put rules that block full domains here and not URL parts (there's `general_url.txt` for that). Also, it must be domains that are used in a third-party context.
+! The rules with hints are at the end of file.
+!
+! Good: ||doubleclick.net^$third-party
+! Bad: /banner.jpg (should be in general_url.txt)
+! Bad: ||adssubdomain.legitwebsite.com^ (should be in adservers_firstparty.txt)
+!
+!
+!
+||ywmvppnlwwxkgt.com^
+||chouchicky.com^
 /^139\.45\.197\.2(4[0-9]|5[0-4]):/
 ||crewedbangup.com^
 ||prwfwayui.com^
@@ -3445,6 +3458,7 @@ vkcdnservice.appspot.com^
 ||adserved.net^
 ||adserverplus.com^
 ||adserverpub.com^
+||adservf.com^
 ||adservicemedia.dk^
 ||adservon.com^
 ||adservr.de^
@@ -41243,6 +41257,7 @@ vkcdnservice.appspot.com^
 ||6a6672.xyz^
 ||70b927c8.live^
 ||7608d5.xyz^
+||7841ffda.xyz^
 ||7ca989e1.xyz^
 ||7e60f1f9.xyz^
 ||7e809ed7-e553-4e29-acb1-4e3c0e986562.site^
