@@ -170,12 +170,13 @@ def CreatDNS(blockDict, unblockDict, fileName):
 
 def CreatFiter(filterList, fileName):
     # 去重、排序
-    def sort(L):
-        L = list(set(L))
+    def sort(L, whiteList):
+        L = list(set(L)-set(whiteList))
         L.sort()
         return L
 
-    filterList = sort(filterList)
+    whiteList = GetWhiteList()
+    filterList = sort(filterList, whiteList)
 
     if os.path.exists(fileName):
         os.remove(fileName)
