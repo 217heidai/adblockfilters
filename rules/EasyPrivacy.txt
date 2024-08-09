@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: 0AvautraLigjyvbCrQBjQQ
-! Version: 202408081551
+! Checksum: Bi9YLKI90bNMLb3MRFVJVQ
+! Version: 202408082351
 ! Title: EasyPrivacy
-! Last modified: 08 Aug 2024 15:51 UTC
+! Last modified: 08 Aug 2024 23:51 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.to/
 ! Licence: https://easylist.to/pages/licence.html
@@ -335,7 +335,6 @@
 /api/v1/stat?
 /api/v1/streamtelemetry
 /api/v2/collector
-/api/v2/jsonlogger
 /api/v3/getPageVisits
 /api/v3/trackSegmentEvent
 /api/video/stats/*$xmlhttprequest
@@ -2098,6 +2097,7 @@
 /stats/api/event
 /stats/article?
 /stats/bezoek_count.php
+/stats/c/*$image
 /stats/collect/*
 /stats/collect?
 /stats/collector.js
@@ -11393,8 +11393,6 @@ $third-party,xmlhttprequest,domain=opensubtitles.org
 ||c.wort-suche.com^
 ||c.xbox.com^
 ||c.ypcdn.com^$domain=yellowpages.com
-||cambash.com/api/events
-||cambash.com/api/metrics
 ||camgirls.casa/p.php
 ||campsaver.com/nelmio-js-logger/
 ||canstockphoto.com/server.php?rqst=track
@@ -11942,8 +11940,6 @@ $third-party,xmlhttprequest,domain=opensubtitles.org
 ||linris.xyz/cdn-cgi/trace
 ||lists.ccmbg.com^
 ||littlebigsnake.com/event?
-||livehdcams.com/api/events
-||livehdcams.com/api/metrics
 ||livejournal.com/ljcounter/
 ||livejournal.com/log?
 ||liveperson.net/hc/*/?visitor=
@@ -11989,10 +11985,6 @@ $third-party,xmlhttprequest,domain=opensubtitles.org
 ||mapquest.com/logger
 ||marketing.alibaba.com^
 ||marketing.dropbox.com^
-||massivecams.com/api/events
-||massivecams.com/api/metrics
-||massivecams.com/api/statsd
-||massivecams.com/api/v1/activity
 ||mat6tube.com/api/stats?
 ||mcc-tags.cisco.com^
 ||mcs-ie.tiktokw.eu^
@@ -12191,8 +12183,6 @@ $third-party,xmlhttprequest,domain=opensubtitles.org
 ||poptropica.com/brain/track.php?
 ||pornbox.com/event/
 ||pornbox.com/stats/
-||pornhublive.com/api/events
-||pornhublive.com/api/metrics
 ||porzo.com/js/analytics
 ||prairiedog.hashnode.com^
 ||pravda.com.ua/counter/
@@ -12837,8 +12827,14 @@ $third-party,xmlhttprequest,domain=opensubtitles.org
 ||aliyuncs.com/r.png
 ||gj.mmstat.com^
 ||oneid.mmstat.com^
-!
+! https://github.com/easylist/easylist/commit/7a86afd
 /rest/high/api/cogitoergosum
+! (naiadsystems.com/icfcdn.com)
+/api/events|$ping,~third-party
+/api/statsd|$~third-party,xmlhttprequest
+/api/v1/activity|$~third-party,xmlhttprequest
+/api/v2/jsonlogger
+||naiadsystems.com/api/v1/xment/
 ! Port scanning Fingerprinting Trackers (Privacy and CPU abuse)
 ! https://nullsweep.com/why-is-this-website-port-scanning-me/
 /^https?:\/\/fdts\.ebay-kleinanzeigen\.de\/[a-z0-9]{13,18}\.js\?/$script,domain=kleinanzeigen.de
@@ -49110,7 +49106,6 @@ $csp=child-src 'none'; frame-src *; worker-src 'none',domain=thepiratebay.org|vi
 ||herz-fuer-tiere.de^*/sunshine.gif?
 ||hokuspokus.tarnkappe.info^
 ||homegate.ch/g/collect?
-||horizont.net/stats/
 ||inside-channels.ch/proxy/engine/api/v1/auth/ping/
 ||inside-it.ch/proxy/engine/api/v1/auth/ping/
 ||jobs.ch/api/v1/public/product/track/
@@ -49152,6 +49147,7 @@ $csp=child-src 'none'; frame-src *; worker-src 'none',domain=thepiratebay.org|vi
 ||responder.wt.heise.de^
 ||ricardo.ch/api/browser-statistics/
 ||rt.bunte.de^
+||ruw.de/js/trackSidebarClicks.js
 ||schnaeppchenfuchs.com/js/default-
 ||shoop.de/mgtrx/
 ||shop.rewe.de/api/xrd/web-vitals
@@ -50433,6 +50429,7 @@ $csp=child-src 'none'; frame-src *; worker-src 'none',domain=thepiratebay.org|vi
 @@||api-analytics.magstimconnect.net^$~third-party
 @@||api-js.datadome.co/js/$domain=sso.garena.com
 @@||api-mg2.db-ip.com^$xmlhttprequest,domain=journal-news.com
+@@||api.aliagents.ai/api/v1/activity$~third-party,xmlhttprequest
 @@||api.amplitude.com^$xmlhttprequest,domain=insiderintelligence.com
 @@||api.ipinfodb.com^$xmlhttprequest,domain=management30.com
 @@||api.perfops.net^$script,xmlhttprequest,domain=cdnperf.com|dnsperf.com
@@ -50952,6 +50949,7 @@ $csp=child-src 'none'; frame-src *; worker-src 'none',domain=thepiratebay.org|vi
 @@||mail.163.com/fetrack/api/27/envelope/?sentry_key=$xmlhttprequest
 @@||marketing.unionpayintl.com/offer-promote/static/sensorsdata.min.js$script,~third-party
 @@||nobook.com/open-interface/official-sensors.git/$script,~third-party
+@@||pubscholar.cn/static/common/fingerprint.js$script,~third-party
 @@||pv.sohu.com/cityjson$domain=ems.com.cn
 @@||statics.zcool.com.cn/track/sensors.$script,~third-party
 @@||tianyancha.com^*/sensorsdata.$script,~third-party
