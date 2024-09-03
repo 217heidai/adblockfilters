@@ -1321,7 +1321,6 @@ enews.tw##.gadRightP
 enews.tw##.divADFrame
 enews.tw##div[id^="adFrame"]
 enews.tw##.newsCardForLeftAdGadCode
-bilibili.com#%#//scriptlet('json-prune', 'data.cm_info.ads')
 ||upload.xchina.biz/ad/
 ||xchina.click/upload/*.webp
 ||xchina.co/scripts/push_*.js
@@ -1348,8 +1347,6 @@ le.com#%#//scriptlet('set-constant', 'Object.prototype.noAD', 'true')
 huya.com##a[class^="Ad--"]
 ||photos18.com/images/friend/
 91porna.com##.carousel-container-bottom
-bilibili.com##.container > div.bili-video-card.is-rcmd:not(:has(> *))
-bilibili.com##.floor-single-card:has(.floor-skeleton):not(:has(> div.bili-video-card__skeleton))
 daohang.qq.com##.banner-adv-new
 ifoodie.tw##.ad-right-column-desktop
 ifoodie.tw##.ad-container
@@ -1463,7 +1460,6 @@ klyingshi.net##.row > div.url-card:has(> div.url-body span.badge-danger)
 phone-book.tw#%#//scriptlet('remove-node-text', 'script', 'yumayishop')
 xiaozhongjishu.com##.apd > a[target="_blank"] > img
 sports.qq.com##.scr-login > .cnxh:has(> .videoDiv #hotvideo)
-search.bilibili.com##.video-list > div.col_3:has(> div.bili-video-card > div.bili-video-card__wrap > a[href*="&csource="])
 creaders.net##div[style="float:left;padding-right:.3em;width:300px;height:250px"]
 iyf.tv##vg-player div.vg-bg
 clickhole.com,lifehacker.com,splinternews.com,avclub.com,deadspin.com,gizmodo.com,jalopnik.com,jezebel.com,kotaku.com,qz.com,theinventory.com,theonion.com,theroot.com,thetakeout.com##div[class]:has(> div[data-ad-unit]:only-child)
@@ -1628,7 +1624,6 @@ csgoob.com#?#div[class^="dark:shadow"]:has(> a[href^="https://www.k7csgo.com/"][
 itblogcn.com#?#.sidebar > div.widget:has(> div.item > aside > div.textwidget > a[href="https://www.itblogcn.com/vultr/t"])
 sto520.com#?#.content > div.book > div[style^="text-align"]:has(> ins.adsbygoogle)
 lihkg.com#?##rightPanel > div[class^="_"] > div[class^="_"] > div[class^="_"] > div[data-post-id] + div:not([data-post-id])
-search.bilibili.com#?#.video-list > div.col_3:has(> div.bili-video-card a[href*="//cm.bilibili.com/"])
 sohu.com#?#.news-wrapper > div.news-box.clear:has(> [data-ad-format])
 military.china.com#$?#.slide_doubleimg > .baiBox { remove: true; }
 zh.moegirl.org.cn#?#.swiper-slide:has(> a[href^="https://m.tb.cn/"])
@@ -1696,8 +1691,6 @@ hao.360.com#?#.cube-container div.cube-mod:has(span.adMark)
 dacota.tw#?#section[class*="widget_text"] > .widget-wrap > .textwidget > div[class^="Zi_ad"]:upward(3)
 dcard.tw#?#div[data-index] > article:contains(贊助活動)
 sharonlife.tw#?##sidebar > div.widget:has(> h4:contains(廣告))
-bilibili.com#$?#.ex-card-common:has(.gg-icon) { remove: true; }
-bilibili.com#$?#.van-slide > .item:has(.bypb-icon) { remove: true; }
 v2ex.com#?##Rightbar > div.box:has(> div.inner a[target="_blank"] > img[src*="cdn.v2ex.com/assets/sidebar/"])
 jable.tv#?#div.col-6.col-sm-4.col-lg-12:has(> div.video-img-box > div.img-box > a[href*="?banner="])
 csdn.net#?#aside > div.slide-outer:has(> div.box > div[adsid])
@@ -1819,11 +1812,9 @@ v2rayssr.com##.single-top-html a[target="_blank"] > img
 ||tiao1.cc/static/default/js/loadLM.js
 baidu.com##.afd-ad
 bbs.125.la##.ad-tips
-bilibili.com##.ad-report
 ||laozuo.org/banner/
 nani.baidu.com,ala.baidu.com##.tbui_aside_float_bar + .clearfix
 3czol.com##div[class^="ban_"]
-bilibili.com##.video-page-game-card-small
 iyf.tv##.player-right
 shangyexinzhi.com##.hang-baidu_adv
 shangyexinzhi.com##.advert
@@ -2944,7 +2935,6 @@ wmsj.pw##[class^="asb-"]
 ||336t.com/img/boss/*.gif$domain=wmsj.pw
 sportsplanetmag.com##.adshow
 ||tt1069.com/bbs/page20_top.php
-||api.live.bilibili.com/*/Banner
 csdn.net##li[data-type="ad"]
 csdn.net###footerRightAds
 ||s3.amazonaws.com/dmas-public/sitemaji/vast.xml$domain=dailymotion.com
@@ -2992,8 +2982,18 @@ netfly.*,netfly.tv##div[class*="tt-"] > a[target="_blank"] + span.tt-icon-close
 ! Do not hide .bili-video-card container to not mess up content, related - https://github.com/AdguardTeam/AdguardFilters/issues/147194#issuecomment-1500803042
 ! https://user-images.githubusercontent.com/3976203/273172163-25ff30a0-c988-4ec3-9e51-cf4722a90976.jpg
 ! bilibili.com#?#.bili-video-card.is-rcmd > div > a[href*="cm.bilibili.com"][data-target-url]:not([data-target-url*=".bili"]) + .bili-video-card__info:upward(2)
+bilibili.com##.container > div.feed-card:not(:has(> div > *))
 bilibili.com#$?#.container > div.floor-single-card:has(> div.skeleton) { remove: true; }
-bilibili.com#$?#.bili-video-card > div[class]:only-child:matches-css(before, content: /Adblock/) { remove: true; }
+bilibili.com##.ad-report
+bilibili.com#%#//scriptlet('json-prune', 'data.cm_info.ads')
+bilibili.com##.container > div.bili-video-card.is-rcmd:not(:has(> *))
+bilibili.com##.floor-single-card:has(.floor-skeleton):not(:has(> div.bili-video-card__skeleton))
+search.bilibili.com##.video-list > div.col_3:has(> div.bili-video-card > div.bili-video-card__wrap > a[href*="&csource="])
+search.bilibili.com#?#.video-list > div.col_3:has(> div.bili-video-card a[href*="//cm.bilibili.com/"])
+bilibili.com#$?#.ex-card-common:has(.gg-icon) { remove: true; }
+bilibili.com#$?#.van-slide > .item:has(.bypb-icon) { remove: true; }
+bilibili.com##.video-page-game-card-small
+||api.live.bilibili.com/*/Banner
 bilibili.com##.bili-video-card:has(.bili-video-card__info--ad) > .bili-video-card__wrap
 bilibili.com##.bili-video-card:has(.bili-video-card__info--creative-ad) > .bili-video-card__wrap
 bilibili.com#$#.bili-video-card:has(.bili-video-card__info--ad) > .bili-video-card__skeleton { visibility: visible !important; }
@@ -5099,6 +5099,10 @@ newduba.cn###jq_youxi
 ||yxvyqyy.icu^
 ||yckamq.xyz^
 ||trutvnci.top^
+||fpgonuk.icu^
+||fq02.shop^
+||jy04.shop^
+||gjkkdashb4.fun^
 ||mwqetvn.icu^
 ||g6tgashb.fun^
 ||phjtxx.xyz^
@@ -14012,6 +14016,7 @@ hxsame.hexun.com$domain=~quote.hexun.com
 ||abody.39.net^
 ||piaotia.com/scripts/read/style
 ||cenyou.net/wp-content/uploads/1200-200.
+||53bk.com/Baokan/Comja/changepic.
 szxx.com.cn###A0
 wealwomen.com##div[data-cptid]
 supercloudsms.com##a[style="display: block;"]
