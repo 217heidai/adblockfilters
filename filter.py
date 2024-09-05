@@ -6,7 +6,6 @@ from typing import List,Dict,Set,Tuple
 
 from readme import Rule
 from resolver import Resolver
-from blacklist import BlackList
 
 class Filter(object):
     def __init__(self, ruleList:List[Rule], path:str):

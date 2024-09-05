@@ -15,8 +15,8 @@ class ADBlock(object):
         # 更新上游规
         updater = Updater(ruleList)
         update, ruleList = updater.update(self.pwd + '/rules')
-        if not update:
-            return
+        #if not update:
+        #    return
 
         # 生成新规则
         filter = Filter(ruleList, self.pwd + '/rules')
