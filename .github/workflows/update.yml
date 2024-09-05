@@ -1,0 +1,45 @@
+name: Update Filters
+on: 
+  workflow_dispatch:
+  schedule:
+  - cron: 0 */8 * * *
+
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  Update_Filters:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@main
+
+      - name: Setup Python 3.10.x
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          sudo timedatectl set-timezone "$TZ"
+          python -m pip install --upgrade pip
+          pip install -U tld IPy dnspython httpx
+
+      - name: Update Filters
+        id: update
+        run: |
+          python adblock.py
+          rm -rf __pycache__
+          echo "message=$(date)" >> $GITHUB_OUTPUT
+
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: ${{ steps.update.outputs.message }}
+          
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          retain_days: 1
+          keep_minimum_runs: 5

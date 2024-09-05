@@ -1,15 +1,18 @@
 import os
 import sys
 import re
+from typing import Tuple,Dict,Set
 
 from tld import get_tld
 import IPy
 
-class Resolver(object):
-    def __init__(self, fileName):
-        self.__fileName = fileName
+from readme import Rule
 
-    def __Analysis(self, address):
+class Resolver(object):
+    def __init__(self, path:str):
+        self.path = path
+
+    def __analysis(self, address):
         try:
             res = get_tld(address, fix_protocol=True, as_object=True)
             return res.fld, res.subdomain
@@ -26,7 +29,7 @@ class Resolver(object):
             return address, ""
 
     # host 模式
-    def __ResolveHost(self, line):
+    def __resolveHost(self, line):
         def match(pattern, string):
             return True if re.match(pattern, string) else False
         try:
@@ -42,7 +45,7 @@ class Resolver(object):
                             row.pop(i)
                     domain = row[1]
                     if domain not in ['localhost', 'localhost.localdomain', 'local', '0.0.0.0']:
-                        block = self.__Analysis(domain)
+                        block = self.__analysis(domain)
                         break
                     print("无需保留的规则：%s"%(line))
                     break
@@ -54,7 +57,7 @@ class Resolver(object):
             return block,unblock,filter
         
     # dns 模式
-    def __ResolveDNS(self, line):
+    def __resolveDNS(self, line):
         def match(pattern, string):
             return True if re.match(pattern, string) else False
         try:
@@ -82,12 +85,12 @@ class Resolver(object):
                     if domain.find('*') >= 0:
                         if domain.startswith('*.') and domain[2:].find('*')<0:
                             domain = domain[2:]
-                            block = self.__Analysis(domain)
+                            block = self.__analysis(domain)
                             break
                         else:
                             filter = line
                             break
-                    block = self.__Analysis(domain)
+                    block = self.__analysis(domain)
                     break
                 # @@||example.org^: unblock access to the example.org domain and all its subdomains.
                 if match('^@@\|\|.*\^$', line):
@@ -95,7 +98,7 @@ class Resolver(object):
                     if domain.find('*') >= 0 or domain.find('/') >= 0:
                         filter = line
                         break
-                    unblock = self.__Analysis(domain)
+                    unblock = self.__analysis(domain)
                     break
                 # /REGEX/: block access to the domains matching the specified regular expression
                 if match('^/.*/$', line):
@@ -113,7 +116,7 @@ class Resolver(object):
             return block,unblock,filter
         
     # filter 模式
-    def __ResolveFilter(self, line):
+    def __resolveFilter(self, line):
         def match(pattern, string):
             return True if re.match(pattern, string) else False
         try:
@@ -141,12 +144,12 @@ class Resolver(object):
                     if domain.find('*') >= 0:
                         if domain.startswith('*.') and domain[2:].find('*')<0:
                             domain = domain[2:]
-                            block = self.__Analysis(domain)
+                            block = self.__analysis(domain)
                             break
                         else:
                             filter = line
                             break
-                    block = self.__Analysis(domain)
+                    block = self.__analysis(domain)
                     break
                 # @@||example.org^: unblock access to the example.org domain and all its subdomains.
                 if match('^@@\|\|.*\^$', line):
@@ -154,7 +157,7 @@ class Resolver(object):
                     if domain.find('*') >= 0 or domain.find('/') >= 0:
                         filter = line
                         break
-                    unblock = self.__Analysis(domain)
+                    unblock = self.__analysis(domain)
                     break
                 # /REGEX/: block access to the domains matching the specified regular expression
                 if match('^/.*/$', line):
@@ -166,7 +169,7 @@ class Resolver(object):
                         domain = line[:-1]
                     else:
                         domain = line
-                    block = self.__Analysis(domain)
+                    block = self.__analysis(domain)
                     break
                 # other
                 filter = line
@@ -176,16 +179,19 @@ class Resolver(object):
         finally:
             return block,unblock,filter
 
-    def Resolve(self, type):
-        blockDict = dict()
-        unblockDict = dict()
-        filterList = []
+    def resolveHost(self, rule:Rule) -> Tuple[Dict[str,Set[str]],Dict[str,Set[str]],Set[str]]:
+        blockDict:Dict[str,Set[str]] = dict()
+        unblockDict:Dict[str,Set[str]] = dict()
+        filterSet:Set[str] = set()
 
-        if not os.path.exists(self.__fileName):
-            return blockDict,unblockDict,filterList
+        filename = self.path + '/' + rule.filename
+
+        if not os.path.exists(filename):
+            return blockDict,unblockDict,filterSet
         
-        print("解析：%s..."%(os.path.basename(self.__fileName))) # 处理信息输出
-        with open(self.__fileName, "r") as f:
+        print("解析：%s..."%(rule.filename)) # 处理信息输出
+
+        with open(filename, "r") as f:
             for line in f:
                 # 去掉换行符
                 line = line.replace('\r', '').replace('\n', '').strip()
@@ -193,38 +199,90 @@ class Resolver(object):
                 if len(line) < 1:
                     continue
 
-                block,unblock,filter=None,None,None
-                if type == "host":
-                    block,unblock,filter = self.__ResolveHost(line)
-
-                if type == "dns":
-                    block,unblock,filter = self.__ResolveDNS(line)
-
-                if type == "filter":
-                    block,unblock,filter = self.__ResolveFilter(line)
+                block,unblock,filter = self.__resolveHost(line)
                 
                 if block:
                     if block[0] not in blockDict:
-                        blockDict[block[0]] = [block[1]]
+                        blockDict[block[0]] = {block[1],}
                     else:
-                        blockDict[block[0]].append(block[1])
+                        blockDict[block[0]].add(block[1])
                 if unblock:
                     if unblock[0] not in unblockDict:
-                        unblockDict[unblock[0]] = [unblock[1]]
+                        unblockDict[unblock[0]] = {unblock[1],}
                     else:
-                        unblockDict[unblock[0]].append(unblock[1])
+                        unblockDict[unblock[0]].add(unblock[1])
                 if filter:
-                    filterList.append(filter)
-        return blockDict,unblockDict,filterList
+                    filterSet.add(filter)
+        return blockDict,unblockDict,filterSet
+    
+    def resolveDNS(self, rule:Rule) -> Tuple[Dict[str,Set[str]],Dict[str,Set[str]],Set[str]]:
+        blockDict:Dict[str,Set[str]] = dict()
+        unblockDict:Dict[str,Set[str]] = dict()
+        filterSet:Set[str] = set()
 
-if __name__ == '__main__':
-    pwd = os.getcwd()
-    file = pwd + "/rules/xinggsf_rule.txt"
-    resolver = Resolver(file)
-    #blockList, unblockList, filterList = resolver.Resolve("host") #1024_hosts、ad-wars_hosts、StevenBlack_hosts
-    #blockList, unblockList, filterList = resolver.Resolve("dns") #1Hosts_(Lite)、AdRules_DNS_List、AWAvenue_Ads_Rule、Hblock、NEO_DEV_HOST、OISD_Basic、SmartTV_Blocklist
-    blockList, unblockList, filterList = resolver.Resolve("filter") #AdGuard_Base_filter、AdGuard_Chinese_filter、AdGuard_DNS_filter、CJX's_Annoyance_List、EasyList_China、EasyList、EasyPrivacy、xinggsf_mv、xinggsf_rule
-    print('blockList: %s'%(len(blockList)))
-    print('unblockList: %s'%(len(unblockList)))
-    print('filterList: %s'%(len(filterList)))
-    print('complete')
+        filename = self.path + '/' + rule.filename
+
+        if not os.path.exists(filename):
+            return blockDict,unblockDict,filterSet
+        
+        print("解析：%s..."%(rule.filename)) # 处理信息输出
+
+        with open(filename, "r") as f:
+            for line in f:
+                # 去掉换行符
+                line = line.replace('\r', '').replace('\n', '').strip()
+                # 去掉空行
+                if len(line) < 1:
+                    continue
+
+                block,unblock,filter = self.__resolveDNS(line)
+                
+                if block:
+                    if block[0] not in blockDict:
+                        blockDict[block[0]] = {block[1],}
+                    else:
+                        blockDict[block[0]].add(block[1])
+                if unblock:
+                    if unblock[0] not in unblockDict:
+                        unblockDict[unblock[0]] = {unblock[1],}
+                    else:
+                        unblockDict[unblock[0]].add(unblock[1])
+                if filter:
+                    filterSet.add(filter)
+        return blockDict,unblockDict,filterSet
+    
+    def resolveFilter(self, rule:Rule) -> Tuple[Dict[str,Set[str]],Dict[str,Set[str]],Set[str]]:
+        blockDict:Dict[str,Set[str]] = dict()
+        unblockDict:Dict[str,Set[str]] = dict()
+        filterSet:Set[str] = set()
+
+        filename = self.path + '/' + rule.filename
+
+        if not os.path.exists(filename):
+            return blockDict,unblockDict,filterSet
+        
+        print("解析：%s..."%(rule.filename)) # 处理信息输出
+
+        with open(filename, "r") as f:
+            for line in f:
+                # 去掉换行符
+                line = line.replace('\r', '').replace('\n', '').strip()
+                # 去掉空行
+                if len(line) < 1:
+                    continue
+
+                block,unblock,filter = self.__resolveFilter(line)
+                
+                if block:
+                    if block[0] not in blockDict:
+                        blockDict[block[0]] = {block[1],}
+                    else:
+                        blockDict[block[0]].add(block[1])
+                if unblock:
+                    if unblock[0] not in unblockDict:
+                        unblockDict[unblock[0]] = {unblock[1],}
+                    else:
+                        unblockDict[unblock[0]].add(unblock[1])
+                if filter:
+                    filterSet.add(filter)
+        return blockDict,unblockDict,filterSet
