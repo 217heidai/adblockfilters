@@ -2,6 +2,8 @@ import re
 import os
 from typing import List
 
+from loguru import logger
+
 class Rule(object):
     def __init__(self, name:str, type:str, url:str, latest:str, update:bool=False):
         self.name = name
@@ -18,6 +20,7 @@ class ReadMe(object):
         self.ruleList:List[Rule] = []
 
     def getRules(self) -> List[Rule]:
+        logger.info("resolve readme...")
         self.ruleList = []
         with open(self.filename, "r") as f:
             for line in f:
@@ -35,6 +38,7 @@ class ReadMe(object):
         self.ruleList = ruleList
     
     def regenerate(self):
+        logger.info("regenerate readme...")
         if os.path.exists(self.filename):
             os.remove(self.filename)
         

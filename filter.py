@@ -4,6 +4,8 @@ import re
 from concurrent.futures import ThreadPoolExecutor,as_completed
 from typing import List,Dict,Set,Tuple
 
+from loguru import logger
+
 from readme import Rule
 from resolver import Resolver
 
@@ -26,6 +28,7 @@ class Filter(object):
         # 线程池解析
         taskList = []
         for rule in self.ruleList:
+            logger.info("resolve %s..."%(rule.name))
             if rule.type == "host":
                 taskList.append(thread_pool.submit(resolver.resolveHost, rule))
             if rule.type == "dns":
@@ -47,22 +50,26 @@ class Filter(object):
     
     # 获取黑名单
     def __getBlackList(self, fileName:str) -> Set[str]:
+        logger.info("resolve black list...")
         blackSet = set()
         if os.path.exists(fileName):
             with open(fileName, 'r') as f:
                 blackList = f.readlines()
                 blackSet = set(map(lambda x: x.replace("\n", ""), blackList))
+        logger.info("black list: %d"%(len(blackSet)))
         return blackSet
 
     # 获取白名单
     def __getWhiteList(self, fileName:str) -> Set[str]:
-        whiteList = []
+        logger.info("resolve white list...")
+        whiteSet = set()
         if os.path.exists(fileName):
             with open(fileName, 'r') as f:
                 for line in f.readlines():
                     if not line.startswith("#") and len(line.replace("\n", "")) > 4:
-                        whiteList.append(line.replace("\n", ""))
-        return set(whiteList)
+                        whiteSet.add(line.replace("\n", ""))
+        logger.info("white list: %d"%(len(whiteSet)))
+        return whiteSet
 
     # 生成 dns 规则文件，同时返回全量域名
     def __generateDNS(self, blockDict:Dict[str, Set[str]], unblockDict:Dict[str, Set[str]], blackSet:Set[str], whiteSet:Set[str], fileName:str):
@@ -103,10 +110,13 @@ class Filter(object):
             
             return domanList,domanList_all
 
+        logger.info("generate adblock dns...")
+
         blockList,blockList_all = sort(blockDict, blackSet, whiteSet)
         unblockList,unblockList_all = sort(unblockDict, blackSet, whiteSet)
 
         # 备份全量域名，用于检查域名有效性生成黑名单
+        logger.info("generate adblock dns backup...")
         backupName = fileName[:-len("txt")] + "backup"
         if os.path.exists(backupName):
             os.remove(backupName)
@@ -115,6 +125,7 @@ class Filter(object):
                 f.write("%s\n"%(fiter))
             for fiter in unblockList_all:
                 f.write("%s\n"%(fiter))
+        logger.info("adblock dns backup: block=%d, unblock=%d"%(len(blockList_all), len(unblockList_all)))
 
         # 生成规则文件
         if os.path.exists(fileName):
@@ -134,9 +145,13 @@ class Filter(object):
                 f.write("||%s^\n"%(fiter))
             for fiter in unblockList:
                 f.write("@@||%s^\n"%(fiter))
+        
+        logger.info("adblock dns: block=%d, unblock=%d"%(len(blockList), len(unblockList)))
 
     # 生成 filter 规则文件
     def __generateFilter(self, filterSet:Set[str], whiteSet:Set[str], fileName:str):
+        logger.info("generate adblock filters...")
+
         filterList = list(filterSet - whiteSet) # 剔除白名单
         filterList.sort() # 排序
 
@@ -155,6 +170,8 @@ class Filter(object):
             f.write("!\n")
             for fiter in filterList:
                 f.write("%s\n"%(fiter))
+
+        logger.info("adblock filters: %d"%(len(filterList)))
 
     def generate(self):
         # 提取规则

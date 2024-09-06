@@ -5,6 +5,7 @@ import asyncio
 from typing import List,Tuple
 
 import httpx
+from loguru import logger
 
 from readme import Rule
 
@@ -20,6 +21,7 @@ class Updater(object):
         # 添加异步任务
         taskList = []
         for rule in self.ruleList:
+            logger.info("updating %s..."%(rule.name))
             task = asyncio.ensure_future(self.__Download(rule, path))
             taskList.append(task)
         # 等待异步任务结束
@@ -31,7 +33,8 @@ class Updater(object):
                 if new.name == rule.name:
                     rule.latest = new.latest
                     rule.update = new.update
-                    self.isNeedUpdate = self.isNeedUpdate ^ rule.update
+                    if rule.update:
+                        self.isNeedUpdate = rule.update
                     break
         return self.isNeedUpdate, self.ruleList
 
@@ -49,7 +52,6 @@ class Updater(object):
         return True
 
     async def __Download(self, rule:Rule, path:str) -> Rule:
-        isNeedUpdate = False
         fileName = path + "/" + rule.filename
         fileName_download = fileName + '.download'
         try:
@@ -69,16 +71,16 @@ class Updater(object):
                 sha256Old = self.__CalcFileSha256(fileName)
                 sha256New = self.__CalcFileSha256(fileName_download)
                 if sha256New != sha256Old:
-                    isNeedUpdate = True
+                    rule.update = True
                 os.remove(fileName)
             else:
-                isNeedUpdate = True
+                rule.update = True
 
             os.rename(fileName_download, fileName)
         except Exception as e:
-            print(f'%s download failed: %s' % (rule.filename, e))
+            logger.error(f'%s download failed: %s' % (rule.name, e))
         finally:
-            if isNeedUpdate:
+            if rule.update:
                 rule.latest = time.strftime("%Y/%m/%d", time.localtime())
-                rule.update = isNeedUpdate
+            logger.info("%s: latest=%s, update=%s"%(rule.name,rule.latest,rule.update))
             return rule

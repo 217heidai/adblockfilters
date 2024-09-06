@@ -5,6 +5,7 @@ from typing import Tuple,Dict,Set
 
 from tld import get_tld
 import IPy
+from loguru import logger
 
 from readme import Rule
 
@@ -12,7 +13,7 @@ class Resolver(object):
     def __init__(self, path:str):
         self.path = path
 
-    def __analysis(self, address):
+    def __analysis(self, address:str) -> Tuple[str]:
         try:
             res = get_tld(address, fix_protocol=True, as_object=True)
             return res.fld, res.subdomain
@@ -22,18 +23,18 @@ class Resolver(object):
                 ip = ip[:ip.rfind(":")]
             try:
                 ip_address = IPy.IP(ip)
+                if ip_address.iptype() != "PUBLIC":
+                    raise Exception('"%s": not public ip'%(address))
+                return address, ""
             except Exception as e: 
-                raise Exception ("not domain or ip: %s"%(address))
-            if ip_address.iptype() != "PUBLIC":
-                raise Exception ("not public ip: %s"%(address))
-            return address, ""
+                raise Exception('"%s": not domain or ip'%(address))
 
     # host 模式
-    def __resolveHost(self, line):
+    def __resolveHost(self, line) -> Tuple[str]:
         def match(pattern, string):
             return True if re.match(pattern, string) else False
         try:
-            block,unblock,filter=None,None,None
+            block=None
             while True:
                 # #* 注释
                 if match('^#.*', line):
@@ -47,17 +48,14 @@ class Resolver(object):
                     if domain not in ['localhost', 'localhost.localdomain', 'local', '0.0.0.0']:
                         block = self.__analysis(domain)
                         break
-                    print("无需保留的规则：%s"%(line))
-                    break
-                print("无需保留的规则：%s"%(line))
-                break
+                raise Exception('"%s": not keep'%(line))
         except Exception as e:
-            print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
+            logger.error("%s"%(e))
         finally:
-            return block,unblock,filter
+            return block
         
     # dns 模式
-    def __resolveDNS(self, line):
+    def __resolveDNS(self, line) -> Tuple[Tuple[str],Tuple[str],str]:
         def match(pattern, string):
             return True if re.match(pattern, string) else False
         try:
@@ -108,15 +106,14 @@ class Resolver(object):
                     filter = line
                     break
                 # other
-                print("无法识别的规则：%s"%(line))
-                break
+                raise Exception('"%s": not keep'%(line))
         except Exception as e:
-            print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
+            logger.error("%s"%(e))
         finally:
             return block,unblock,filter
         
     # filter 模式
-    def __resolveFilter(self, line):
+    def __resolveFilter(self, line) -> Tuple[Tuple[str],Tuple[str],str]:
         def match(pattern, string):
             return True if re.match(pattern, string) else False
         try:
@@ -175,7 +172,7 @@ class Resolver(object):
                 filter = line
                 break
         except Exception as e:
-            print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
+            logger.error("%s"%(e))
         finally:
             return block,unblock,filter
 
@@ -188,8 +185,6 @@ class Resolver(object):
 
         if not os.path.exists(filename):
             return blockDict,unblockDict,filterSet
-        
-        print("解析：%s..."%(rule.filename)) # 处理信息输出
 
         with open(filename, "r") as f:
             for line in f:
@@ -199,20 +194,14 @@ class Resolver(object):
                 if len(line) < 1:
                     continue
 
-                block,unblock,filter = self.__resolveHost(line)
+                block = self.__resolveHost(line)
                 
                 if block:
                     if block[0] not in blockDict:
                         blockDict[block[0]] = {block[1],}
                     else:
                         blockDict[block[0]].add(block[1])
-                if unblock:
-                    if unblock[0] not in unblockDict:
-                        unblockDict[unblock[0]] = {unblock[1],}
-                    else:
-                        unblockDict[unblock[0]].add(unblock[1])
-                if filter:
-                    filterSet.add(filter)
+        logger.info("%s: block=%d, unblock=%d, filter=%d"%(rule.name,len(blockDict),len(unblockDict),len(filterSet)))
         return blockDict,unblockDict,filterSet
     
     def resolveDNS(self, rule:Rule) -> Tuple[Dict[str,Set[str]],Dict[str,Set[str]],Set[str]]:
@@ -224,8 +213,6 @@ class Resolver(object):
 
         if not os.path.exists(filename):
             return blockDict,unblockDict,filterSet
-        
-        print("解析：%s..."%(rule.filename)) # 处理信息输出
 
         with open(filename, "r") as f:
             for line in f:
@@ -249,6 +236,7 @@ class Resolver(object):
                         unblockDict[unblock[0]].add(unblock[1])
                 if filter:
                     filterSet.add(filter)
+        logger.info("%s: block=%d, unblock=%d, filter=%d"%(rule.name,len(blockDict),len(unblockDict),len(filterSet)))
         return blockDict,unblockDict,filterSet
     
     def resolveFilter(self, rule:Rule) -> Tuple[Dict[str,Set[str]],Dict[str,Set[str]],Set[str]]:
@@ -260,8 +248,6 @@ class Resolver(object):
 
         if not os.path.exists(filename):
             return blockDict,unblockDict,filterSet
-        
-        print("解析：%s..."%(rule.filename)) # 处理信息输出
 
         with open(filename, "r") as f:
             for line in f:
@@ -285,4 +271,5 @@ class Resolver(object):
                         unblockDict[unblock[0]].add(unblock[1])
                 if filter:
                     filterSet.add(filter)
+        logger.info("%s: block=%d, unblock=%d, filter=%d"%(rule.name,len(blockDict),len(unblockDict),len(filterSet)))
         return blockDict,unblockDict,filterSet

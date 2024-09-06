@@ -1,7 +1,7 @@
 import os
-import sys
 import asyncio
 
+from loguru import logger
 from dns.asyncresolver import Resolver as DNSResolver
 
 class BlackList(object):
@@ -10,7 +10,8 @@ class BlackList(object):
         self.__domainlistFile = os.getcwd() + "/rules/adblockdns.backup"
         self.__maxTask = 500
 
-    def GenerateDomainList(self):
+    def __getDomainList(self):
+        logger.info("resolve adblock dns backup...")
         domainList = []
         try:
             if os.path.exists(self.__domainlistFile):
@@ -18,11 +19,12 @@ class BlackList(object):
                     tmp = f.readlines()
                     domainList = list(map(lambda x: x.replace("\n", ""), tmp))
         except Exception as e:
-            print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
+            logger.error("%s"%(e))
         finally:
+            logger.info("adblock dns backup: %d"%(len(domainList)))
             return domainList
     
-    async def pingx(self, dnsresolver, domain, semaphore):
+    async def __pingx(self, dnsresolver, domain, semaphore):
         async with semaphore: # 限制并发数，超过系统限制后会报错Too many open files
             host = domain
             port = None
@@ -38,7 +40,7 @@ class BlackList(object):
                     await writer.wait_closed()
                     isAvailable = True
                 except Exception as e:
-                    print("%s[%s]" % (domain, e if e else "Connect failed"))
+                    logger.error('"%s": %s' % (domain, e if e else "Connect failed"))
                     isAvailable = False
             else:
                 try:
@@ -49,11 +51,12 @@ class BlackList(object):
                     #    break
                     isAvailable = True
                 except Exception as e:
-                    print("%s[%s]" % (domain, e if e else "Resolver failed"))
+                    logger.error('"%s": %s' % (domain, e if e else "Resolver failed"))
                     isAvailable = False
             return domain, isAvailable
 
-    def GenerateBlackList(self, blackList):
+    def __generateBlackList(self, blackList):
+        logger.info("generate black list...")
         try:
             if os.path.exists(self.__blacklistFile):
                 os.remove(self.__blacklistFile)
@@ -61,10 +64,12 @@ class BlackList(object):
             with open(self.__blacklistFile, "w") as f:
                 for domain in blackList:
                     f.write("%s\n"%(domain))
+            logger.info("block domain: %d"%(len(blackList)))
         except Exception as e:
-            print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
+            logger.error("%s"%(e))
 
-    def TestDomain(self, domainList, nameservers, port=53):
+    def __testDomain(self, domainList, nameservers, port=53):
+        logger.info("resolve domain...")
         # 异步检测
         dnsresolver = DNSResolver()
         dnsresolver.nameservers = nameservers
@@ -75,7 +80,7 @@ class BlackList(object):
         # 添加异步任务
         taskList = []
         for domain in domainList:
-            task = asyncio.ensure_future(self.pingx(dnsresolver, domain, semaphore))
+            task = asyncio.ensure_future(self.__pingx(dnsresolver, domain, semaphore))
             taskList.append(task)
         # 等待异步任务结束
         loop.run_until_complete(asyncio.wait(taskList))
@@ -84,15 +89,17 @@ class BlackList(object):
         for task in taskList:
             domain, isAvailable = task.result()
             blackDict[domain] = isAvailable
+
+        logger.info("resolve domain: %d"%(len(blackDict)))
         return blackDict
 
-    def Create(self):
+    def generate(self):
         try:
-            domainList = self.GenerateDomainList()
+            domainList = self.__getDomainList()
             if len(domainList) < 1:
                 return
-
-            blackDict = self.TestDomain(domainList, ["127.0.0.1"], 5053) # 使用本地 smartdns 进行域名解析，配置3组国内、3组国际域名解析服务器，提高识别效率
+            
+            blackDict = self.__testDomain(domainList, ["127.0.0.1"], 5053) # 使用本地 smartdns 进行域名解析，配置3组国内、3组国际域名解析服务器，提高识别效率
 
             blackList = []
             for domain in domainList:
@@ -100,10 +107,10 @@ class BlackList(object):
                     blackList.append(domain)
 
             if len(blackList):
-                self.GenerateBlackList(self.__blacklistFile, blackList)
+                self.__generateBlackList(blackList)
         except Exception as e:
-            print("%s.%s: %s" % (self.__class__.__name__, sys._getframe().f_code.co_name, e))
+            logger.error("%s"%(e))
 
 if __name__ == "__main__":
     blackList = BlackList()
-    blackList.Create()
+    blackList.generate()
