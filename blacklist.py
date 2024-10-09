@@ -33,9 +33,9 @@ class BlackList(object):
             logger.info("adblock dns backup: %d"%(len(domainList)))
             return domainList
         
-    def __getDomainList_CN(self):
+    def __getDomainSet_CN(self):
         logger.info("resolve China domain list...")
-        domainList = []
+        domainSet = set()
         try:
             if os.path.exists(self.__domainlistFile_CN):
                 os.remove(self.__domainlistFile_CN)
@@ -49,16 +49,16 @@ class BlackList(object):
             if os.path.exists(self.__domainlistFile_CN):
                 with open(self.__domainlistFile_CN, 'r') as f:
                     tmp = f.readlines()
-                    domainList = list(map(lambda x: x.replace("\n", ""), tmp))
+                    domainSet = set(map(lambda x: x.replace("\n", ""), tmp))
         except Exception as e:
             logger.error("%s"%(e))
         finally:
-            logger.info("China domain list: %d"%(len(domainList)))
-            return domainList
+            logger.info("China domain list: %d"%(len(domainSet)))
+            return domainSet
         
-    def __getIPList_CN(self):
+    def __getIPDict_CN(self):
         logger.info("resolve China IP list...")
-        IPList = []
+        IPDict = dict()
         try:
             if os.path.exists(self.__iplistFile_CN):
                 os.remove(self.__iplistFile_CN)
@@ -68,15 +68,18 @@ class BlackList(object):
                 response.raise_for_status()
                 with open(self.__iplistFile_CN,'wb') as f:
                     f.write(response.content)
+            
             if os.path.exists(self.__iplistFile_CN):
                 with open(self.__iplistFile_CN, 'r') as f:
-                    tmp = f.readlines()
-                    IPList = list(map(lambda x: IPy.IP(x.replace("\n", "")), tmp))
+                    for line in f.readlines():
+                        row = line.replace("\n", "").split("/")
+                        ip, offset = row[0], int(row[1])
+                        IPDict[IPy.parseAddress(ip)[0]] = offset
         except Exception as e:
             logger.error("%s"%(e))
         finally:
-            logger.info("China IP list: %d"%(len(IPList)))
-            return IPList
+            logger.info("China IP list: %d"%(len(IPDict)))
+            return IPDict
     
     async def __resolve(self, dnsresolver, domain):
         ip = None
@@ -173,15 +176,16 @@ class BlackList(object):
         logger.info("resolve domain: %d"%(len(domainDict)))
         return domainDict
 
-    def __isChinaDomain(self, domain, ip, domainList_CN, IPList_CN):
+    def __isChinaDomain(self, domain, ip, domainSet_CN, IPDict_CN):
         isChinaDomain = False
         try:
             res = get_tld(domain, fix_protocol=True, as_object=True)
-            if res.fld in domainList_CN:
+            if res.fld in domainSet_CN:
                 isChinaDomain = True
             else:
-                for ipy in IPList_CN:
-                    if ip in ipy:
+                ip = IPy.parseAddress(ip)[0]
+                for k, v in IPDict_CN.items():
+                    if (ip ^ k) >> (32 - v)  == 0:
                         isChinaDomain = True
                         break
         except Exception as e: 
@@ -194,20 +198,20 @@ class BlackList(object):
             domainList = self.__getDomainList()
             if len(domainList) < 1:
                 return
-            #domainList = domainList[:2000] # for test
+            #domainList = domainList[:3000] # for test
             
             domainDict = self.__testDomain(domainList, ["127.0.0.1"], 5053) # 使用本地 smartdns 进行域名解析，配置3组国内、3组国际域名解析服务器，提高识别效率
             #domainDict = self.__testDomain(domainList, ["192.168.3.1"], 53) # for test
 
-            domainList_CN = self.__getDomainList_CN()
-            IPList_CN = self.__getIPList_CN()
+            domainSet_CN = self.__getDomainSet_CN()
+            IPDict_CN = self.__getIPDict_CN()
             blackList = []
-            if len(domainList_CN) > 100 and len(IPList_CN) > 100:
+            if len(domainSet_CN) > 100 and len(IPDict_CN) > 100:
                 thread_pool = ThreadPoolExecutor(max_workers=os.cpu_count() if os.cpu_count() > 4 else 4)
                 taskList = []
                 for domain in domainList:
                     if domainDict[domain]:
-                        taskList.append(thread_pool.submit(self.__isChinaDomain, domain, domainDict[domain], domainList_CN, IPList_CN))
+                        taskList.append(thread_pool.submit(self.__isChinaDomain, domain, domainDict[domain], domainSet_CN, IPDict_CN))
                     else:
                         blackList.append(domain)
                 # 获取解析结果
