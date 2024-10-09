@@ -78,6 +78,21 @@ class BlackList(object):
             logger.info("China IP list: %d"%(len(IPList)))
             return IPList
     
+    async def __resolve(self, dnsresolver, domain):
+        ip = None
+        try:
+            query_object = await dnsresolver.resolve(qname=domain, rdtype="A")
+            query_item = query_object.response.answer[0]
+            ipList = []
+            for item in query_item:
+                ipList.append('{}'.format(item))
+            logger.info("%s: %s" % (domain, ipList))
+            ip = ipList[0]
+        except Exception as e:
+            logger.error('"%s": %s' % (domain, e if e else "Resolver failed"))
+        finally:
+            return ip
+
     async def __pingx(self, dnsresolver, domain, semaphore):
         async with semaphore: # 限制并发数，超过系统限制后会报错Too many open files
             host = domain
@@ -96,16 +111,15 @@ class BlackList(object):
                 except Exception as e:
                     logger.error('"%s": %s' % (domain, e if e else "Connect failed"))
             else:
-                try:
-                    query_object = await dnsresolver.resolve(qname=host, rdtype="A")
-                    query_item = query_object.response.answer[0]
-                    ipList = []
-                    for item in query_item:
-                        ipList.append('{}'.format(item))
-                    logger.info("%s: %s" % (domain, ipList))
-                    ip = ipList[0]
-                except Exception as e:
-                    logger.error('"%s": %s' % (domain, e if e else "Resolver failed"))
+                while True:
+                    ip = await self.__resolve(dnsresolver, host)
+                    if ip is None:
+                        break
+                    try:
+                        IPy.IP(ip)
+                        break
+                    except Exception as e: 
+                        host = ip
             return domain, ip
 
     def __generateBlackList(self, blackList):
