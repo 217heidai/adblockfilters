@@ -182,10 +182,16 @@ class BlackList(object):
     def __isChinaDomain(self, domain, ipList, domainSet_CN, IPDict_CN):
         isChinaDomain = False
         try:
-            res = get_tld(domain, fix_protocol=True, as_object=True)
-            if res.fld in domainSet_CN:
-                isChinaDomain = True
-            else:
+            while True:
+                if domain[-3:] == ".cn":
+                    isChinaDomain = True
+                    break
+
+                res = get_tld(domain, fix_protocol=True, as_object=True)
+                if res.fld in domainSet_CN:
+                    isChinaDomain = True
+                    break
+
                 for ip in ipList:
                     ip = IPy.parseAddress(ip)[0]
                     for k, v in IPDict_CN.items():
@@ -194,6 +200,8 @@ class BlackList(object):
                             break
                     if isChinaDomain:
                         break
+                
+                break
         except Exception as e: 
             logger.error('"%s": not domain'%(domain))
         finally:
