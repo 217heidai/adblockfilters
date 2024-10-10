@@ -94,7 +94,9 @@ class BlackList(object):
             if query_item is None:
                 raise Exception("not A type")
             for item in query_item:
-                ipList.append('{}'.format(item))
+                ip = '{}'.format(item)
+                if ip != "0.0.0.0":
+                    ipList.append(ip)
         except Exception as e:
             logger.error('"%s": %s' % (domain, e if e else "Resolver failed"))
         finally:
@@ -118,7 +120,10 @@ class BlackList(object):
                 except Exception as e:
                     logger.error('"%s": %s' % (domain, e if e else "Connect failed"))
             else:
-                ipList = await self.__resolve(dnsresolver, host)
+                count = 3
+                while len(ipList) < 1 and count > 0:
+                    ipList = await self.__resolve(dnsresolver, host)
+                    count -= 1
 
             logger.info("%s: %s" % (domain, ipList))
             return domain, ipList
@@ -199,10 +204,10 @@ class BlackList(object):
             domainList = self.__getDomainList()
             if len(domainList) < 1:
                 return
-            #domainList = domainList[:3000] # for test
+            #domainList = domainList[:1000] # for test
             
             domainDict = self.__testDomain(domainList, ["127.0.0.1"], 5053) # 使用本地 smartdns 进行域名解析，配置3组国内、3组国际域名解析服务器，提高识别效率
-            #domainDict = self.__testDomain(domainList, ["192.168.3.1"], 53) # for test
+            #domainDict = self.__testDomain(domainList, ["1.12.12.12"], 53) # for test
 
             domainSet_CN = self.__getDomainSet_CN()
             IPDict_CN = self.__getIPDict_CN()
@@ -240,5 +245,6 @@ class BlackList(object):
             logger.error("%s"%(e))
 
 if __name__ == "__main__":
+    #logger.add(os.getcwd() + "/blacklist.log")
     blackList = BlackList()
     blackList.generate()
