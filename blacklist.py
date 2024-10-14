@@ -13,7 +13,7 @@ class BlackList(object):
     def __init__(self):
         self.__ChinalistFile = os.getcwd() + "/rules/china.txt"
         self.__blacklistFile = os.getcwd() + "/rules/black.txt"
-        self.__domainlistFile = os.getcwd() + "/rules/adblockdns.backup"
+        self.__domainlistFile = os.getcwd() + "/rules/domain.txt"
         self.__domainlistFile_CN = os.getcwd() + "/rules/direct-list.txt"
         self.__domainlistUrl_CN = "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/refs/heads/release/direct-list.txt"
         self.__iplistFile_CN = os.getcwd() + "/rules/CN-ip-cidr.txt"
@@ -111,6 +111,10 @@ class BlackList(object):
                 offset = domain.rfind(":")
                 host = domain[ : offset]
                 port = int(domain[offset + 1 : ])
+            try:
+                get_tld(host, fix_protocol=True, as_object=True) # 确认是否为域名
+            except Exception as e:
+                port = 80
             if port:
                 try:
                     _, writer = await asyncio.open_connection(host, port)
@@ -118,7 +122,15 @@ class BlackList(object):
                     await writer.wait_closed()
                     ipList.append(host)
                 except Exception as e:
-                    logger.error('"%s": %s' % (domain, e if e else "Connect failed"))
+                    if port == 80:
+                        port = 443
+                        try:
+                            _, writer = await asyncio.open_connection(host, port)
+                            writer.close()
+                            await writer.wait_closed()
+                            ipList.append(host)
+                        except Exception as e:
+                            logger.error('"%s": %s' % (domain, e if e else "Connect failed"))
             else:
                 count = 3
                 while len(ipList) < 1 and count > 0:
@@ -253,6 +265,12 @@ class BlackList(object):
             logger.error("%s"%(e))
 
 if __name__ == "__main__":
-    #logger.add(os.getcwd() + "/blacklist.log")
+    '''
+    # for test
+    logFile = os.getcwd() + "/adblock.log"
+    if os.path.exists(logFile):
+        os.remove(logFile)
+    logger.add(logFile)
+    '''
     blackList = BlackList()
     blackList.generate()
