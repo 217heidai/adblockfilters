@@ -153,15 +153,24 @@ class Filter(object):
             if filter.startswith('#%#var'):
                 filterList_var.append(filter)
                 continue
+            
             domain = filterDict[filter]
             if domain:
-                domainSet.add(domain)
                 if domain in blackSet: # 剔除黑名单
                     continue
-                if filter.startswith('||') and domain in blockSet: # 剔除 adblockdns 已拦截
-                    continue
-                if filter.startswith('@@||') and domain in unblockSet: # 剔除 adblockdns 已放行
-                    continue
+                try:
+                    res = get_tld(domain, fix_protocol=True, as_object=True)
+                    fld = res.fld
+                except Exception as e:
+                    fld = ''
+                if filter.startswith('@@'):
+                    if domain in unblockSet or fld in unblockSet: # 剔除 adblockdns 已放行
+                        continue
+                else:
+                    if domain in blockSet or fld in blockSet: # 剔除 adblockdns 已拦截
+                        continue
+                domainSet.add(domain)
+            
             filterList_final.append(filter)
 
         if os.path.exists(fileName):

@@ -30,8 +30,8 @@ class Resolver(object):
                         'ping',
                         'other',
                         'match-case',
-                        'ctag',
                         # AdGuard Advanced capabilities
+                        'ctag',
                         'all',
                         'redirect',
                         'stealth',
@@ -81,40 +81,36 @@ class Resolver(object):
             return block
 
     # 从 filter 规则中找出包含的域名
-    def __resolveFilterDomain_from_DNS(self, filter) -> Tuple[str, str]:
-        def match(pattern, string):
-            return True if re.match(pattern, string) else False
-        domain = None
-        try:
-            while True:
-                if filter.startswith('/'):
-                    break
-                if match('^\|\|.*\^\$ctag=.*', filter):
-                    domain_tmp = filter[len('||') : filter.find('^$ctag=')]
-                    try:
-                        get_tld(domain_tmp, fix_protocol=True, as_object=True) # 确认是否为域名
-                        domain = domain_tmp
-                    except Exception as e:
-                        raise Exception('"%s": not include domain'%(filter))
-                    break
-                raise Exception('"%s": can not resolve domain or ip'%(filter))
-        except Exception as e:
-            logger.error("%s"%(e))
-        finally:
-            return filter,domain
-
-    # 从 filter 规则中找出包含的域名
     def __resolveFilterDomain(self, filter) -> Tuple[str, str]:
-        def match(pattern, string):
+        def match(pattern, string) -> bool:
             return True if re.match(pattern, string) else False
         domain = None
         try:
             domain_tmp = None
             while True:
-                if filter.startswith('#%#var') or filter.startswith('###'):
+                '''
+                # for test
+                if filter == "@@|https://media.amazon.map.fastly.net^$script":
+                    print(filter)
+                '''
+                if filter.startswith('#%#var'):
                     break
-                # ||example.org^$option or @@||example.org^$option
-                if filter.startswith('||') or filter.startswith('@@||'):
+
+                if filter.startswith('###'):
+                    break
+
+                if filter.startswith('##') and filter.find('://') < 0:
+                    break
+
+                if match('^/.*/$', filter):
+                    break
+
+                if match('^\|\|.*\*.*\^$', filter):
+                    break
+
+                # ||example.org^$option
+                # @@||example.org^$option
+                if match('^\|\|.*\^\$.*', filter) or match('^@@\|\|.*\^\$.*', filter):
                     for opt in self.options:
                         if match('^\|\|.*\^\$%s'%(opt), filter):
                             domain_tmp = filter[len('||'):filter.find('^$%s'%(opt))]
@@ -123,7 +119,27 @@ class Resolver(object):
                             domain_tmp = filter[len('@@||'):filter.find('^$%s'%(opt))]
                             break
                     break
-                
+                # ||example.org
+                if match('^\|\|.*', filter):
+                    domain_tmp = filter[len('||'):]
+                    if domain_tmp.find('/') > 0:
+                        domain_tmp = domain_tmp[:domain_tmp.find('/')]
+                    if domain_tmp.find('^*') > 0:
+                        domain_tmp = domain_tmp[:domain_tmp.find('^*')]
+                    if domain_tmp.find('*') > 0:
+                        domain_tmp = domain_tmp[:domain_tmp.find('*')]
+                    break
+                # @@||example.org
+                if match('^@@\|\|.*', filter):
+                    domain_tmp = filter[len('@@||'):]
+                    if domain_tmp.find('/') > 0:
+                        domain_tmp = domain_tmp[:domain_tmp.find('/')]
+                    if domain_tmp.find('^*') > 0:
+                        domain_tmp = domain_tmp[:domain_tmp.find('^*')]
+                    if domain_tmp.find('*') > 0:
+                        domain_tmp = domain_tmp[:domain_tmp.find('*')]
+                    break
+
                 # ip$network
                 if match('.*\$network$', filter):
                     domain_tmp = filter[:-len('$network')]
@@ -136,9 +152,47 @@ class Resolver(object):
                     domain_tmp = filter[:-1]
                     break
                 
-                # example.org#*
-                if match('.*#.*', filter) and not filter.startswith('#') and not filter.endswith('#'):
-                    domain_tmp = filter[ : filter.find('#')]
+                # ##
+                # example.com##selector
+                # ~example.com##selector
+                # example.com,example.edu##selector
+                # example.com,~mail.example.com##selector
+                connector = '##'
+                if match('.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
+                    domain_tmp = filter[ : filter.find(connector)]
+                    if domain_tmp.find(',') > 0:
+                        domain_tmp = None
+                    break
+                # #?#
+                # example.com#?#selector
+                # ~example.com#?#selector
+                # example.com,example.edu#?#selector
+                # example.com,~mail.example.com#?#selector
+                connector = '#\?#'
+                if match('.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
+                    domain_tmp = filter[ : filter.find(connector)]
+                    if domain_tmp.find(',') > 0:
+                        domain_tmp = None
+                    break
+                # #@#
+                # example.com#@#selector
+                # ~example.com#@#selector
+                # example.com,example.edu#@#selector
+                # example.com,~mail.example.com#@#selector
+                connector = '#@#'
+                if match('.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
+                    domain_tmp = filter[ : filter.find(connector)]
+                    if domain_tmp.find(',') > 0:
+                        domain_tmp = None
+                    break
+                # #$#
+                # example.com#$#selector
+                # ~example.com#$#selector
+                # example.com,example.edu#$#selector
+                # example.com,~mail.example.com#$#selector
+                connector = '#\$#'
+                if match('.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
+                    domain_tmp = filter[ : filter.find(connector)]
                     if domain_tmp.find(',') > 0:
                         domain_tmp = None
                     break
@@ -148,6 +202,10 @@ class Resolver(object):
                     domain_tmp = filter[filter.find('http://') + len('http://'):]
                     if domain_tmp.startswith('*.'):
                         domain_tmp = domain_tmp[2:]
+                    if domain_tmp.find("'") > 0:
+                        domain_tmp = domain_tmp[:domain_tmp.find("'")]
+                    if domain_tmp.find("^") > 0:
+                        domain_tmp = domain_tmp[:domain_tmp.find("^")]
                     if domain_tmp.find(',') > 0:
                         domain_tmp = None
                     break
@@ -157,6 +215,10 @@ class Resolver(object):
                     domain_tmp = filter[filter.find('https://') + len('https://'):]
                     if domain_tmp.startswith('*.'):
                         domain_tmp = domain_tmp[2:]
+                    if domain_tmp.find("'") > 0:
+                        domain_tmp = domain_tmp[:domain_tmp.find("'")]
+                    if domain_tmp.find("^") > 0:
+                        domain_tmp = domain_tmp[:domain_tmp.find("^")]
                     if domain_tmp.find(',') > 0:
                         domain_tmp = None
                     break
@@ -167,7 +229,7 @@ class Resolver(object):
             if domain_tmp:
                 if domain_tmp.find('"') > 0:
                     domain_tmp = domain_tmp[:domain_tmp.find('"')]
-                if domain_tmp.startswith('~') or domain_tmp.startswith('-'):
+                if domain_tmp.startswith('~') or domain_tmp.startswith('/') or domain_tmp.startswith('.'):
                     domain_tmp = domain_tmp[1:]
                 if domain_tmp.find('.') < 0:
                     raise Exception('"%s": not include domain or ip'%(filter))
@@ -241,7 +303,7 @@ class Resolver(object):
                 raise Exception('"%s": not keep'%(line))
             
             if filter:
-                filter = self.__resolveFilterDomain_from_DNS(filter)
+                filter = self.__resolveFilterDomain(filter)
         except Exception as e:
             logger.error("%s"%(e))
         finally:
@@ -295,6 +357,14 @@ class Resolver(object):
                 # @@||example.org^: unblock access to the example.org domain and all its subdomains.
                 if match('^@@\|\|.*\^$', line):
                     domain = line[4:-1]
+                    if domain.find('*') >= 0 or domain.find('/') >= 0:
+                        filter = line
+                        break
+                    unblock = self.__analysis(domain)
+                    break
+                # @@||example.org^|: unblock access to the example.org domain and all its subdomains.
+                if match('^@@\|\|.*\^\|$', line):
+                    domain = line[4:-2]
                     if domain.find('*') >= 0 or domain.find('/') >= 0:
                         filter = line
                         break

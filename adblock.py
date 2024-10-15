@@ -19,10 +19,11 @@ class ADBlock(object):
         for rule in ruleList:
             if rule.type in ['filter']:
                 testList.append(rule)
-        #    if rule.name in ["AdGuard Chinese filter"]:
+        #    if rule.name in ["AdGuard Mobile Ads filter"]: # "AdRules DNS List", "CJX's Annoyance List", "EasyList China", "EasyList", "EasyPrivacy", "jiekouAD", "xinggsf mv", "xinggsf rule"
         #        testList.append(rule)
         ruleList = testList
         '''
+        
         # 更新上游规
         updater = Updater(ruleList)
         update, ruleList = updater.update(self.pwd + '/rules')
