@@ -44,12 +44,6 @@ class Updater(object):
             sha256obj.update(f.read())
             hash_value = sha256obj.hexdigest()
             return hash_value
-        
-    def __isConfigFile(self, filename):
-        filestats = os.stat(filename)
-        if filestats.st_size < 1024 * 4:
-            return False
-        return True
 
     async def __Download(self, rule:Rule, path:str) -> Rule:
         fileName = path + "/" + rule.filename
@@ -61,11 +55,11 @@ class Updater(object):
             async with httpx.AsyncClient() as client:
                 response = await client.get(rule.url)
                 response.raise_for_status()
+                contentType = response.headers.get("Content-Type")
+                if contentType.find("text/plain") < 0:
+                    raise Exception("Content-Type[%s] error"%(contentType))
                 with open(fileName_download,'wb') as f:
                     f.write(response.content)
-            
-            if not self.__isConfigFile(fileName_download):
-                raise Exception("not rule file")
 
             if os.path.exists(fileName):
                 sha256Old = self.__CalcFileSha256(fileName)

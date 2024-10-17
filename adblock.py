@@ -23,7 +23,6 @@ class ADBlock(object):
         #        testList.append(rule)
         ruleList = testList
         '''
-        
         # 更新上游规
         updater = Updater(ruleList)
         update, ruleList = updater.update(self.pwd + '/rules')
