@@ -37,22 +37,33 @@ class Resolver(object):
                         'stealth',
                         'domain'
                     }
-
-    def __analysis(self, address:str) -> Tuple[str]:
+    
+    def __ip_or_domain(self, address:str) -> Tuple[str]: # ip, fld, subdomain
+        ip, fld, subdomain = None, None, None
         try:
             res = get_tld(address, fix_protocol=True, as_object=True)
-            return res.fld, res.subdomain
-        except Exception as e: 
-            ip = address
-            if ip.rfind(":") > 0:
-                ip = ip[:ip.rfind(":")]
+            fld = res.fld
+            subdomain = res.subdomain
+        except Exception as e:
             try:
-                ip_address = IPy.IP(ip)
-                if ip_address.iptype() != "PUBLIC":
-                    raise Exception('"%s": not public ip'%(address))
-                return address, ""
-            except Exception as e: 
-                raise Exception('"%s": not domain or ip'%(address))
+                ip_address = IPy.IP(address)
+                if ip_address.iptype() == "PUBLIC":
+                    ip = address
+            except Exception as e:
+                pass
+        finally:
+            return ip, fld, subdomain
+    
+    def __analysis(self, address:str) -> Tuple[str]:
+        address_tmp = address
+        if address.rfind(":") > 0:
+            address_tmp = address[ : address.rfind(":")]
+        ip, fld, subdomain = self.__ip_or_domain(address_tmp)
+        if ip:
+            return address, "" # 可能包含port，因此直接return address
+        if fld:
+            return fld, subdomain
+        raise Exception('"%s": not domain or public ip'%(address))
 
     # host 模式
     def __resolveHost(self, line) -> Tuple[str]:
@@ -234,20 +245,13 @@ class Resolver(object):
                 if domain_tmp.find('.') < 0:
                     raise Exception('"%s": not include domain or ip'%(filter))
                 try:
-                    res = get_tld(domain_tmp, fix_protocol=True, as_object=True) # 确认是否为域名
-                    if len(res.subdomain) > 0:
-                        domain = "%s.%s"%(res.subdomain,res.fld)
+                    fld, subdomain = self.__analysis(domain_tmp)
+                    if len(subdomain) > 0:
+                        domain = "%s.%s"%(subdomain,fld)
                     else:
-                        domain = "%s"%(res.fld)
+                        domain = "%s"%(fld)
                 except Exception as e:
-                    ip = domain_tmp
-                    if ip.find(":") > 0:
-                        ip = ip[:ip.find(":")]
-                    try:
-                        IPy.IP(ip)
-                        domain = domain_tmp
-                    except Exception as e: 
-                        raise Exception('"%s": not include domain or ip'%(filter))
+                    raise Exception('"%s": not include domain or ip'%(filter))
         except Exception as e:
             logger.error("%s"%(e))
         finally:

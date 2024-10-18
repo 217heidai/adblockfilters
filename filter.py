@@ -77,7 +77,10 @@ class Filter(object):
     def __generateDNS(self, blockDict:Dict[str, Set[str]], unblockDict:Dict[str, Set[str]], blackSet:Set[str], whiteSet:Set[str], fileName:str) -> Tuple[Set[str], Set[str]]:
         # 去重、排序
         def sort(domainDict:Dict[str, Set[str]], blackSet:Set[str], whiteSet:Set[str]) -> Tuple[List[str], Set[str]]:
-            def repetition(l):
+            def repetition(l): # 短域名已被拦截，则干掉所有长域名。如'a.example'、'b.example'、'example'，则只保留'example'
+                l = sorted(l, key = lambda item:len(item), reverse=False) # 按从短到长排序
+                if l[0] == '':
+                    return l[:1]
                 if len(l) < 2:
                     return l
                 tmp = set()
@@ -88,28 +91,47 @@ class Filter(object):
                 l = list(set(l)-tmp)
                 l.sort()
                 return l
+            def get_domain(fld, subdomain):
+                if len(subdomain) > 0:
+                    domain = ("%s.%s")%(subdomain, fld)
+                else:
+                    domain = ("%s")%(fld)
+                return domain
             domanList = []
             domanSet_all = set()
             fldList = list(domainDict.keys())
             fldList.sort() # 排序
             for fld in fldList:
-                subdomainList = sorted(list(domainDict[fld]), key = lambda item:len(item), reverse=False)
-                if '' == subdomainList[0] and fld not in whiteSet: # 二级域名已被拦截，则干掉所有子域名。如二级域名在白名单中，则不拦截二级域名，只拦截三级域名
-                    subdomainList = ['']
-                subdomainList = list(filter(None, subdomainList)) # 去空
-                if len(subdomainList) > 0:
-                    subdomainList = repetition(subdomainList) # 短域名已被拦截，则干掉所有长域名。如'a.example'、'b.example'、'example'，则只保留'example'
-                    for subdomain in subdomainList:
-                        domain = "%s.%s"%(subdomain, fld)
-                        if domain not in blackSet and domain not in whiteSet: # 剔除已无法访问的域名blackSet、需要保留的域名whiteSet
+                subdomainList_origin = list(domainDict[fld])
+                subdomainList = repetition(subdomainList_origin) # 短域名已被拦截，则干掉所有长域名。如'a.example'、'b.example'、'example'，则只保留'example'
+                for subdomain in subdomainList:
+                    subdomain_not_black = False
+                    for _subdomain in list(set(subdomainList_origin) - set(subdomainList)):
+                        if len(subdomain) > 0:
+                            if re.match('.*\.%s$'%(subdomain), _subdomain):
+                                _domain = get_domain(fld, _subdomain)
+                                if _domain not in blackSet:
+                                    subdomain_not_black = True
+                                    break
+                        else:
+                            _domain = get_domain(fld, _subdomain)
+                            if _domain not in blackSet:
+                                subdomain_not_black = True
+                                break
+                    
+                    domain = get_domain(fld, subdomain)
+                    if domain not in whiteSet:
+                        if domain not in blackSet:
                             domanList.append(domain)
-                        domanSet_all.add(domain)
-                else:
-                    domain = fld
-                    if domain not in blackSet and domain not in whiteSet: # 剔除已无法访问的域名blackSet、需要保留的域名whiteSet
-                        domanList.append(domain)
+                        else:
+                            if subdomain_not_black: # 只要子域名有一个未black，仍然保留
+                                domanList.append(domain)
+
+                # 全域名保留，用于后续验证连通性
+                for subdomain in subdomainList_origin: 
+                    domain = get_domain(fld, subdomain)
                     domanSet_all.add(domain)
-            
+                
             return domanList,domanSet_all
 
         logger.info("generate adblock dns...")
