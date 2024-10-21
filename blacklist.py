@@ -1,5 +1,6 @@
 import os
 import asyncio
+import re
 from concurrent.futures import ThreadPoolExecutor,as_completed
 
 import httpx
@@ -9,6 +10,87 @@ from loguru import logger
 from dns.asyncresolver import Resolver as DNSResolver
 from dns.rdatatype import RdataType as DNSRdataType
 
+
+class ChinaDomian(object):
+    def __init__(self, fileName, url):
+        self.__fileName = fileName
+        self.__url = url
+        self.fullSet = set()
+        self.domainSet = set()
+        self.regexpSet = set()
+        self.keywordSet = set()
+        self.__update()
+        self.__resolve()
+
+    def __update(self):
+        try:
+            if os.path.exists(self.__fileName):
+                os.remove(self.__fileName)
+            
+            with httpx.Client() as client:
+                response = client.get(self.__url)
+                response.raise_for_status()
+                with open(self.__fileName,'wb') as f:
+                    f.write(response.content)
+        except Exception as e:
+            logger.error("%s"%(e))
+    
+    def __isDomain(self, address):
+        fld, subdomain = '', ''
+        try:
+            res = get_tld(address, fix_protocol=True, as_object=True) # 确认是否为域名
+            fld, subdomain = res.fld, res.subdomain
+        except Exception as e:
+            logger.error("%s: not domain"%(address))
+        finally:
+            return fld, subdomain
+
+    def __resolve(self):
+        try:
+            if not os.path.exists(self.__fileName):
+                return
+            
+            with open(self.__fileName, 'r') as f:
+                for line in f:
+                    # 去掉换行符
+                    line = line.replace('\r', '').replace('\n', '').strip()
+                    # 去掉空行
+                    if len(line) < 1:
+                        continue
+                    # 去掉注释
+                    if line.startswith('#'):
+                        continue
+                    if line.find('#') > 0:
+                        line = line[:line.find('#')].strip()
+                    
+                    # regexp
+                    if line.startswith('regexp:'):
+                        self.regexpSet.add(line[len('regexp:'):])
+                        continue
+                    
+                    # keyword
+                    if line.startswith('keyword:'):
+                        self.keywordSet.add(line[len('keyword:'):])
+                        continue
+                    
+                    if line.startswith('full:'):
+                        domain = line[len('full:'):]
+                    elif line.startswith('domain:'):
+                        domain = line[len('domain:'):]
+                    else:
+                        domain = line
+                    fld, subdomian = self.__isDomain(domain)
+                    if len(fld) > 0:
+                        if len(subdomian) > 0:
+                            self.fullSet.add(domain)
+                        else:
+                            self.domainSet.add(domain)
+                    else:
+                        logger.error("%s: not domain[domain]"%(line))
+        except Exception as e:
+            logger.error("%s"%(e))
+
+
 class BlackList(object):
     def __init__(self):
         self.__ChinalistFile = os.getcwd() + "/rules/china.txt"
@@ -16,6 +98,10 @@ class BlackList(object):
         self.__domainlistFile = os.getcwd() + "/rules/domain.txt"
         self.__domainlistFile_CN = os.getcwd() + "/rules/direct-list.txt"
         self.__domainlistUrl_CN = "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/refs/heads/release/direct-list.txt"
+        self.__domainlistFile_CN_Apple = os.getcwd() + "/rules/apple-cn.txt"
+        self.__domainlistUrl_CN_Apple = "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/refs/heads/release/apple-cn.txt"
+        self.__domainlistFile_CN_Google = os.getcwd() + "/rules/google-cn.txt"
+        self.__domainlistUrl_CN_Google = "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/refs/heads/release/google-cn.txt"
         self.__iplistFile_CN = os.getcwd() + "/rules/CN-ip-cidr.txt"
         self.__iplistUrl_CN = "https://raw.githubusercontent.com/Hackl0us/GeoIP2-CN/refs/heads/release/CN-ip-cidr.txt"
         self.__maxTask = 500
@@ -36,26 +122,21 @@ class BlackList(object):
         
     def __getDomainSet_CN(self):
         logger.info("resolve China domain list...")
-        domainSet = set()
+        fullSet,domainSet,regexpSet,keywordSet = set(),set(),set(),set()
         try:
-            if os.path.exists(self.__domainlistFile_CN):
-                os.remove(self.__domainlistFile_CN)
-            
-            with httpx.Client() as client:
-                response = client.get(self.__domainlistUrl_CN)
-                response.raise_for_status()
-                with open(self.__domainlistFile_CN,'wb') as f:
-                    f.write(response.content)
-            
-            if os.path.exists(self.__domainlistFile_CN):
-                with open(self.__domainlistFile_CN, 'r') as f:
-                    tmp = f.readlines()
-                    domainSet = set(map(lambda x: x.replace("\n", ""), tmp))
+            domain_cn = ChinaDomian(self.__domainlistFile_CN, self.__domainlistUrl_CN)
+            domain_apple = ChinaDomian(self.__domainlistFile_CN_Apple, self.__domainlistUrl_CN_Apple)
+            domain_google = ChinaDomian(self.__domainlistFile_CN_Google, self.__domainlistUrl_CN_Google)
+
+            fullSet = domain_cn.fullSet | domain_apple.fullSet | domain_google.fullSet
+            domainSet = domain_cn.domainSet | domain_apple.domainSet | domain_google.domainSet
+            regexpSet = domain_cn.regexpSet | domain_apple.regexpSet | domain_google.regexpSet
+            keywordSet = domain_cn.keywordSet | domain_apple.keywordSet | domain_google.keywordSet
         except Exception as e:
             logger.error("%s"%(e))
         finally:
-            logger.info("China domain list: %d"%(len(domainSet)))
-            return domainSet
+            logger.info("China domain list: full[%d], domain[%d], regexp[%d], keyword[%d]"%(len(fullSet),len(domainSet),len(regexpSet),len(keywordSet)))
+            return fullSet,domainSet,regexpSet,keywordSet
         
     def __getIPDict_CN(self):
         logger.info("resolve China IP list...")
@@ -191,28 +272,52 @@ class BlackList(object):
         logger.info("resolve domain: %d"%(len(domainDict)))
         return domainDict
 
-    def __isChinaDomain(self, domain, ipList, domainSet_CN, IPDict_CN):
+    def __isChinaDomain(self, domain, ipList, fullSet_CN, domainSet_CN, regexpSet_CN, keywordSet_CN, IPDict_CN):
         isChinaDomain = False
         try:
+            if domain.find(':') > 0:
+                domain = domain[ : domain.find(':')]
+            
             while True:
-                if domain[-3:] == ".cn":
-                    isChinaDomain = True
-                    break
-
-                res = get_tld(domain, fix_protocol=True, as_object=True)
-                if res.fld in domainSet_CN:
-                    isChinaDomain = True
-                    break
-
-                for ip in ipList:
-                    ip = IPy.parseAddress(ip)[0]
-                    for k, v in IPDict_CN.items():
-                        if (ip ^ k) >> (32 - v)  == 0:
+                try:
+                    res = get_tld(domain, fix_protocol=True, as_object=True)
+                    if domain[-3:] == ".cn":
+                        isChinaDomain = True
+                        break
+                    # full:
+                    if domain in fullSet_CN:
+                        isChinaDomain = True
+                        break
+                    # doamin:
+                    if res.fld in domainSet_CN:
+                        isChinaDomain = True
+                        break
+                    # regexp:
+                    for regexp in regexpSet_CN:
+                        if re.match(regexp, domain):
                             isChinaDomain = True
                             break
                     if isChinaDomain:
                         break
-                
+                    # keyword:
+                    for keyword in keywordSet_CN:
+                        if re.match(".*%s.*"%(keyword), domain):
+                            isChinaDomain = True
+                            break
+                    if isChinaDomain:
+                        break
+                    # IP
+                    raise Exception("try to resolve ip")
+                except Exception as e:
+                    # IP
+                    for ip in ipList:
+                        ip = IPy.parseAddress(ip)[0]
+                        for k, v in IPDict_CN.items():
+                            if (ip ^ k) >> (32 - v)  == 0:
+                                isChinaDomain = True
+                                break
+                        if isChinaDomain:
+                            break
                 break
         except Exception as e: 
             logger.error('"%s": not domain'%(domain))
@@ -229,7 +334,7 @@ class BlackList(object):
             domainDict = self.__testDomain(domainList, ["127.0.0.1"], 5053) # 使用本地 smartdns 进行域名解析，配置3组国内、3组国际域名解析服务器，提高识别效率
             #domainDict = self.__testDomain(domainList, ["1.12.12.12"], 53) # for test
 
-            domainSet_CN = self.__getDomainSet_CN()
+            fullSet_CN,domainSet_CN,regexpSet_CN,keywordSet_CN = self.__getDomainSet_CN()
             IPDict_CN = self.__getIPDict_CN()
             blackList = []
             if len(domainSet_CN) > 100 and len(IPDict_CN) > 100:
@@ -237,7 +342,7 @@ class BlackList(object):
                 taskList = []
                 for domain in domainList:
                     if len(domainDict[domain]):
-                        taskList.append(thread_pool.submit(self.__isChinaDomain, domain, domainDict[domain], domainSet_CN, IPDict_CN))
+                        taskList.append(thread_pool.submit(self.__isChinaDomain, domain, domainDict[domain], fullSet_CN, domainSet_CN, regexpSet_CN, keywordSet_CN, IPDict_CN))
                     else:
                         blackList.append(domain)
                 # 获取解析结果
