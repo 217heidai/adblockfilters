@@ -222,11 +222,14 @@ class Filter(object):
         if os.path.exists(fileName):
             os.remove(fileName)
 
+        domainList = list(domainSet)
+        domainList.sort() # 排序
+
         with open(fileName, 'a') as f:
-            for domain in domainSet:
+            for domain in domainList:
                 f.write("%s\n"%(domain))
         
-        logger.info("domain backup: %d"%(len(domainSet)))
+        logger.info("domain backup: %d"%(len(domainList)))
 
     def generate(self):
         # 提取规则
