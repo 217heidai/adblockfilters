@@ -135,6 +135,8 @@ class Resolver(object):
                     domain_tmp = filter[len('||'):]
                     if domain_tmp.find('/') > 0:
                         domain_tmp = domain_tmp[:domain_tmp.find('/')]
+                    if domain_tmp.find('$') > 0:
+                        domain_tmp = domain_tmp[:domain_tmp.find('$')]
                     if domain_tmp.find('^*') > 0:
                         domain_tmp = domain_tmp[:domain_tmp.find('^*')]
                     if domain_tmp.find('*') > 0:
@@ -181,7 +183,7 @@ class Resolver(object):
                 # example.com,~mail.example.com#?#selector
                 connector = '#\?#'
                 if match('.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
-                    domain_tmp = filter[ : filter.find(connector)]
+                    domain_tmp = filter[ : filter.find('#?#')] # 需去掉转义符'#\?#' -> '#?#'
                     if domain_tmp.find(',') > 0:
                         domain_tmp = None
                     break
@@ -203,7 +205,7 @@ class Resolver(object):
                 # example.com,~mail.example.com#$#selector
                 connector = '#\$#'
                 if match('.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
-                    domain_tmp = filter[ : filter.find(connector)]
+                    domain_tmp = filter[ : filter.find('#$#')] # 需去掉转义符'#\$#' -> '#$#'
                     if domain_tmp.find(',') > 0:
                         domain_tmp = None
                     break
@@ -240,9 +242,13 @@ class Resolver(object):
             if domain_tmp:
                 if domain_tmp.find('"') > 0:
                     domain_tmp = domain_tmp[:domain_tmp.find('"')]
+                if domain_tmp.startswith('*.') > 0:
+                    domain_tmp = domain_tmp[len('*.'):]
                 if domain_tmp.startswith('~') or domain_tmp.startswith('/') or domain_tmp.startswith('.'):
                     domain_tmp = domain_tmp[1:]
-                if domain_tmp.find('.') < 0:
+                if domain_tmp.find('/') > 0:
+                    domain_tmp = domain_tmp[:domain_tmp.find('/')]
+                if len(domain_tmp) < 4 or domain_tmp.find('.') < 0 or domain_tmp.find('*') > 0 or domain_tmp[-1]=='.':
                     raise Exception('"%s": not include domain or ip'%(filter))
                 try:
                     fld, subdomain = self.__analysis(domain_tmp)

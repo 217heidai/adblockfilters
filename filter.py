@@ -72,9 +72,20 @@ class Filter(object):
                         whiteSet.add(line.replace("\n", ""))
         logger.info("white list: %d"%(len(whiteSet)))
         return whiteSet
+    
+    # 获取 China domian 清单
+    def __getChinaList(self, fileName:str) -> Set[str]:
+        logger.info("resolve China list...")
+        ChinaSet = set()
+        if os.path.exists(fileName):
+            with open(fileName, 'r') as f:
+                ChinaList = f.readlines()
+                ChinaSet = set(map(lambda x: x.replace("\n", ""), ChinaList))
+        logger.info("China list: %d"%(len(ChinaSet)))
+        return ChinaSet
 
     # 生成 dns 规则文件，同时返回全量域名
-    def __generateDNS(self, blockDict:Dict[str, Set[str]], unblockDict:Dict[str, Set[str]], blackSet:Set[str], whiteSet:Set[str], fileName:str) -> Tuple[Set[str], Set[str]]:
+    def __generateDNS(self, blockDict:Dict[str, Set[str]], unblockDict:Dict[str, Set[str]], blackSet:Set[str], whiteSet:Set[str], fileName:str) -> Tuple[list[str], Set[str]]:
         # 去重、排序
         def sort(domainDict:Dict[str, Set[str]], blackSet:Set[str], whiteSet:Set[str]) -> Tuple[List[str], Set[str]]:
             def repetition(l): # 短域名已被拦截，则干掉所有长域名。如'a.example'、'b.example'、'example'，则只保留'example'
@@ -159,10 +170,45 @@ class Filter(object):
                 f.write("@@||%s^\n"%(fiter))
         
         logger.info("adblock dns: block=%d, unblock=%d"%(len(blockList), len(unblockList)))
-        return set(blockList), set(unblockList), blockSet_all | unblockSet_all
+        return blockList, unblockList, blockSet_all | unblockSet_all
+
+    # 生成 dns 规则文件
+    def __generateDNSLite(self, blockList:List[str], unblockList:List[str], ChinaSet:Set[str], fileName:str):
+        logger.info("generate adblock dns lite...")
+
+        blockList_lite = []
+        for domain in blockList:
+            if domain in ChinaSet:
+                blockList_lite.append(domain)
+        
+        unblockList_lite = []
+        for domain in unblockList:
+            if domain in ChinaSet:
+                unblockList_lite.append(domain)
+
+        # 生成规则文件
+        if os.path.exists(fileName):
+            os.remove(fileName)    
+        with open(fileName, 'a') as f:
+            f.write("!\n")
+            f.write("! Title: AdBlock DNS Lite\n")
+            f.write("! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：1Hosts (Lite)、AdGuard Base filter、AdGuard Base filter、AdGuard DNS filter、AdRules DNS List、Hblock、NEO DEV HOST、OISD Basic、1024 hosts、ad-wars hosts、StevenBlack hosts、xinggsf、EasyList、Easylist China、EasyPrivacy、CJX's Annoyance List、SmartTV Blocklist、AWAvenue Ads Rule、jiekouAD。Lite 版仅针对国内域名拦截。\n")
+            f.write("! Homepage: https://github.com/217heidai/adblockfilters\n")
+            f.write("! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnslite.txt\n")
+            f.write("! Version: %s\n"%(time.strftime("%Y%m%d%H%M%S", time.localtime())))
+            f.write("! Last modified: %s\n"%(time.strftime("%Y/%m/%d %H:%M:%S", time.localtime())))
+            f.write("! Blocked domains: %s\n"%(len(blockList_lite)))
+            f.write("! unBlocked domains: %s\n"%(len(unblockList_lite)))
+            f.write("!\n")
+            for fiter in blockList_lite:
+                f.write("||%s^\n"%(fiter))
+            for fiter in unblockList_lite:
+                f.write("@@||%s^\n"%(fiter))
+        
+        logger.info("adblock dns: block=%d, unblock=%d"%(len(blockList_lite), len(unblockList_lite)))
 
     # 生成 filter 规则文件
-    def __generateFilter(self, filterDict:Dict[str,str], blockSet:Set[str], unblockSet:Set[str], blackSet:Set[str], whiteSet:Set[str], fileName:str):
+    def __generateFilter(self, filterDict:Dict[str,str], blockSet:Set[str], unblockSet:Set[str], blackSet:Set[str], whiteSet:Set[str], fileName:str) -> Tuple[list[str], Set[str]]:
         logger.info("generate adblock filters...")
 
         filterList = list(set(filterDict) - whiteSet) # 剔除白名单
@@ -170,7 +216,7 @@ class Filter(object):
         # 与 adblockdns 去重
         filterList_var = []
         filterList_final = []
-        domainSet = set()
+        domainSet_all = set()
         for filter in filterList:
             if filter.startswith('#%#var'):
                 filterList_var.append(filter)
@@ -191,13 +237,12 @@ class Filter(object):
                 else:
                     if domain in blockSet or fld in blockSet: # 剔除 adblockdns 已拦截
                         continue
-                domainSet.add(domain)
+                domainSet_all.add(domain)
             
             filterList_final.append(filter)
 
         if os.path.exists(fileName):
             os.remove(fileName)
-        
         with open(fileName, 'a') as f:
             f.write("!\n")
             f.write("! Title: AdBlock Filter\n")
@@ -214,7 +259,39 @@ class Filter(object):
                 f.write("%s\n"%(fiter))
 
         logger.info("adblock filters: %d[%d]"%(len(filterList_final), len(filterList)))
-        return domainSet
+        return filterList_var,filterList_final,domainSet_all
+
+    # 生成 filter 规则文件
+    def __generateFilterLite(self, filterDict:Dict[str,str], filterList_var:List[str], filterList_final:List[str], ChinaSet:Set[str], fileName:str):
+        logger.info("generate adblock filters lite...")
+
+        filterList_lite = []
+        for filter in filterList_final:
+            domain = filterDict[filter]
+            if domain:
+                if domain in ChinaSet:
+                    filterList_lite.append(filter)
+            else:
+                filterList_lite.append(filter)
+
+        if os.path.exists(fileName):
+            os.remove(fileName)
+        with open(fileName, 'a') as f:
+            f.write("!\n")
+            f.write("! Title: AdBlock Filter Lite\n")
+            f.write("! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：1Hosts (Lite)、AdGuard Base filter、AdGuard Base filter、AdGuard DNS filter、AdRules DNS List、Hblock、NEO DEV HOST、OISD Basic、1024 hosts、ad-wars hosts、StevenBlack hosts、xinggsf、EasyList、Easylist China、EasyPrivacy、CJX's Annoyance List、SmartTV Blocklist、AWAvenue Ads Rule、jiekouAD。Lite 版仅针对国内域名拦截。\n")
+            f.write("! Homepage: https://github.com/217heidai/adblockfilters\n")
+            f.write("! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt\n")
+            f.write("! Version: %s\n"%(time.strftime("%Y%m%d%H%M%S", time.localtime())))
+            f.write("! Last modified: %s\n"%(time.strftime("%Y/%m/%d %H:%M:%S", time.localtime())))
+            f.write("! Blocked Filters: %s\n"%(len(filterList_lite)))
+            f.write("!\n")
+            for fiter in filterList_var:
+                f.write("%s\n"%(fiter))
+            for fiter in filterList_lite:
+                f.write("%s\n"%(fiter))
+
+        logger.info("adblock filters: %d"%(len(filterList_lite)))
 
     # 生成用于域名连通性检测的全域名清单
     def __generateDomainList(self, domainSet, fileName:str):
@@ -234,11 +311,16 @@ class Filter(object):
     def generate(self):
         # 提取规则
         blockDict,unblockDict,filterDict = self.__getFilters()
-        # 提取黑名单、白名单
+        # 提取黑名单、白名单、China domian
         blackSet = self.__getBlackList(self.path + "/black.txt")
         whiteSet = self.__getWhiteList(self.path + "/white.txt")
+        ChinaSet = self.__getChinaList(self.path + "/china.txt")
         # 生成合并规则
-        blockSet, unblockSet, domainSet_dns = self.__generateDNS(blockDict, unblockDict, blackSet, whiteSet, self.path + "/adblockdns.txt")
-        domainSet_filter = self.__generateFilter(filterDict, blockSet, unblockSet, blackSet, whiteSet, self.path + "/adblockfilters.txt")
+        blockList, unblockList, domainSet_dns = self.__generateDNS(blockDict, unblockDict, blackSet, whiteSet, self.path + "/adblockdns.txt")
+        filterList_var, filterList_final, domainSet_filter = self.__generateFilter(filterDict, set(blockList), set(unblockList), blackSet, whiteSet, self.path + "/adblockfilters.txt")
+        # 生成lite规则
+        if len(ChinaSet) > 0:
+            self.__generateDNSLite(blockList, unblockList, ChinaSet, self.path + "/adblockdnslite.txt")
+            self.__generateFilterLite(filterDict, filterList_var, filterList_final, ChinaSet, self.path + "/adblockfilterslite.txt")
         # 生成用于域名连通性检测的全域名清单
         self.__generateDomainList(domainSet_dns | domainSet_filter, self.path + "/domain.txt")
