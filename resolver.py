@@ -267,7 +267,7 @@ class Resolver(object):
                     domain_tmp = domain_tmp[1:]
                 if domain_tmp.find('/') > 0:
                     domain_tmp = domain_tmp[:domain_tmp.find('/')]
-                if len(domain_tmp) < 4 or domain_tmp.find('.') < 0 or domain_tmp.find('*') >= 0 or domain_tmp[-1]=='.':
+                if len(domain_tmp) < 4 or domain_tmp.find('.') < 0 or domain_tmp.find('*') >= 0 or domain_tmp[-1]=='.' or domain_tmp.startswith('-'):
                     raise Exception('"%s": not include domain or ip'%(filter))
                 try:
                     fld, subdomain = self.__analysis(domain_tmp)
