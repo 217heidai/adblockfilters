@@ -147,6 +147,8 @@ class Resolver(object):
                     domain_tmp = filter[len('@@||'):]
                     if domain_tmp.find('/') > 0:
                         domain_tmp = domain_tmp[:domain_tmp.find('/')]
+                    if domain_tmp.find('$') > 0:
+                        domain_tmp = domain_tmp[:domain_tmp.find('$')]
                     if domain_tmp.find('^*') > 0:
                         domain_tmp = domain_tmp[:domain_tmp.find('^*')]
                     if domain_tmp.find('*') > 0:
@@ -242,6 +244,8 @@ class Resolver(object):
             if domain_tmp:
                 if domain_tmp.find('"') > 0:
                     domain_tmp = domain_tmp[:domain_tmp.find('"')]
+                if domain_tmp.find('^') > 0:
+                    domain_tmp = domain_tmp[:domain_tmp.find('^')]
                 if domain_tmp.startswith('*.') > 0:
                     domain_tmp = domain_tmp[len('*.'):]
                 if domain_tmp.startswith('~') or domain_tmp.startswith('/') or domain_tmp.startswith('.'):
