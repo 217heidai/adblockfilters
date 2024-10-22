@@ -211,6 +211,17 @@ class Resolver(object):
                     if domain_tmp.find(',') > 0:
                         domain_tmp = None
                     break
+                # #%#
+                # example.com#%#selector
+                # ~example.com#%#selector
+                # example.com,example.edu#%#selector
+                # example.com,~mail.example.com#%#selector
+                connector = '#%#'
+                if match('.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
+                    domain_tmp = filter[ : filter.find(connector)]
+                    if domain_tmp.find(',') > 0:
+                        domain_tmp = None
+                    break
                 
                 # a[href^="http://sarcasmadvisor.com/"]
                 if match('.*http:\/\/.*', filter):
@@ -221,6 +232,8 @@ class Resolver(object):
                         domain_tmp = domain_tmp[:domain_tmp.find("'")]
                     if domain_tmp.find("^") > 0:
                         domain_tmp = domain_tmp[:domain_tmp.find("^")]
+                    if domain_tmp.find('$') > 0:
+                        domain_tmp = domain_tmp[:domain_tmp.find('$')]
                     if domain_tmp.find(',') > 0:
                         domain_tmp = None
                     break
@@ -234,6 +247,8 @@ class Resolver(object):
                         domain_tmp = domain_tmp[:domain_tmp.find("'")]
                     if domain_tmp.find("^") > 0:
                         domain_tmp = domain_tmp[:domain_tmp.find("^")]
+                    if domain_tmp.find('$') > 0:
+                        domain_tmp = domain_tmp[:domain_tmp.find('$')]
                     if domain_tmp.find(',') > 0:
                         domain_tmp = None
                     break
@@ -252,7 +267,7 @@ class Resolver(object):
                     domain_tmp = domain_tmp[1:]
                 if domain_tmp.find('/') > 0:
                     domain_tmp = domain_tmp[:domain_tmp.find('/')]
-                if len(domain_tmp) < 4 or domain_tmp.find('.') < 0 or domain_tmp.find('*') > 0 or domain_tmp[-1]=='.':
+                if len(domain_tmp) < 4 or domain_tmp.find('.') < 0 or domain_tmp.find('*') >= 0 or domain_tmp[-1]=='.':
                     raise Exception('"%s": not include domain or ip'%(filter))
                 try:
                     fld, subdomain = self.__analysis(domain_tmp)
