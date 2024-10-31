@@ -3,9 +3,9 @@
 ! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：1Hosts (Lite)、AdGuard Base filter、AdGuard Base filter、AdGuard DNS filter、AdRules DNS List、Hblock、NEO DEV HOST、OISD Basic、1024 hosts、ad-wars hosts、StevenBlack hosts、xinggsf、EasyList、Easylist China、EasyPrivacy、CJX's Annoyance List、SmartTV Blocklist、AWAvenue Ads Rule、jiekouAD。
 ! Homepage: https://github.com/217heidai/adblockfilters
 ! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt
-! Version: 20241031001059
-! Last modified: 2024/10/31 00:10:59
-! Blocked Filters: 68619
+! Version: 20241031083953
+! Last modified: 2024/10/31 08:39:53
+! Blocked Filters: 68621
 !
 #%#var AG_abortInlineScript=function(g,b,c){var d=function(){if("currentScript"in document)return document.currentScript;var a=document.getElementsByTagName("script");return a[a.length-1]},e=Math.random().toString(36).substr(2,8),h=d();AG_defineProperty(b,{beforeGet:function(){var a=d();if(a instanceof HTMLScriptElement&&a!==h&&""===a.src&&g.test(a.textContent))throw c&&console.warn("AdGuard aborted execution of an inline script"),new ReferenceError(e);}});var f=window.onerror;window.onerror=function(a){if("string"===typeof a&&-1!==a.indexOf(e))return c&&console.warn("AdGuard has caught window.onerror: "+b),!0;if(f instanceof Function)return f.apply(this,arguments)}};
 #%#var AG_abortOnPropertyRead=function(a,b){var c=Math.random().toString(36).substr(2,8);AG_defineProperty(a,{beforeGet:function(){b&&console.warn("AdGuard aborted property read: "+a);throw new ReferenceError(c);}});var d=window.onerror;window.onerror=function(e){if("string"===typeof e&&-1!==e.indexOf(c))return b&&console.warn("AdGuard has caught window.onerror: "+a),!0;if(d instanceof Function)return d.apply(this,arguments)}};
@@ -4731,7 +4731,6 @@
 ##div > a[href^="https://b"][href$=".vip"][target="_blank"] > img[src]
 ##div > a[target="_blank"] > img[src$=".gif"][style*="width:100%"]
 ##div > a[target="_blank"] > img[style="width:100%;height:100%"][src$=".gif"]
-##div > div:not([style]):not([id]) > div[style="position: relative;"]:not([id])
 ##div > div[class="swiper-c swiper-initialized swiper-horizontal swiper-autoheight swiper-ios swiper-backface-hidden"]
 ##div > iframe[src*="&width=300&height=100&"]
 ##div > span[style*="bottom:"][style*="30vh"][style*="position"][style*="fixed"]
@@ -8375,7 +8374,6 @@ $~xmlhttprequest,removeparam=r,domain=tv2.no|linode.com|ledger.*|mrgay.com|odyse
 /EZ-YAHOO/*$domain=ezvivi.com
 /EmailOpenTrackLog.aspx?$image
 /EmbedAsyncLogger.js
-/EndpointTracker/allendpoints?
 /Engagement/TrackEventAsync
 /Events/Impression?
 /FduttjAlivqpo/*
@@ -9025,6 +9023,7 @@ $~xmlhttprequest,removeparam=r,domain=tv2.no|linode.com|ledger.*|mrgay.com|odyse
 /antnest/NTM-$script
 /aoyou372down300_
 /ap.lijit.com/*
+/apc/trans.gif?
 /api-analytics.
 /api-insights/log?
 /api/0/stats
@@ -9069,6 +9068,8 @@ $~xmlhttprequest,removeparam=r,domain=tv2.no|linode.com|ledger.*|mrgay.com|odyse
 /api/statsd|$~third-party,xmlhttprequest
 /api/track?guid
 /api/trk?
+/api/v1/EndpointTracker
+/api/v1/EndpointTracker$domain=live.com|office.com
 /api/v1/activity|$~third-party,xmlhttprequest
 /api/v1/firehose?_
 /api/v1/metrics
@@ -30966,7 +30967,6 @@ hdonlyfans.com##.widget-visible
 hdonlyfans.com##iframe[src="about:blank"]
 hdpfans.com##DIV.adimglistbox,DIV.boxrightcom,DIV.boxleftconm,IMG[src^="http://www.hdpfans.com/images/icons/"],DIV.wp.a_f,font.jammer,.comiis_adbox
 hdrabbit.ru,kinowinx.ru,forallkino.ru#?##myDivKino div[style]:has(> img[src$="/share.png"])
-hdrezka1twwpb.org,omnirezka.tv,hdrezka1dhpkk.org,hdrezka9bsbhq.org,hdrezka720dhh.org,hdrezka320ypq.org,hdrezka180map.org,hdrezka320hjh.org,hdrezka9fmskj.org,hdrezka2vmmty.org,hdrezka8dgquu.org,hdrezkayyh5pq.org,hdrezka2tepnm.org,standby-rezka.tv,flymaterez.net,hdrezka320fkk.org,hdrezka.vip,rezka.space,hdrezka8bdhtq.org,hdrezka1tqbbd.org,hdrezka1qkpbx.org,hdrezka320rtq.org,rezka-ua.tv,hdrezkabmmshq.org,hdrezka.in,hdrezka66yhfg.net,hdrezka.rest,hdrezka19139.org,hdrezka.ag,upivi.com,hdrezka.me,kinopub.me,3ivi.com,rezkify.com,bestofkinopoisk.com,rezkery.com,hdrezkaonline.com,hdrezka.sh,cokinopoisk.com,hdrezka-ag.com,hdrezka.club,hdrezka.cm,hdrezka.co,hdrezka.name,hdrezka.site,hdrezka.today,hdrezka.tv,hdrezka.website,hdrezkayou.com,rezka.ag##.b-dwnapp
 hdscg.com###playBox,.wp.a_f,.a_mu,[src^="http://res.hdscg.com/adbox/"]
 hdsex.org##.player-actions-controls__button--share
 hdshare.cn,it168.com###adv
@@ -36288,6 +36288,7 @@ m.bilibili.com##div[class*="mplayer-control-btn mplayer-control-btn-callapp mpla
 m.bilibili.com##div[class*="mplayer-widescreen-callapp"]
 m.bilibili.com##div[class*="openapp"]
 m.bilibili.com##div[class^="open-app-btn"]
+m.bilibili.com#@#div > div:not([style]):not([id]) > div[style="position: relative;"]:not([id])
 m.biqiugege8.com##+js(set-constant, lists, undefined)
 m.blog.csdn.net##[width="400"]
 m.blog.naver.com##.btm_banner
@@ -52789,6 +52790,7 @@ zn.ua##.recent-events
 zn.ua##.youtube-box__top
 zn.ua#?#.content__news > div.content-title:has(> div.content-title__link:contains(/ЧИТАЙТЕ НАС В СОЦСЕТЯХ|FOLLOW US ON SOCIAL NETWORKS|ЧИТАЙТЕ НАС У СОЦМЕРЕЖАХ/))
 zn508.cc###klp_hdp
+zn508.cc##.GzList
 zn508.cc#?##portal_block_69_content > li:-abp-has(a[href^="http"])
 znak.com##.relap
 znanierussia.ru##+js(set-local-storage-item, exit_attempt, true)
