@@ -1,6 +1,6 @@
 ![Adblock Plus 2.0]
-! Checksum: 7AACbQM3B+EgrI7Qol2jnw
-! Diff-Path: ../patches/22_optimized/22_optimized-s-1730741907-3600.patch
+! Checksum: 42ANQJUhD+VhUg3213o8ew
+! Diff-Path: ../patches/22_optimized/22_optimized-s-1730785026-3600.patch
 ! Title: AdGuard Widgets filter (Optimized)
 ! Description: Blocks annoying third-party widgets: online assistants, live support chats, etc.
 ! Version: 2.0.10.9
@@ -189,6 +189,7 @@ maspiai.com##.recommended-summary
 tousatu.xyz##.textwidget > div[style]:has(> div[style] > div[id^="blz_rss"])
 tousatu.xyz###related-box
 kh-pokemon-mc.com##.custom-html-widget
+etude000.com###mainEntity > .clearfix > span[style$="padding:0 10px;font-weight:bold; font-size:large;"]:has(+ div[style="text-align: center;"])
 etude000.com###side-fixed
 korewaeroi.com##div[class^="divider"] > aside.widget-main
 aaieba.livedoor.biz##.left-container
@@ -457,6 +458,7 @@ figsoku.net##.rssarea
 russianbeauties.jp##+js(abort-on-property-read, document.write)
 tozanchannel.blog.jp##.waku
 tozanchannel.blog.jp##.waku-1
+tozanchannel.blog.jp##.waku-2
 tozanchannel.blog.jp##.article-body-inner span[style="font-size: large;"] > b > span[style^="padding-left: 10px; color:"]
 tozanchannel.blog.jp##.article-body-inner div[style="font-size: 120%; padding-left:10px; padding-right:10px; width:auto;"]
 gundamlog.com###kijisita_rss2
@@ -504,7 +506,6 @@ hosyusokuhou.jp###bottom_rss
 nofootynolife.net,gfoodd.com##div[class^="blogroll_"]
 wetterauer-zeitung.de,werra-rundschau.de,wa.de,wlz-online.de,tz.de,soester-anzeiger.de,op-online.de,meine-anzeigenzeitung.de,mannheim24.de,ludwigshafen24.de,kurierverlag.de,kreisbote.de,in-muenchen.de,hna.de,hersfelder-zeitung.de,heidelberg24.de,hanauer.de,hallo-muenchen.de,giessener-allgemeine.de,fuldaerzeitung.de,fr.de,fnp.de,echo24.de,dasgelbeblatt.de,come-on.de,bw24.de,buzzfeed.de,kreiszeitung.de,az-online.de,24vita.de,24hamburg.de,24garten.de,24auto.de,merkur.de,24rhein.de##.wv_story_el_cleverPushWidget
 moeimg.net##.news_footer
-||bantyou.livedoor.biz/frss.html
 2ch-matomenews.com##.rss_contents
 ||inutomo11.com/nanj$subdocument
 inutomo11.com##iframe[src^="http://inutomo11.com/nanj"]
@@ -807,7 +808,6 @@ blog.livedoor.jp##div[class^="shitarss_"]
 blog.livedoor.jp##div[id^="shitarss_title_"]
 ~sinoptik.ua###SinoptikInformer
 ##a[title="WhatsApp Newsletter Marketing"]
-||chat*-ce.chatdealer.jp^
 .az/livechat/
 /crm/site_button/loader_*.js$domain=~tvoe.live
 /Jetlink.js
@@ -923,13 +923,11 @@ blog.livedoor.jp##div[id^="shitarss_title_"]
 ||tidiochat.com^$third-party
 ||static.landbot.io^$third-party
 ||static.me-talk.ru^$third-party
-||liveexpert.ru^$third-party
 ||livesupporti.com^$third-party
 ||embed.tawk.to^$third-party,domain=~roonlabs.com
 ||jivosite.com^$third-party,domain=~jivosite.ru
 ||mod.calltouch.ru^$third-party
 ||netroxsc.ru^$third-party
-||pinformer.sinoptik.ua^$third-party
 ||st.yagla.ru^$third-party
 ||static.elfsight.com^$third-party
 ||widget.sender.mobi^$third-party,domain=~privat24.ua|~privatbank.ua
@@ -1122,6 +1120,7 @@ full-count.jp#?#section > div.c-heading:has(> p.c-heading__en:contains(RECOMMEND
 ||widget.installchatbot.com^$third-party
 ||widget.moin.ai^$third-party
 ||widget.replain.cc^$third-party
+||widget.chatbullet.com^$third-party
 ||showtalk.jp^$third-party
 ||uhchat.net^$third-party
 shirainime.com,daemon-hentai.com,seirsanduk.us,sedsports.com,139.99.120.222,indoxxi.show,aniwatcher.com,mylivecricket.info,debrid-file.com,streamonsport.info,freestreams-live.my##iframe[src*="chatango.com"]
@@ -1158,6 +1157,7 @@ howdyho.net##.hollow
 javbangers.com,javtasty.com##.table > .block-chat
 lenov.ru##.lc_area
 lenov.ru##a[onclick^="window.open('/chat.php'"]
+lenov.ru#?#.wrapper > div.col-md-3 > div.nav-side-menu > h2:contains(Мини чат)
 moluch.ru##.ask_out
 tcaeintegral.es,tremplin-numerique.org,ordvor.com##.joinchat
 ||app.hubspot.com/conversations-visitor$third-party
@@ -1284,6 +1284,7 @@ ukr.net###sinoptik_container
 ##.gsInformer
 /gs_informerClient.min.$third-party
 ||gismeteo.*/getInformer/$third-party
+||meteoprog.ua/*/weather/informer/$third-party
 arxiv.org##.bps-banner.forum
 arxiv.org###support-ack
 thebell.io##app-adfox-top
