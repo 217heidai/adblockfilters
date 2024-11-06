@@ -3,9 +3,9 @@
 ! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：1Hosts (Lite)、AdGuard Base filter、AdGuard Base filter、AdGuard DNS filter、AdRules DNS List、Hblock、NEO DEV HOST、OISD Basic、1024 hosts、ad-wars hosts、StevenBlack hosts、xinggsf、EasyList、Easylist China、EasyPrivacy、CJX's Annoyance List、SmartTV Blocklist、AWAvenue Ads Rule、jiekouAD。
 ! Homepage: https://github.com/217heidai/adblockfilters
 ! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt
-! Version: 20241106001057
-! Last modified: 2024/11/06 00:10:57
-! Blocked Filters: 68678
+! Version: 20241106083822
+! Last modified: 2024/11/06 08:38:22
+! Blocked Filters: 68719
 !
 #%#var AG_abortInlineScript=function(g,b,c){var d=function(){if("currentScript"in document)return document.currentScript;var a=document.getElementsByTagName("script");return a[a.length-1]},e=Math.random().toString(36).substr(2,8),h=d();AG_defineProperty(b,{beforeGet:function(){var a=d();if(a instanceof HTMLScriptElement&&a!==h&&""===a.src&&g.test(a.textContent))throw c&&console.warn("AdGuard aborted execution of an inline script"),new ReferenceError(e);}});var f=window.onerror;window.onerror=function(a){if("string"===typeof a&&-1!==a.indexOf(e))return c&&console.warn("AdGuard has caught window.onerror: "+b),!0;if(f instanceof Function)return f.apply(this,arguments)}};
 #%#var AG_abortOnPropertyRead=function(a,b){var c=Math.random().toString(36).substr(2,8);AG_defineProperty(a,{beforeGet:function(){b&&console.warn("AdGuard aborted property read: "+a);throw new ReferenceError(c);}});var d=window.onerror;window.onerror=function(e){if("string"===typeof e&&-1!==e.indexOf(c))return b&&console.warn("AdGuard has caught window.onerror: "+a),!0;if(d instanceof Function)return d.apply(this,arguments)}};
@@ -19,6 +19,8 @@
 #%#var AG_setConstant=function(e,a){if("undefined"===a)a=void 0;else if("false"===a)a=!1;else if("true"===a)a=!0;else if("noopFunc"===a)a=function(){};else if("trueFunc"===a)a=function(){return!0};else if("falseFunc"===a)a=function(){return!1};else if(/^\d+$/.test(a)){if(a=parseFloat(a),isNaN(a)||32767<Math.abs(a))return}else return;var b=!1;AG_defineProperty(e,{get:function(){return a},set:function(c){if(b)var d=!0;else void 0!==c&&void 0!==a&&typeof c!==typeof a&&(b=!0),d=b;d&&(a=c)}})};
 ###ADbox
 ###ADtip
+###Ad-Container
+###Ad-Content
 ###AdBlockDialog
 ###AdBox2
 ###Ad_windows
@@ -82,6 +84,8 @@
 ###ad-1,#ad-2,#ad-3,#ad-4,#ad-5,#ad-6,#ad-7
 ###ad-B1-ATF
 ###ad-SNSSplashAd
+###ad-container
+###ad-content
 ###ad-floatwin
 ###ad-header-mobile-contener
 ###ad-index
@@ -427,8 +431,24 @@
 ###buySellAds
 ###buysellads
 ###callVideoAppHeader
+###carbon-ads-container-bg
+###carbonadcontainer
+###carbonads
+###carbonads-container
+###card-ads-top
 ###cat_intro_first_ad
 ###cat_intro_second_ad
+###category-ad
+###category-sponsor
+###center-ad
+###center-ad-group
+###center-ads-group
+###centerads
+###centered-ad
+###centered-ad-group
+###centered-ads
+###centered-ads-group
+###centeredads
 ###checkadblockernow
 ###chorus-social-fixed
 ###chs_bannerArea
@@ -13499,6 +13519,10 @@ $~xmlhttprequest,removeparam=r,domain=tv2.no|linode.com|ledger.*|mrgay.com|odyse
 168gamer.com,168gamer.net##.b_tad
 168xs.com##.bd980
 16fan.com##.item-newad
+16honeys.com###adDisplaySection
+16honeys.com###adSpot
+16honeys.com,iporntv.net###ad-container
+16honeys.com,iporntv.net###centered-ad
 16personalities.com##.sp-socials
 16rd.com###diy_ad_article_right IMG
 16rd.com###diy_bbs_list_right IMG
@@ -15626,7 +15650,6 @@ $~xmlhttprequest,removeparam=r,domain=tv2.no|linode.com|ledger.*|mrgay.com|odyse
 @@||adidas.com^*/adidasAnalytics.js?
 @@||adidasoriginals-lookbook.com.tw/js/adtracking.js
 @@||adjs.8591.com.tw^$script
-@@||admin.corrata.com/console/dcconsolews/event-log?$~third-party
 @@||admin.memberspace.com/sites/*/analytics/views$~third-party
 @@||adnet.qq.com^$~third-party
 @@||adnz.co/dmp/publisher.js$domain=finanzen.ch
@@ -26567,6 +26590,7 @@ douxie.com##.ndxChdjBox
 douyin.com###videoSideBar iframe
 douyin.com###videoSideBar:-abp-has(div:-abp-contains(/商品|商家|退款|店铺/))
 douyin.com#?##douyin-right-container > div[class] > div[class]:has(> ul[class] > li[class] > a[href][target="_blank"] + div:contains(广告))
+douyin.com#?##videoSideBar:-abp-has(div:-abp-contains(/商品|商家|退款|店铺/))
 douyin.com#?#.xgplayer>div[class]:-abp-has(svg[height="16"][width="30"])
 douyu.com###js-fix-download
 douyu.com###js-live-room-recommend
@@ -32290,6 +32314,8 @@ igdiryasargazetesi.com,kriptom.com,harpers.org##.splash
 igdownloader.app##.section-app-download
 igeeksblog.com##+js(set-constant, Object.prototype.startShow, noopFunc)
 igg-games.com##.uk-article div[style^="display:"][style*="justify-content:"]:has(> a[href] > img[src])
+igg-games.com##.uk-margin-medium-top > div[style^="display:"]:has(> a[href^="/offernf?offer="])
+igg-games.com##.uk-margin-medium-top ~ div[style^="display:"] > a[href^="/offernf?offer="]
 iggtech.com##+js(adjust-setTimeout, window.location.href, *, 0.02)
 ign.com###pit-article-before-verdict
 ign.com###pit-below-all-content
@@ -36797,6 +36823,15 @@ m.vilipix.com##.open-app-btn, .right, .download-app
 m.vilipix.com##.top-actions, .user-details-follow
 m.viva100.com##.bm_sns
 m.vz.ru##main > div.signature
+m.wandoujia.com##.wdj-download
+m.wandoujia.com##[class*="relative"]
+m.wandoujia.com##[class="infos download-rank"]
+m.wandoujia.com##[class="infos similar-app"]
+m.wandoujia.com##[class^="brand-"]
+m.wandoujia.com##[class^="midbanner"]
+m.wandoujia.com##a[data-bd-track="detail-save_download_main"]
+m.wandoujia.com##a[href*="/binding?"]
+m.wandoujia.com##li[class="new-app"]
 m.wannianli8.com,wannianli8.com##.cesuankuang
 m.wannianli8.com,wannianli8.com##.csbox
 m.wcostream.tv,m.wcostream.net#?#.ui-grid-solo > .ui-bar:has(> h1:only-child:contains(/^Share on$/))
@@ -38292,6 +38327,7 @@ momxs.com##body > script + span
 momxs.com##div#inglestore
 mon-isha-anime.com##.me_sns
 mona-news.com##.article-body-inner > dd:has(a[href^="https://livedoor.blogimg.jp/mona_news/"]) ~ dd
+mona-news.com##.article-body-outer dd:has(> span[style^="color: "] > a[href^="https://2ch-c.net/"][target="_blank"])
 mona-news.com##div[id^="rss_"]
 mona-news.com,vipsister23.com,blog.esuteru.com##.plugin-twitter_follow_button
 monacomatin.mc,nicematin.com,varmatin.com##.RhooBg
@@ -42887,8 +42923,8 @@ radiotrek.rv.ua###like-mobile
 radiox.com##.notifyjs-corner
 radixweb.com##.emailsection
 radsport-news.com##.LayoutPromotionAds
-radsport-news.com,enduro-mtb.com,vampster.com,granfondo-cycling.com,deutschlandistvegan.de,mimikama.at,mixed.de,fachwerk.de,der-postillon.com,serieslyawesome.tv##+js(no-xhr-if, pagead2.googlesyndication.com, true)
-radsport-news.com,enduro-mtb.com,vampster.com,granfondo-cycling.com,deutschlandistvegan.de,mimikama.at,mixed.de,fachwerk.de,der-postillon.com,serieslyawesome.tv##body .test-adblock-overlay:not(#style_important)
+radsport-news.com,enduro-mtb.com,vampster.com,granfondo-cycling.com,deutschlandistvegan.de,mixed.de,fachwerk.de,der-postillon.com,serieslyawesome.tv##+js(no-xhr-if, pagead2.googlesyndication.com, true)
+radsport-news.com,enduro-mtb.com,vampster.com,granfondo-cycling.com,deutschlandistvegan.de,mixed.de,fachwerk.de,der-postillon.com,serieslyawesome.tv##body .test-adblock-overlay:not(#style_important)
 rae.es,cyclowired.jp,javascript.ru,bad-good.ru##.addtoany
 raenonx.cc##.main_ads-content + div
 raenonx.cc##.z-popup-ultimate
@@ -49767,7 +49803,6 @@ wandhi.com##.unit-100
 wandhi.com##a[href="http://www1.huizhek.com"]
 wandhi.com##a[style="display: inline-block;position: relative"]
 wandoujia.com##.qr-box
-wandoujia.com##[class="infos download-rank"],[class^="brand-"],[class^="midbanner"],li[class="new-app"],[class*="relative"],[class="infos similar-app"]
 wangfz.com##div[class^="my-ad-"]
 wanghualang.com##div.ad_h
 wangpan007.com##[width="160"][height="350"]
@@ -53985,6 +54020,7 @@ zzzyk.com###Tinfo
 ||accdn.lpsnmedia.net/api/account/*/configuration/le-campaigns/$domain=homedepot.com
 ||accesswire.com/img.ashx
 ||accor.com/g/collect?
+||account.golem.de/ping
 ||account.wps.cn^$replace=/"has_ad": 1/"has_ad": 0/
 ||accounts.ad.nl/gscounters.sendReport
 ||accounts.google.com/gsi/client^$third-party,script,domain=dtf.ru|stackoverflow.com|vc.ru|pikabu.ru|nytimes.com|baltimoresun.com|rozetka.com.ua|estadao.com.br|medium.com|gzt.com|mercurynews.com|drukarnia.com.ua|diffchecker.com|kaystls.site|kaystls.site|overclock.net|nissanclub.com|crazygames.com|notion.so|usnews.com|nypost.com|etnownews.com|timesnownews.com|menshealth.com|themirror.com|cq.ru|voetbalzone.nl|perplexity.ai|lefigaro.fr|lifehacker.ru|app.notta.ai|vnexpress.net
@@ -54313,6 +54349,7 @@ zzzyk.com###Tinfo
 ||akamaized.net/js3/tracker.js
 ||akqipai.com/m/Tpl/v3/js/indexbottom.js
 ||aksam.com.tr/analytic
+||aktion.kurier.de/umfrage/anlvi/setIframeParent
 ||akuziti.com/tu/*.js
 ||alarm.youku.com/api/sendAlarm
 ||alaskaair.com/AlXMT4Ma/init.js
@@ -56592,6 +56629,7 @@ zzzyk.com###Tinfo
 ||cdn.statically.io/gh/opcdn/analytics/main/script.js
 ||cdn.staticmember.com/wtp/common/scripts/google-tagmanager-min.js
 ||cdn.tebilisim.com/analytics.js
+||cdn.thenewsbox.net/m/impression
 ||cdn.theoplayer.com/t?
 ||cdn.thinkindot.com/tracker/tracker-*.min.js
 ||cdn.threadloom.com/ga/
@@ -57178,8 +57216,8 @@ zzzyk.com###Tinfo
 ||computerbase.de/api/nlytcs
 ||computerbase.de/api/stats?
 ||computerbase.de/api2/$ping,xmlhttprequest
+||computerbase.de/nly
 ||computerbase.de/nlylew
-||computerbase.de/nlyt
 ||computerbase.de/nlytcs
 ||comunidade.globalmediagroup.pt//tracker/tracker.ashx
 ||con.arbeitsagentur.de/prod/matomo/
@@ -57489,7 +57527,6 @@ zzzyk.com###Tinfo
 ||darking*.tk^
 ||darkreader.org/data/top-backers.json
 ||darkreader.org/elements/backers-
-||darkreader.org/elements/statistics.js
 ||darkroomvr.com^$removeparam=nats
 ||dartington.co.uk/*/WeltPixel_GA4/js/weltpixel_ga4_gtm.js
 ||dashboard.nowdialogue.com/api/events/
@@ -58024,6 +58061,8 @@ zzzyk.com###Tinfo
 ||dyjqd.com/images/js/dyjqd.js
 ||dykshao.cn/image/$third-party
 ||dymmt.com/skin/mzitu/js/foot.
+||dynamic.infranken.de/delivery/consent.php
+||dynamic.infranken.de/delivery/info/
 ||dyncdn.me/static/20/js/expla
 ||dyncdn2.com/static/20/js/expla
 ||dytt.com/oj.js
@@ -62632,6 +62671,7 @@ zzzyk.com###Tinfo
 ||netu.ac/cdn-cgi/trace
 ||netuplayer.top/cdn-cgi/trace
 ||netusia.xyz/cdn-cgi/trace
+||netzwelt.de/log
 ||netzwelt.de/log?
 ||neulion.vo.llnwd.net^*/track.js
 ||new-icon.ol-img.com/jslib/ad
@@ -64695,6 +64735,7 @@ zzzyk.com###Tinfo
 ||service.webgoto.net/*?wAnalytics
 ||service.weibo.com/share/
 ||services.addons.mozilla.org^$removeparam=telemetry-client-id
+||services.haaretz.co.il^$ping
 ||services.kontur.ru/articles/ajax/statistics/update
 ||services.meteored.com/web/usr/v1/check/
 ||services.noticiasaominuto.com/site/track?
