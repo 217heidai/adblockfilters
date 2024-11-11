@@ -1,10 +1,10 @@
 ![Adblock Plus 2.0]
-! Checksum: 5ZcQzlofMw+BiBRMNBtNtw
-! Diff-Path: ../patches/224/224-s-1731296212-3600.patch
+! Checksum: 505JlCi+PJE8YGGe1kshpg
+! Diff-Path: ../patches/224/224-s-1731328672-3600.patch
 ! Title: AdGuard Chinese filter
 ! Description: EasyList China + AdGuard Chinese filter. Filter list that specifically removes ads on websites in Chinese language.
-! Version: 2.1.25.64
-! TimeUpdated: 2024-11-11T03:33:35+00:00
+! Version: 2.1.25.67
+! TimeUpdated: 2024-11-11T12:34:05+00:00
 ! Expires: 5 days (update frequency)
 ! Homepage: https://github.com/AdguardTeam/AdGuardFilters
 ! License: https://github.com/AdguardTeam/AdguardFilters/blob/master/LICENSE
@@ -2759,8 +2759,8 @@ huya.com##+js(remove-attr, style, #banner[style*="background-image:url"])
 !
 ! qq.com
 ! https://github.com/AdguardTeam/AdguardFilters/issues/163538
-lpl.qq.com,v.qq.com##+js(set-constant, CreativePlayerwebPlugin.AD_EVENT.AD_DESTROY, '')
-lpl.qq.com,v.qq.com##+js(set-constant, CreativePlayerwebPlugin.AD_EVENT.AD_LOAD_START, '')
+sports.qq.com,lpl.qq.com,v.qq.com##+js(set-constant, CreativePlayerwebPlugin.AD_EVENT.AD_DESTROY, '')
+sports.qq.com,lpl.qq.com,v.qq.com##+js(set-constant, CreativePlayerwebPlugin.AD_EVENT.AD_LOAD_START, '')
 ! https://github.com/AdguardTeam/AdguardFilters/issues/184076
 ! https://github.com/AdguardTeam/AdguardFilters/issues/180379
 ! https://github.com/AdguardTeam/AdguardFilters/issues/168881
@@ -2957,6 +2957,7 @@ qiuziti.com#@#.banner
 ||imasdk.googleapis.com/js/sdkloader/ima3.js$script,redirect=google-ima.js,domain=line.me
 ||securepubads.g.doubleclick.net/tag/js/gpt.js$script,redirect=googletagservices_gpt.js,domain=line.me
 ||d.line-scdn.net/*/torimochi.js/*/torimochi.js$script,redirect=googletagservices_gpt.js,domain=line.me
+! For apps, where redirect does not help when used DNS filtering
 ! https://github.com/AdguardTeam/AdguardFilters/issues/150114
 ||lensdump.com/i/*.gif$badfilter
 ! https://github.com/AdguardTeam/AdguardFilters/issues/149526
@@ -4845,6 +4846,7 @@ newduba.cn###jq_youxi
 ||iqi4l.icu^
 ||qqxi6.icu^
 ||eiphrut.com^
+||aoao11111iis.top^
 ||kdzgrvn.icu^
 ||shestieh.com^
 ||jwhjqjfl.icu^
@@ -9483,7 +9485,7 @@ $popup,third-party,domain=76fengyun.com|avsdown.com|downdv.com|downdvs.com|downh
 ||xiyouence.com^$popup,third-party
 ||yy18.info^*thanks$popup
 $image,third-party,domain=lady1.top
-$script,third-party,domain=happymh.com|xiaoyakankan.com|52movieba.com|audio699.com|kan-tv.com|m.supfree.net|movieffm.net|xiaoxintv.cc|xiaoxintv.com|xiaoxintv.net
+$script,third-party,domain=xiaoyakankan.com|52movieba.com|audio699.com|kan-tv.com|m.supfree.net|movieffm.net|xiaoxintv.cc|xiaoxintv.com|xiaoxintv.net
 $script,third-party,websocket,domain=52codes.net
 $third-party,websocket,xmlhttprequest,domain=qiyoudy2.com|qiyoudy4.com
 $third-party,xmlhttprequest,domain=subhd.tv|subhdtw.com|xyg688.com|xyg688.xyz|zzzzz688.com
@@ -13883,7 +13885,9 @@ hxsame.hexun.com$domain=~quote.hexun.com
 ||51miz.com/index.php?m=Ad&
 ||wxc.cc/scripts/gg.
 ||xmcdn.com/storages/97b8-customerservice/E7/5E/GKwRIJILApO8AALGLwMrioMa.
+||cnki.net/spot/app/get/ads?
 szxx.com.cn###A0
+sehuatang.net##DIV[class^="show-text"]
 ghxi.com##.widget_html_ad + div[style]
 nodeloc.com###wghtml
 tvbs.com.tw##div[data-testid="ad-container"]
@@ -19563,8 +19567,6 @@ gohome.com.hk#@#div[id^="div-gpt-ad"]
 android-doc.com,apk.tw,chaojizhibo.net,chtoen.com,dizhishengcheng.com,doitwell.tw,epinv.com,ff14angler.com,fxpan.com,haoweichi.com,logi.im,lspdfrcn.com,moa.tw,moe48.com,numberempire.com,playok.com,reh.tw,shenfendaquan.com,vaptcha.com#@#ins.adsbygoogle
 android-doc.com,apk.tw,chaojizhibo.net,chtoen.com,dizhishengcheng.com,doitwell.tw,epinv.com,ff14angler.com,fxpan.com,haoweichi.com,logi.im,lspdfrcn.com,moa.tw,moe48.com,numberempire.com,playok.com,reh.tw,shenfendaquan.com,vaptcha.com#@#ins.adsbygoogle[data-ad-slot]
 @@.adserver.$domain=litv.tv
-@@||unpkg.com^$script,domain=happymh.com
-@@||cloudflare.com^$script,domain=happymh.com
 @@||am730.com.hk^$generichide
 @@.com/adv/$domain=my.ctrip.com
 @@.gif#$domain=b168.net|cnprint.org|huhupan.com|tgfcer.com|wgun.net
