@@ -1,10 +1,10 @@
 ![Adblock Plus 2.0]
-! Checksum: zVZ7AQFfsTEK3KSwxb0new
-! Diff-Path: ../patches/17/17-s-1731519493-3600.patch
+! Checksum: +zrGhvLwx0ii/90y958i+g
+! Diff-Path: ../patches/17/17-s-1731584382-3600.patch
 ! Title: AdGuard URL Tracking filter
 ! Description: Filter that enhances privacy by removing tracking parameters from URLs.
-! Version: 2.0.9.78
-! TimeUpdated: 2024-11-13T17:34:22+00:00
+! Version: 2.0.9.79
+! TimeUpdated: 2024-11-14T11:35:12+00:00
 ! Expires: 5 days (update frequency)
 ! Homepage: https://github.com/AdguardTeam/AdGuardFilters
 ! License: https://github.com/AdguardTeam/AdguardFilters/blob/master/LICENSE
@@ -385,6 +385,8 @@ $removeparam=fb_source
 ! Bad: ||example.org^$xmlhttprequest,redirect=noopvast-3.0 (for instance, should be in specific.txt)
 !
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/192759
+||wsj.com^$removeparam=mod
 ! https://github.com/AdguardTeam/AdguardFilters/issues/192849
 ||fanatical.com^$removeparam=aff_track
 ||fanatical.com^$removeparam=cj_pid
@@ -1198,8 +1200,10 @@ mailchimp.com$removeparam=amp%3Bafl
 ||chemistwarehouse.com.au^$removeparam=ranSiteID
 ! https://github.com/AdguardTeam/AdguardFilters/issues/153536
 ||playstation.com$removeparam=emcid
-! https://github.com/AdguardTeam/AdguardFilters/issues/153222
+! epicgames.com
+||epicgames.com^$removeparam=epic_gameId
 ||epicgames.com^$removeparam=epic_affiliate
+! https://github.com/AdguardTeam/AdguardFilters/issues/153222
 ||gamersgate.com^$removeparam=caff
 ||humblebundle.com^$removeparam=partner
 ! https://github.com/AdguardTeam/AdguardFilters/issues/153288
