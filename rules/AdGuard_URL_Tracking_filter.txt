@@ -1,10 +1,10 @@
 ![Adblock Plus 2.0]
-! Checksum: rkWxMomUQTeJn8IrPWlogA
-! Diff-Path: ../patches/17/17-s-1731483444-3600.patch
+! Checksum: zVZ7AQFfsTEK3KSwxb0new
+! Diff-Path: ../patches/17/17-s-1731519493-3600.patch
 ! Title: AdGuard URL Tracking filter
 ! Description: Filter that enhances privacy by removing tracking parameters from URLs.
-! Version: 2.0.9.77
-! TimeUpdated: 2024-11-13T07:33:50+00:00
+! Version: 2.0.9.78
+! TimeUpdated: 2024-11-13T17:34:22+00:00
 ! Expires: 5 days (update frequency)
 ! Homepage: https://github.com/AdguardTeam/AdGuardFilters
 ! License: https://github.com/AdguardTeam/AdguardFilters/blob/master/LICENSE
@@ -1054,22 +1054,30 @@ mailchimp.com$removeparam=amp%3Butm_medium
 mailchimp.com$removeparam=amp%3Butm_campaign
 mailchimp.com$removeparam=amp%3Baid
 mailchimp.com$removeparam=amp%3Bafl
+!
+! wetransfer.com
+! https://github.com/AdguardTeam/AdguardFilters/issues/192651
+||wetransfer.com^$removeparam=t_lsid
+||wetransfer.com^$removeparam=t_rid
+||wetransfer.com^$removeparam=t_exp
+||wetransfer.com^$removeparam=t_ts
 ! https://github.com/AdguardTeam/AdguardFilters/issues/158205
 ||wetransfer.com^$removeparam=trk
 ||wetransfer.com^$removeparam=amp;utm_campaign
 ||wetransfer.com^$removeparam=amp;utm_medium
 ||wetransfer.com^$removeparam=amp;utm_source
-! https://github.com/AdguardTeam/AdguardFilters/issues/158251
-||douyin.com^$removeparam=extra_params
-||douyin.com^$removeparam=previous_page
-! https://github.com/uBlockOrigin/uAssets/issues/19320
-||bandcamp.com^$removeparam=from
 ! https://github.com/AdguardTeam/AdguardFilters/issues/158209
 ||wetransfer.zendesk.com^$removeparam=amp%3Btrk
 ||wetransfer.zendesk.com^$removeparam=amp%3Btoken
 ||wetransfer.zendesk.com^$removeparam=amp%3Butm_campaign
 ||wetransfer.zendesk.com^$removeparam=amp%3Butm_source
 ||wetransfer.zendesk.com^$removeparam=amp%3Butm_medium
+!
+! https://github.com/AdguardTeam/AdguardFilters/issues/158251
+||douyin.com^$removeparam=extra_params
+||douyin.com^$removeparam=previous_page
+! https://github.com/uBlockOrigin/uAssets/issues/19320
+||bandcamp.com^$removeparam=from
 ! https://github.com/AdguardTeam/AdguardFilters/issues/158548
 ||dvdfab.org^$removeparam=trackid
 ||dvdfab.org^$removeparam=c_ad
@@ -2340,7 +2348,6 @@ $removeparam=ns_fee,domain=bbc.com|bbc.co.uk
 ||office.com^$removeparam=ocid
 ! Embedded tweets
 $removeparam=refsrc,domain=twitter.com|x.com
-||x.com^$removeparam=ref_src
 $removeparam=ref_src,domain=twitter.com|x.com
 $removeparam=ref_url,domain=twitter.com|x.com
 ! Twitter
