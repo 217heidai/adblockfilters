@@ -1,10 +1,10 @@
 ![Adblock Plus 2.0]
-! Checksum: VzE2OnKvjZ3zpuQgl0FtcA
-! Diff-Path: ../patches/224/224-s-1731681549-3600.patch
+! Checksum: Dxi2OmNnNjZ+5NWMjfE/fw
+! Diff-Path: ../patches/224/224-s-1731713831-3600.patch
 ! Title: AdGuard Chinese filter
 ! Description: EasyList China + AdGuard Chinese filter. Filter list that specifically removes ads on websites in Chinese language.
-! Version: 2.1.25.93
-! TimeUpdated: 2024-11-15T14:35:15+00:00
+! Version: 2.1.25.96
+! TimeUpdated: 2024-11-15T23:33:54+00:00
 ! Expires: 5 days (update frequency)
 ! Homepage: https://github.com/AdguardTeam/AdGuardFilters
 ! License: https://github.com/AdguardTeam/AdguardFilters/blob/master/LICENSE
@@ -656,7 +656,6 @@ game735.com#$#div[id^="gklobl"] { height: 1px!important; }
 ruanyifeng.com#@#a > img[src*="wangbase.com/blogimg/asset/"]
 ! https://github.com/AdguardTeam/AdguardFilters/issues/46061#issuecomment-601842012
 t66y.com##+js(no-setTimeout-if, /tpc.?[A-Z0-9].?tml/)
-!+ NOT_PLATFORM(windows, mac, android)
 !+ NOT_PLATFORM(windows, mac, android, ext_chromium, ext_edge)
 t66y.com#$?#.sptable_do_not_remove { display: block !important; visibility: hidden !important; }
 ||alicdn.com^$domain=t66y.com
@@ -2910,6 +2909,8 @@ adguard.info,adguard.com,adguard.app##.hello_from_adguard_chinese
 ! ! temporary
 ! https://github.com/AdguardTeam/AdguardBrowserExtension/issues/3031
 !
+! Disable a rule which may unblocks trackers requests
+@@||translate.googleapis.com/element/$badfilter
 ! https://github.com/AdguardTeam/AdguardFilters/issues/189929
 @@||lib.baomitu.com/vue/*/vue.global.prod.min.js$domain=69xx03608.xyz
 @@||lib.baomitu.com/video.js/*/video.min.js$domain=69xx03608.xyz
@@ -4845,6 +4846,8 @@ newduba.cn###jq_youxi
 ||67.21.92.*.gif
 ||cnzz.trafficmanager.net^
 ||cupfox.app^$third-party
+||qphkuua.icu^
+||ngxzkaxf.icu^
 ||uaqdgrfr.icu^
 ||gzfsqrc.icu^
 ||kweisid.top^
