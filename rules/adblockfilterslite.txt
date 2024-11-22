@@ -3,9 +3,9 @@
 ! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：1Hosts (Lite)、AdGuard Base filter、AdGuard Base filter、AdGuard DNS filter、AdRules DNS List、Hblock、OISD Basic、1024 hosts、ad-wars hosts、StevenBlack hosts、xinggsf、EasyList、Easylist China、EasyPrivacy、CJX's Annoyance List、SmartTV Blocklist、AWAvenue Ads Rule、jiekouAD。Lite 版仅针对国内域名拦截。
 ! Homepage: https://github.com/217heidai/adblockfilters
 ! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt
-! Version: 20241122000830
-! Last modified: 2024/11/22 00:08:30
-! Blocked Filters: 42104
+! Version: 20241122082902
+! Last modified: 2024/11/22 08:29:02
+! Blocked Filters: 42086
 !
 #%#var AG_abortInlineScript=function(g,b,c){var d=function(){if("currentScript"in document)return document.currentScript;var a=document.getElementsByTagName("script");return a[a.length-1]},e=Math.random().toString(36).substr(2,8),h=d();AG_defineProperty(b,{beforeGet:function(){var a=d();if(a instanceof HTMLScriptElement&&a!==h&&""===a.src&&g.test(a.textContent))throw c&&console.warn("AdGuard aborted execution of an inline script"),new ReferenceError(e);}});var f=window.onerror;window.onerror=function(a){if("string"===typeof a&&-1!==a.indexOf(e))return c&&console.warn("AdGuard has caught window.onerror: "+b),!0;if(f instanceof Function)return f.apply(this,arguments)}};
 #%#var AG_abortOnPropertyRead=function(a,b){var c=Math.random().toString(36).substr(2,8);AG_defineProperty(a,{beforeGet:function(){b&&console.warn("AdGuard aborted property read: "+a);throw new ReferenceError(c);}});var d=window.onerror;window.onerror=function(e){if("string"===typeof e&&-1!==e.indexOf(c))return b&&console.warn("AdGuard has caught window.onerror: "+a),!0;if(d instanceof Function)return d.apply(this,arguments)}};
@@ -14890,7 +14890,7 @@
 ##a-ad
 ##a.gggg[href^="https"]
 ##a.hengfu > img.hengfu
-##a:has(+ amp-pixel) > amp-img.aspw
+##a[attributionsrc*=".html-load.com/contents/"]
 ##a[clickmode="ad"]
 ##a[href$=".cc:8443"]
 ##a[href$=".php"] > img[src*=".bcebos.com"]
@@ -15059,9 +15059,8 @@
 ##a[onclick^="_czc.push(['_trackEvent', '广告"]
 ##a[onclick^="gtag"] > .add
 ##a[onclick^="javascript:pc_"] > img[src*=".alicdn.com"]
-##a[style="position:fixed;top:0;left:0;width:100%;height:100%"]:has(+ script[src])
 ##a[style="width:100%;height:100%;z-index:10000000000000000;position:absolute;top:0;left:0;"]
-##a[style^="background:transparent url"][style*=".html-load.com/contents/"]
+##a[style^="background:transparent url(data:image/png;base64,"][style*=".html-load.com/contents/"]
 ##a[target="_bank"] > img[src*=".360buyimg.com"][style="width:100%;height:auto;"]
 ##a[target="_blank"] > img.king
 ##a[target="_blank"] > img[src*=".bitautoimg.com/"][src$=".gif"]
@@ -15072,8 +15071,7 @@
 ##ad-slot
 ##amp-ad
 ##amp-ad-custom
-##amp-ad-exit + div[class^="img_"] > div[class^="img_"][lang] > a[on$="_asochNbParam='9')"]
-##amp-ad-exit + div[class^="img_"]:has(+ div[aria-hidden="true"])
+##amp-ad-exit + div[class^="img_"]:has(+ div[aria-hidden="true"] ~ amp-pixel)
 ##amp-connatix-player
 ##amp-embed[type="taboola"]
 ##amp-fx-flying-carpet
@@ -15104,9 +15102,7 @@
 ##body > div#dontfoid
 ##body > div#fixedban
 ##body > div.demo-wrapper[style="display:none;"] + div[id][class]
-##body > div[id^="img_"] > div[id^="img_"] > a[on^="tap"]:has(+ div[aria-hidden="true"][dir="ltr"]) > amp-img.aspw:only-child
-##body > div[id^="img_"]:has(+ amp-pixel) > div[id^="img_"]
-##body > div[id^="img_"]:nth-child(2):empty
+##body > div[id^="img_"]:has(~ amp-analytics) > div[id^="img_"]
 ##body > div[style="display:none;"] + div[style="display:none;"] + div[id][class][style^="background-color:"]
 ##body > div[style="position: fixed; display: block; width: 100%; height: 100%; inset: 0px; background-color: rgba(0, 0, 0, 0); z-index: 300000;"]
 ##body > div[style="width: 100% !important; margin: 0px !important; padding: 0px !important; display: flex !important; flex-flow: row wrap !important; background: rgb(255, 255, 255) !important; color: transparent !important; font-size: 0px !important; text-indent: -10000px !important; line-height: 0px !important;"]
@@ -15140,7 +15136,6 @@
 ##body.page.player > div.popup.popup-tips.popup-icon.open
 ##body[onload*="u()"] > #x
 ##body[ontouchstart] > #topBox
-##body[style] > div[class^="img_"][style="width:100%; height:100%;"]
 ##bottomadblock
 ##button[data-openuri="|BTN_URL|"]
 ##button[onclick*=".xacg.info/"]
@@ -15153,7 +15148,6 @@
 ##citrus-ad-wrapper
 ##display-ad-component
 ##display-ads
-##div + a > img.aspw[style="display:block"]
 ##div#ad_id
 ##div#apage.apage > div > ul > li > a
 ##div#beijing.article_content.layui-clear > div.left > div > a
@@ -15212,6 +15206,7 @@
 ##div.swiper-slide > A[rel='nofollow noopenner']
 ##div.synopsisArea > a[id*='hudie_']
 ##div:not(#video)[style^="width: 100%;"][style$="display: block;"] iframe[scrolling="no"][src*="//"][src*="?"][src*="="][src*="&"][width][height][frameborder="0"]
+##div:not([id]):not([class]) > script[async][src] ~ script + div[id^="img_"] > script + script + span[id^="img_"]
 ##div[align="center"] > a[href^="/url/"] > img[src*=".alicdn.com"]
 ##div[align="center"] > a[href^="/url/"] > img[src*=".qpic.cn"]
 ##div[aria-label="Ads"]
@@ -15220,10 +15215,8 @@
 ##div[class][id][style] > .pic_container
 ##div[class^="Adstyled__AdWrapper-"]
 ##div[class^="Display_displayAd"]
-##div[class^="img_"] > div[class^="img_"][style^="grid-template-areas:"]
-##div[class^="img_"][style$="width: 300px; height: 254px; overflow: hidden;"]
-##div[class^="img_"][style="display: flex; justify-content: center; align-items: center; width: 320px; height: 104px; overflow: hidden;"]
-##div[class^="img_"][style="width: 298px;"]
+##div[class^="img_"][style^="grid-template:"]
+##div[class^="img_"][style^="position:absolute;"][aria-label="Sponsored Ad"]
 ##div[class^="is_"] > a > img[referrerpolicy="no-referrer"]
 ##div[class^="is_"] > a > img[referrerpolicy="no-referrer"][src*="hdslb.com"]
 ##div[class^="kiwi-ad-wrapper"]
@@ -15270,7 +15263,7 @@
 ##div[id^="ezoic-pub-ad-"]
 ##div[id^="google_dfp_"]
 ##div[id^="gpt_ad_"]
-##div[id^="img_"][name^="adroute_ads_adblock_15"]
+##div[id^="img_"][draggable="false"]
 ##div[id^="lazyad-"]
 ##div[id^="optidigital-adslot"]
 ##div[id^="pa_sticky_ad_box_middle_"]
@@ -15295,17 +15288,15 @@
 ##div[style="margin:10px auto;width: 930px;height: 250px;"]
 ##div[style="position: fixed; top: 0px; overflow: hidden; z-index: 2147483647; background-color: rgba(0, 0, 0, 0.5); height: 110%;"]
 ##div[style="position: fixed;top: 60px;right:0;z-index:999;width:250px"]
-##div[style="position:absolute;display:none;"] + meta + meta + div[class^="img_"]
 ##div[style="width: 100%;"]:not([id]):not([class]) > iframe[scrolling="no"][src*="//"][src*="?"][src*="="][src*="&"][width][height][frameborder="0"]
-##div[style="width:320px;height:100%;margin:auto;"] > div[id^="img_"] > span[id^="img_"][style="border:none;margin:0;padding:0;position:relative;display:inline-block"]
 ##div[style^="line-height"][style*="http"][style$="fixed;"]
 ##div[style^="position"][onclick^="window.open"]
-##div[style^="position:relative; padding:0; width:300px ; height:250px ; background-color:#"]
 ##div[style^="width: 100%;"]:not([id]):not([class]) > iframe[scrolling="no"][src^="http"][src*="?"][src*="="][src*="&"][width][height][frameborder="0"]:not([allowfullscreen])
 ##div[style^="width: 100%;"][style$="margin: 0px;"] iframe[scrolling="no"][src*="//"][src*="?"][src*="="][src*="&"][width][height][frameborder="0"]
 ##div[style^="width: 100%;"][style$="opacity: 100;"] iframe[scrolling="no"][src*="//"][src*="?"][src*="="][src*="&"][width][height][frameborder="0"]
 ##div[style^="width: 100%;"][style$="overflow: hidden;"] iframe[scrolling="no"][src*="//"][src*="?"][src*="="][src*="&"][width][height][frameborder="0"]
 ##div[style^="width: 100%;"][style$="z-index: inherit;"] iframe[scrolling="no"][src*="//"][src*="?"][src*="="][src*="&"][width][height][frameborder="0"]
+##div[x-frame-width] > div[style="position:absolute;display:none;"] + meta + meta + div[class^="img_"]
 ##dl#listwoBox
 ##embed[width="100%"][height="100"]
 ##embed[width="120"][height="240"]
@@ -15326,11 +15317,9 @@
 ##html.wap [style='left: 40%;']
 ##html[data-lt-installed="true"] > body[style=""] img[style="width: 100%;max-width: 728px;"]
 ##iframe.ad-frame
-##iframe[src*=".html-load.com/contents/"][title="Ad Content"]
 ##iframe[src*=".xxmh"][src*="?u="]
 ##iframe[src^="//ad.a-ads.com/"]
 ##iframe[src^="//tempest.services.disqus.com/ads-iframe/"]
-##iframe[style="width:100%;height:100%;position:relative;display:block;overflow:hidden;"] + div[class^="img_"][style="position: absolute; inset: 0px; z-index: 800; cursor: pointer; pointer-events: auto;"]
 ##iframe[width="100%"][height="120"]
 ##iframe[width="100%"][height="90"]
 ##iframe[width="104"][height="464"]
@@ -15348,16 +15337,9 @@
 ##img#adv1
 ##img#hth[onclick$="hth.html')"]
 ##img#hth[onclick^="window.open"]
-##img.aspw[adsby="1"][border="0"][height="102"]
-##img.aspw[adsby="1"][border="0"][width="300"]
-##img.aspw[adsby="1"][border="0"][width="336"]
-##img.aspw[style$="-webkit-backface-visibility:visible;pointer-events:auto;vertical-align:bottom;"]
-##img[adsby="1"][style$="z-index:1!important;"]
-##img[border="0"][src*=".html-load.com/contents/"][style^="display:block!important;"]
+##img.aspw[style$="height:250px;-webkit-backface-visibility:visible;pointer-events:auto;vertical-align:bottom;"]
 ##img[data-link][data-src*="/u/"]:not([data-link*="/i/"])
 ##img[data-src*=".alicdn.com/img/ibank/"][src="/static/images/loadingerror.gif"]
-##img[id^="img_"][draggable="false"]
-##img[id^="img_"][style^="object-fit:"]
 ##img[onclick*=".qq.com/doc/"]
 ##img[onclick*="/2e9c9aa9.com"]
 ##img[onclick*="/c7.net/"]
@@ -15368,7 +15350,7 @@
 ##img[src$=".gif"][style="width:100%;max-width: 960px;height:45px;margin-bottom:2px;"]
 ##img[src$="/img/tianbo.gif"]
 ##img[src*=".c-ctrip.com"][style="width:100%;height:70px;"]
-##img[src*=".html-load.com/contents/"][style$="box-shadow:rgb(0,0,0) 0px 0px 3px;"]
+##img[src*=".html-load.com/contents/"][height="100%"]
 ##img[src*=".jd.com"][style="width:100%;height:70px;"]
 ##img[src*=".meituan.net"][style="width:100%;height:70px;"]
 ##img[src*=".meiyida.tv/"]
@@ -15385,9 +15367,8 @@
 ##img[width="728"][height="90"]
 ##ins.adsbygoogle[data-ad-client]
 ##ins.adsbygoogle[data-ad-slot]
-##meta + style + div[class^="img_"]
+##link[rel="stylesheet"][href*=".html-load.com/contents/"] + script + div[class^="img_"]
 ##oxk
-##picture[class^="img_"]
 ##ps-connatix-module
 ##script + #coupletBox
 ##script + #rbbox
@@ -15398,10 +15379,9 @@
 ##script + a[href] > img[src*="lbsugc.cdn.bcebos.com"]
 ##script + a[target="_bank"] > img[src*=".c-ctrip.com"][style="width:100%;height:auto;"]
 ##script + div[id^="a-loading-"]
-##script[async][src] + script + div[id^="img_"] > script + script + span[id^="img_"]
 ##script[src$="/base.js"] + #couplet
+##script[src*=".html-load.com/contents/"]:first-child + div:not([class]):not([id]) > script + script[src*=".html-load.com/contents/"] + script + div[id^="img_"] > script + script + span[id^="img_"]
 ##script[src="/js/sy2.js"] + div[align="center"]
-##script[src] + div:not([class]):not([id]) > script + script[src] + script + div[id^="img_"] > script + script + span[id^="img_"]
 ##secion#ly LI[role='group'],secion#ly > H2
 ##section > SPAN[style='display: block; clear: both; overflow: hidden;']
 ##section.global_video_bottom_dbtc
@@ -17565,6 +17545,7 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 /^(?!.*(fastlycdn.com|doodcdn.co|intensedebate.com|vixcloud.co|cdn.plyr.io|authkong.com|rsc.cdn77.org|linkvertise.com|fastly.net|statically.io|sharecast.ws|b-cdn.net|bunnycdn.ru|bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|cdn.staticfile.org|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|(\/\/|\.)vk\.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com|imgsmail.ru|cloudflare.net|(\/\/|\.)x\.com)).*$/$third-party,script,_____,domain=manshuxs.com|yemancomic.com|qimiaoxiaoshuo.com|gaofuwu.org|nxpaaq.com|dengbi2.com|92hm.top|634.tv|myhaitang.cc|ckplayer.vip
 /^(?!.*(swarm.video|alexsports.store|googleusercontent.com)).*$/$third-party,xmlhttprequest,script,domain=alexsports.xyz|alexsports.site
 /^.+stat\.kugou\.com/
+/^139\.45\.197\.2(4[0-9]|5[0-4])/
 /^139\.45\.197\.2(4[0-9]|5[0-4]):/
 /^139\.45\.197\.2(4[0-9]|5[0-4]):/$network
 /^139\.45\.19[5-7]\.\d{1,3}/
@@ -17577,6 +17558,7 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 /^23\.109\.170\.(18[7-9]|19[0-2])$/$network
 /^23\.109\.73\.\d{3}/
 /^23\.109\.73\.\d{3}/$network
+/^94\.242\.247\.(2[0-9]|3[0-2])/
 /^94\.242\.247\.(2[0-9]|3[0-2]):/
 /^94\.242\.247\.(2[0-9]|3[0-2]):/$network
 /^admarvel\./
@@ -18086,7 +18068,7 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 /advert?
 /advertising/banners/*$image
 /advertisment/*$~image
-/adverts.$~script,domain=~0xacab.org|~adverts.ie|~adverts.org.ua|~github.com|~gitlab.com
+/adverts.$~script,~xmlhttprequest,domain=~0xacab.org|~adverts.ie|~adverts.org.ua|~github.com|~gitlab.com
 /adverts/*$~xmlhttprequest
 /advpic/*
 /advrotator_banner_largo.htm$subdocument
