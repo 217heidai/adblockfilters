@@ -3,9 +3,9 @@
 ! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：1Hosts (Lite)、AdGuard Base filter、AdGuard Base filter、AdGuard DNS filter、AdRules DNS List、Hblock、NEO DEV HOST、OISD Basic、1024 hosts、ad-wars hosts、StevenBlack hosts、xinggsf、EasyList、Easylist China、EasyPrivacy、CJX's Annoyance List、SmartTV Blocklist、AWAvenue Ads Rule、jiekouAD。Lite 版仅针对国内域名拦截。
 ! Homepage: https://github.com/217heidai/adblockfilters
 ! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt
-! Version: 20241129001052
-! Last modified: 2024/11/29 00:10:52
-! Blocked Filters: 54450
+! Version: 20241129084213
+! Last modified: 2024/11/29 08:42:13
+! Blocked Filters: 54453
 !
 #%#var AG_abortInlineScript=function(g,b,c){var d=function(){if("currentScript"in document)return document.currentScript;var a=document.getElementsByTagName("script");return a[a.length-1]},e=Math.random().toString(36).substr(2,8),h=d();AG_defineProperty(b,{beforeGet:function(){var a=d();if(a instanceof HTMLScriptElement&&a!==h&&""===a.src&&g.test(a.textContent))throw c&&console.warn("AdGuard aborted execution of an inline script"),new ReferenceError(e);}});var f=window.onerror;window.onerror=function(a){if("string"===typeof a&&-1!==a.indexOf(e))return c&&console.warn("AdGuard has caught window.onerror: "+b),!0;if(f instanceof Function)return f.apply(this,arguments)}};
 #%#var AG_abortOnPropertyRead=function(a,b){var c=Math.random().toString(36).substr(2,8);AG_defineProperty(a,{beforeGet:function(){b&&console.warn("AdGuard aborted property read: "+a);throw new ReferenceError(c);}});var d=window.onerror;window.onerror=function(e){if("string"===typeof e&&-1!==e.indexOf(c))return b&&console.warn("AdGuard has caught window.onerror: "+a),!0;if(d instanceof Function)return d.apply(this,arguments)}};
@@ -13465,6 +13465,7 @@
 ##.yel-popup-main-wrapper
 ##.yikes-mailchimp-container
 ##.yjscroll
+##.ympb_target
 ##.ymw-app-open
 ##.ytp-ad-progress-list
 ##.ytp-share-button
@@ -26158,6 +26159,8 @@ $~xmlhttprequest,removeparam=r,domain=tv2.no|linode.com|ledger.*|mrgay.com|odyse
 4fresh.ru#$?#body:has(> div) { overflow: visible!important; }
 4gtv.tv,80s.ai,ft.com,ftchinese.com,ftchinese.com.sz-dns.net,kartinfo.me,long7.qq.com,reh.tw,typecho.wiki#@#.adsbox
 4gtv.tv,ftv.com.tw,ftvnews.com.tw###Allow
+4horlover.com,jobsibe.com##body > div[id][class*=" "]:first-child
+4horlover.com,richitt.com,mylivewallpapers.com#%#//scriptlet('abort-on-stack-trace', 'document.createElement', 'adsBlocked')
 4k123.com##.comeing_wad,.a_pb
 4kdownload.com#$?#body > div.remodal-wrapper:has(> div#ouibounce-modal > div#popup-download-root) { display: none!important; }
 4kdownload.com,folhavitoria.com.br,giffits-articles-publicitaires.ch,giffits-werbeartikel.at,giffits-werbeartikel.ch,giffits.*,easycosmetic.de##.overlay
@@ -43519,7 +43522,6 @@ rheinpfalz.de,pz-news.de##a[class*="nfy-share-"]
 riavrn.ru,pdf.movavi.ru##.article-buttons
 riaway.com##.info_message_container
 ricedigital.co.uk,vladan.fr#%#//scriptlet('abort-on-property-read', 'wpsite_clickable_data')
-richitt.com,mylivewallpapers.com#%#//scriptlet('abort-on-stack-trace', 'document.createElement', 'adsBlocked')
 right.com.cn###hd > div.wp > div.hdc > h2
 right.com.cn##.a_t
 right.com.cn##a[href^="https://jd.dangbei.com/"]
@@ -52874,6 +52876,7 @@ zzzyk.com###Tinfo
 ||reddit.com^$removeparam=correlation_id
 ||reddit.com^$removeparam=post_fullname
 ||reddit.com^$removeparam=post_index
+||reddit.com^$removeparam=recap_redirect
 ||reddit.com^$removeparam=ref
 ||reddit.com^$removeparam=ref_campaign
 ||reddit.com^$removeparam=ref_source
