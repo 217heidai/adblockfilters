@@ -1,5 +1,5 @@
 ! Title: ➗ Actually Legitimate URL Shortener Tool
-! Version: 29November2024v1
+! Version: 30November2024v2
 ! Expires: 12 hours
 ! Description: In a world dominated by bitLy, adfLy, and several thousand other malware cover-up tools, this list reduces the length of URLs in a much more legitimate and transparent manner. Essentially, it automatically removes unnecessary $/& values from the URLs, making them easier to copy from the URL bar and pasting elsewhere as links. Enjoy.
 ! Homepage: https://github.com/DandelionSprout/adfilt/discussions/163
@@ -2148,8 +2148,8 @@ $removeparam=uact,domain=www.google.*|ipv6.google.com
 ! https://egon-no.translate.goog/ledige-stillinger/204bd5b2-6f9b-45bf-893d-1c0b21f9dc8a?_x_tr_sl=no&_x_tr_tl=en&_x_tr_hl=no&_x_tr_pto=wapp
 $removeparam=_x_tr_pto
 ! https://github.com/DandelionSprout/adfilt/pull/862
-||google.$removeparam=/^sa=X$/
-||google.$removeparam=/^sa=N$/
+||google.$doc,removeparam=/^sa=X$/
+||google.$doc,removeparam=/^sa=N$/
 ! https://github.com/DandelionSprout/adfilt/discussions/163#discussioncomment-6196774
 ||support.google.com^$doc,removeparam=sjid
 ! https://github.com/DandelionSprout/adfilt/discussions/163#discussioncomment-6525587
@@ -2170,6 +2170,11 @@ $doc,removeparam=sca_upv,domain=www.google.*|ipv6.google.com
 ! https://support.google.com/adsense/answer/9055049 imply that "Shift_JIS" was supposed to be accepted by Google, but while https://www.google.co.jp/search?q=%E3%83%9E%E3%83%BC%E3%83%A1%E3%82%A4%E3%83%89%E3%83%A9%E3%82%B0%E3%83%BC%E3%83%B3%E3%81%AE%E3%83%A9%E3%83%8B%E3%83%BC works correctly (マーメイドラグーンのラニー, the Japanese name of a book), https://www.google.co.jp/search?q=%E3%83%9E%E3%83%BC%E3%83%A1%E3%82%A4%E3%83%89%E3%83%A9%E3%82%B0%E3%83%BC%E3%83%B3%E3%81%AE%E3%83%A9%E3%83%8B%E3%83%BC&ie=Shift_JIS clearly doesn't, no matter which combinations of online converters or halfwidth/fullwidth I tested with.
 ://www.google.$doc,removeparam=ie,domain=www.google.*|ipv6.google.com
 ://ipv6.google.com^$doc,removeparam=ie,domain=www.google.*|ipv6.google.com
+! https://github.com/DandelionSprout/adfilt/discussions/163#discussioncomment-11391406
+||www.google.$doc,removeparam=fbs
+||www.google.$doc,removeparam=ictx
+||www.google.$doc,removeparam=dpr
+||www.google.$doc,removeparam=tfu
 
 !!! ———TikTok———
 ! https://github.com/DandelionSprout/adfilt/discussions/163#discussioncomment-632259
@@ -3905,7 +3910,7 @@ $removeparam=sub,domain=allboner.com|twinkvideos.com
 ||sony.$removeparam=cpint
 
 ! https://github.com/DandelionSprout/adfilt/discussions/163#discussioncomment-3778558
-||target.$removeparam=preselect
+!!! ||target.$removeparam=preselect - https://github.com/DandelionSprout/adfilt/discussions/163#discussioncomment-11417832
 
 ! https://github.com/DandelionSprout/adfilt/pull/660
 $removeparam=ueid,domain=ask.com|askmoney.com|bloglines.com|consumersearch.com|directhit.com|faqtoids.com|findthedish.com|informationvine.com|internetcorkboard.com|life123.com|ohdeal.com|questionsanswered.net|reference.com|shop411.com|shopping.net|simpli.com|smarter.com|symptomfind.com
