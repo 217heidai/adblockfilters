@@ -27,7 +27,7 @@
 
 | 规则 | 类型 | 原始链接 | 加速链接 | 更新日期 |
 |:-|:-|:-|:-|:-|
-| Anti-CSS EasyList + AdGuard 基本过滤器（优化） | filter | [原始链接](https://github.com/fhvvbvn/abpmerge/raw/refs/heads/main/Anti-CSS.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/Anti-CSS_EasyList_+_AdGuard_基本过滤器（优化）.txt) | 2024/12/08 |
+| AdGuard Optimized | filter | [原始链接](https://raw.githubusercontent.com/fhvvbvn/abpmerge/refs/heads/main/Optimized.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/Anti-CSS_EasyList_+_AdGuard_基本过滤器（优化）.txt) | 2024/12/08 |
 | ADgk filter | filter | [原始链接](https://raw.githubusercontent.com/banbendalao/ADgk/master/ADgk.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/ADgk_filter.txt) | 2024/10/26 |
 | AdGuard Chinese filter | filter | [原始链接](https://filters.adtidy.org/extension/ublock/filters/224.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/AdGuard_Chinese_filter.txt) | 2024/12/09 |
 | AdGuard URL Tracking filter | filter | [原始链接](https://filters.adtidy.org/extension/ublock/filters/17.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/AdGuard_URL_Tracking_filter.txt) | 2024/12/07 |
@@ -40,7 +40,6 @@
 | Ad Filter J | filter | [原始链接](https://raw.githubusercontent.com/jk278/Ad-J/main/Ad-J.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/Ad_Filter_J.txt) | 2024/10/26 |
 | jiekouAD | filter | [原始链接](https://raw.githubusercontent.com/damengzhu/banad/main/jiekouAD.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/jiekouAD.txt) | 2024/12/08 |
 | AdGuard Social（优化） | filter | [原始链接](https://filters.adtidy.org/extension/ublock/filters/4_optimized.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/AdGuard_Social（优化）.txt) | 2024/12/09 |
-| AdGuard Annoyances（优化） | filter | [原始链接](https://filters.adtidy.org/extension/ublock/filters/14_optimized.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/AdGuard_Annoyances（优化）.txt) | 2024/12/09 |
 | AdGuard 移动广告过滤器 | filter | [原始链接](https://filters.adtidy.org/extension/ublock/filters/11.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/AdGuard_移动广告过滤器.txt) | 2024/12/09 |
 | Adguard DNS Filter | dns | [原始链接](https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/Adguard_DNS_Filter.txt) | 2024/12/09 |
 | malware-filter_Malicious-URL-Blocklist | dns | [原始链接](https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-agh-online.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/malware-filter_Malicious-URL-Blocklist.txt) | 2024/12/09 |
