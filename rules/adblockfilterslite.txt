@@ -3,9 +3,9 @@
 ! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：1Hosts (Lite)、AdGuard Base filter、AdGuard Base filter、AdGuard DNS filter、AdRules DNS List、Hblock、NEO DEV HOST、OISD Basic、1024 hosts、ad-wars hosts、StevenBlack hosts、xinggsf、EasyList、Easylist China、EasyPrivacy、CJX's Annoyance List、SmartTV Blocklist、AWAvenue Ads Rule、jiekouAD。Lite 版仅针对国内域名拦截。
 ! Homepage: https://github.com/217heidai/adblockfilters
 ! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt
-! Version: 20241214084112
-! Last modified: 2024/12/14 08:41:12
-! Blocked Filters: 27736
+! Version: 20241214161105
+! Last modified: 2024/12/14 16:11:05
+! Blocked Filters: 27746
 !
 #%#var AG_abortInlineScript=function(g,b,c){var d=function(){if("currentScript"in document)return document.currentScript;var a=document.getElementsByTagName("script");return a[a.length-1]},e=Math.random().toString(36).substr(2,8),h=d();AG_defineProperty(b,{beforeGet:function(){var a=d();if(a instanceof HTMLScriptElement&&a!==h&&""===a.src&&g.test(a.textContent))throw c&&console.warn("AdGuard aborted execution of an inline script"),new ReferenceError(e);}});var f=window.onerror;window.onerror=function(a){if("string"===typeof a&&-1!==a.indexOf(e))return c&&console.warn("AdGuard has caught window.onerror: "+b),!0;if(f instanceof Function)return f.apply(this,arguments)}};
 #%#var AG_abortOnPropertyRead=function(a,b){var c=Math.random().toString(36).substr(2,8);AG_defineProperty(a,{beforeGet:function(){b&&console.warn("AdGuard aborted property read: "+a);throw new ReferenceError(c);}});var d=window.onerror;window.onerror=function(e){if("string"===typeof e&&-1!==e.indexOf(c))return b&&console.warn("AdGuard has caught window.onerror: "+a),!0;if(d instanceof Function)return d.apply(this,arguments)}};
@@ -36,6 +36,7 @@
 ###QQ_Full
 ###SOHU_MAIN > .module-cmt-float-bar
 ###ShareModule
+###SociaLKare
 ###SocialButtons
 ###SocialSharingBtns
 ###Video-Shunt-Box + .container
@@ -776,6 +777,7 @@
 ##.amp-ad container
 ##.amp-ad-container
 ##.amp-pages__share
+##.amp-social-container
 ##.amp_ad
 ##.ampforwp-social-icons
 ##.ampforwp-social-icons-wrapper
@@ -1461,6 +1463,7 @@
 ##.post-social-gplus
 ##.post-social-pin
 ##.post-social-tweet
+##.post-social-vk
 ##.post-title + .metadata + .entry > div > div > a[href^="/"][href$="/"] > img
 ##.postShare
 ##.post_likes
@@ -1615,6 +1618,7 @@
 ##.sharing-popup-social
 ##.sharing-tools
 ##.sharing__list
+##.sharing_controls
 ##.sharingfooter
 ##.sharrre
 ##.sharrre-container
@@ -1664,6 +1668,7 @@
 ##.social-block-share
 ##.social-btn-block
 ##.social-button-small
+##.social-button_holder
 ##.social-fb-alt2
 ##.social-fp-widget
 ##.social-horizontal
@@ -6481,6 +6486,9 @@ $~xmlhttprequest,removeparam=r,domain=tv2.no|linode.com|ledger.*|mrgay.com|odyse
 /assets/js/adAdsense.js
 /assets/js/common/discor.js
 /assets/performance_timing-
+/assets/publish/chart.1.js$~third-party
+/assets/publish/d3.2.js$~third-party
+/assets/publish/react.3.js$~third-party
 /assets/sidebar/*$domain=v2ex.com
 /assets/smarttag-$script
 /assets/t_j/tongji.js
@@ -15572,6 +15580,8 @@ fishpi.cn#?#.module:-abp-has(>.ad)
 fitbook.de,myhomebook.de,travelbook.de,petbook.de,stylebook.de##div[data-type="social-bar"]
 fixedcost.moneyforward.com,gamebiz.jp##.share-sns
 fjsen.com,nuomi.com#@#.right-ad
+flame.az,qreat.az##.facebook-bg
+flame.az,qreat.az##.facebook-window
 flight.qunar.com##.l_rside > .b_fly_ban_b:nth-child(2)
 flighty.cn###searchBox + #sidebarBox
 flixhd.cc,sflix.se##.dtc-share
@@ -17484,7 +17494,6 @@ kidd.co.kr,veritas-a.com,wikileaks-kr.org,aitimes.kr,edujin.co.kr,datanet.co.kr#
 kijyomatome-ch.com,openworldnews.net,majikichi.com,majikichi.com,girlsvip-matome.com,sutekinakijo.com,onecall2ch.com,jin115.com,chaos2ch.com,bipblog.com,akb48matomemory.com,himasoku.com,blog.esuteru.com,kyousoku.net,vipsister23.com,blog.jp,2chblog.jp,doorblog.jp,livedoor.biz,blog.livedoor.jp###article-1_5
 kijyomita.com,kijonotakuhaibin.com##.social-buttom-bigsize
 kingdomfiles.com,katfile.com,down.mdiaload.com,down.fast-down.com,userupload.net,file-upload.com,file-upload.cc###sharebuttons
-kinggnuceremony.com,mahouka-yuutousei.jp##.p-h-share
 kinobar.vip#$?#.has-brand { margin-top: 0 !important; }
 kinotan.ru,kinotochka.club,legend.az##.counts
 kinoz.store,tehno-rating.ru##.fshare
@@ -18196,6 +18205,7 @@ mi.com##div.download
 mi.com##span.sep:nth-of-type(10)
 miaopai.com##.div1,.v6_btn_banner_class,.footer_banner
 miaopai.com##.footer
+miasskiy.ru,turizmtatilseyahat.com,djhjmedia.com,gazetedavul.com,bursamiz.com,haberdurumu.com##.jeg_sharelist
 microcontrol.cn###body > table[width="758"]
 microsite-news.pages.dev,news.patreon.com##.share-link-wrapper
 microsoftnews.msn.cn##div[class^="nativeAd-DS-card"]
@@ -20104,6 +20114,7 @@ suning.com##DIV.sn-sidebar:nth-child(41) > DIV.sn-sidebar-tabs.sn-sidebar-bottom
 suning.com##DIV.sn-sidebar:nth-child(41) > DIV.sn-sidebar-tabs.sn-sidebar-bottom-tabs:nth-child(3) > DIV.sn-sidebar-tab.sn-sidebar-wider-tab.sn-sidebar-code.sn-sidebar-tab-js:nth-child(3) > A > I.tab-icon.tab-icon-code:last-child
 superluchas.com,mundokodi.com##div[id^="lx_"]
 superluchas.com,newsit.gr###gp-social-share
+superluchas.com,usa.one##.cl-social
 superuser.com,stackoverflow.com,askubuntu.com##.js-social-container
 surabaya.kompas.com,thairath.co.th##.buttonShare
 surfsnow.jp#$?#.modaal-inline:has(a[href*="/jackbnr_"]) { display: none !important; }
@@ -20516,7 +20527,6 @@ traefik.io,trendingtopics.eu##.post__sharing
 trafficjunky.com$third-part
 tranimeizle.*##.share.transition
 trannylime.com,znews.vn,m.news.nate.com,zingnews.vn,pornomovies.com,babestube.com,submityourflicks.com,chubbyporn.com,milliyet.com.tr##.btnShare
-translate.google.*##.share-translation-button
 translate.yandex.*###shareContent
 translate.yandex.*###shareContent + div[data-action="mailTo"]
 transparency.org,shibuya.tokyu-plaza.com,24smi.org,nur.kz,smartcitysweden.com,goodfon.com,sony.*,otus.ru,daily.afisha.ru,about.com,drive2.com,drive2.ru,metrolyrics.com,surfingbird.ru##.js-share
