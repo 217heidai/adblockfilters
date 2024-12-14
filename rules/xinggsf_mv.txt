@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
 ! Title: 乘风 视频过滤规则
-! Version: 202410221
+! Version: 202412131
 ! Expires: 1 day
 ! Homepage: https://github.com/xinggsf/Adblock-Plus-Rule/issues
 
@@ -13,6 +13,7 @@ cad.youku.com
 ||alicdn.com/*yksdk/*sdk.js$script,domain=youku.com
 ||alicdn.com/awsc/et/
 
+iqiyi.com##a[href^="https://ads."]
 iqiyi.com##.black-screen[data-cupid=adblock-blackscreen], .qy-plist-ad
 iqiyi.com##.cupid-panel + div, div[data-adzone],#block-V
 iqiyi.com##+js(set, Object.prototype.blackscreenDuration, 1)
@@ -36,7 +37,8 @@ show.ssports.com
 v.qq.com##.video-card-module > .card-wrap
 v.qq.com##.quick_games.quick_item, div.game-switch-ad
 qq.com##+js(json-prune, ads ad material.video)
-v.qq.com##+js(no-fetch-if, /(beacon|trace)\.qq\.com/)
+v.qq.com,news.qq.com##+js(no-fetch-if, /(beacon|trace)\.qq\.com/)
+v.qq.com,news.qq.com##+js(no-xhr-if, snowflake.qq.com)
 !qq.com##+js(nano-sib, \u5012\u8ba1\u65f6)
 !qq.com##+js(aopr, Beacon.prototype.fail)
 @@||union.video.qq.com/fcgi-bin/$script,domain=qq.com
@@ -49,11 +51,17 @@ cm.l.qq.com
 ||gtimg.com/qqlive/
 ||qzonestyle.gtimg.cn/qzone/biz/ac/comm/$script
 |https://imgcache.qq.com/qzone/biz/comm/js/qbs.js
-!||ssp.qq.com/static/web/websites/pcnewsplugin/sspad_$script
-new.qq.com##+js(set, SSPAd.prototype.loadAd, noopFunc)
+news.qq.com##+js(set, SSPAd.prototype.loadAd, noopFunc)
 ||news.ssp.qq.com/app
+||ssp.qq.com/ad^$xhr
+||staticfile.qq.com/datong/$script
+||staticfile.qq.com/qimei/$script
+||vfiles.gtimg.cn/tvideo/js/new_ping_video.js^$script
+||res.ab.qq.com/tab/$script
+||v.qq.com/cache/wuji/object^$script
 
 bilibili.com##.ad-report, .ad-floor
+bilibili.com##.container.is-version8 > .feed-card:has(>div:only-child), .container.is-version8 > .bili-video-card:has(>div:only-child)
 bilibili.com##.gg-floor-module,#slide_ad,a[href^="//cm.bilibili.com"]
 ||api.bilibili.com/x/web-show/res/loc?pf=$~script
 ||hdslb.com/bfs/cm/cm-sdk/static/js/bili-collect.js^$empty
@@ -74,8 +82,10 @@ de.as.pptv.com
 ||osswc.pplive.cn/cccms/$image
 ||mediamax.suning.com/adssp/sdk/$script
 
-miguvideo.com###adver-box
-||cmvideo.cn/v1/iflyad/$media,image,domain=miguvideo.com
+! miguvideo.com###adver-box
+! ||ggc.cmvideo.cn/v1/iflyad/deliverysystem/direct/$image,redirect=2x2.png
+! ||cmvideo.cn/v1/iflyad/$media,image,domain=miguvideo.com
+||miguvideo.com/mgs/common/miguplayerPlugins/prd/WWWggView.js^$script
 ! 风行网： fun.tv
 pub.funshion.com
 
@@ -147,25 +157,24 @@ litix.io
 ||google.*/pagead/
 ||gstatic.com/shopping?
 
-||btsow.motorcycles/app/javu$image
+||btsow.motorcycles/app/jav$image
 jads.co
 |https://tellme.pw/go/jav$popup
+btsow.motorcycles##a[href^="https://tellme.pw/go/jav"]
 
-age.tv,agedm.org##.ratio-16x9:style(--bs-aspect-ratio:0!important)
-||cdn.aiqingyu1314.com/age/statics/js/notice.js^$script
 age.tv,agedm.org##+js(noeval-if, devtoolsDetector)
-||toutiaoimg.com/origin/$image,domain=agedm.org|acgndmku.com
+||cdn.aiqingyu1314.com/age/statics/js/notice.js^$script
+||toutiaoimg.com/origin/$image,domain=agedm.org
 ||dd-static.jd.com^$image,domain=subaibaiys.com
 
-!dandanzan.com,dandanzan10.top,nunuyy5.org##+js(set,webkitRTCPeerConnection,null)
-nnyy.in##.gm-fp-body video:style(max-height:100%!important)
+!dandanzan.net,nunuyy5.com##+js(set,webkitRTCPeerConnection,null)
+dandanzan.net,nnyy.in,nunuyy5.com##.gm-fp-body video:style(max-height:100%!important)
 
 yatu.tv##.dplayer-web-fullscreen-fix #tburl,#loadtop,[id^=myas],#myds1,#daohang
-yatu.tv,yhdm15.com##+js(set,document.oncontextmenu,trueFunc)
+yatu.tv,yhdm7.com,yhdm95.com,xdm530.com##+js(aopw,document.oncontextmenu)
 ||www.yatu.tv:2082/image/*.gif^$image
 ||www.yatu.tv:2082/m/images/$image
 
 ||tracker.$xhr,websocket,script,ping
 stgowan.com
-youle55.com
 z4a.net
