@@ -3,9 +3,9 @@
 ! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：1Hosts (Lite)、AdGuard Base filter、AdGuard Base filter、AdGuard DNS filter、AdRules DNS List、Hblock、NEO DEV HOST、OISD Basic、1024 hosts、ad-wars hosts、StevenBlack hosts、xinggsf、EasyList、Easylist China、EasyPrivacy、CJX's Annoyance List、SmartTV Blocklist、AWAvenue Ads Rule、jiekouAD。Lite 版仅针对国内域名拦截。
 ! Homepage: https://github.com/217heidai/adblockfilters
 ! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt
-! Version: 20241215084637
-! Last modified: 2024/12/15 08:46:37
-! Blocked Filters: 30165
+! Version: 20241215161112
+! Last modified: 2024/12/15 16:11:12
+! Blocked Filters: 30159
 !
 #%#var AG_abortInlineScript=function(g,b,c){var d=function(){if("currentScript"in document)return document.currentScript;var a=document.getElementsByTagName("script");return a[a.length-1]},e=Math.random().toString(36).substr(2,8),h=d();AG_defineProperty(b,{beforeGet:function(){var a=d();if(a instanceof HTMLScriptElement&&a!==h&&""===a.src&&g.test(a.textContent))throw c&&console.warn("AdGuard aborted execution of an inline script"),new ReferenceError(e);}});var f=window.onerror;window.onerror=function(a){if("string"===typeof a&&-1!==a.indexOf(e))return c&&console.warn("AdGuard has caught window.onerror: "+b),!0;if(f instanceof Function)return f.apply(this,arguments)}};
 #%#var AG_abortOnPropertyRead=function(a,b){var c=Math.random().toString(36).substr(2,8);AG_defineProperty(a,{beforeGet:function(){b&&console.warn("AdGuard aborted property read: "+a);throw new ReferenceError(c);}});var d=window.onerror;window.onerror=function(e){if("string"===typeof e&&-1!==e.indexOf(c))return b&&console.warn("AdGuard has caught window.onerror: "+a),!0;if(d instanceof Function)return d.apply(this,arguments)}};
@@ -435,6 +435,7 @@
 ###sc-superman-ad
 ###search > a[href="/top1.html"]
 ###selectShareContainer
+###sf_social_links
 ###sfsi_floater
 ###share-block
 ###share-buttons
@@ -1529,7 +1530,6 @@
 ##.rotate-adv
 ##.row > .gao-bg
 ##.rrssb-buttons
-##.rrssb-buttons-container
 ##.rt_ad
 ##.rt_share
 ##.rtcenter_game
@@ -1622,7 +1622,6 @@
 ##.shareit
 ##.sharelinks
 ##.sharelist
-##.sharelist_vertical
 ##.sharepost
 ##.sharer
 ##.sharethis
@@ -8575,6 +8574,7 @@ $~xmlhttprequest,removeparam=r,domain=tv2.no|linode.com|ledger.*|mrgay.com|odyse
 /js/ads/youxiajiao.js
 /js/ads/zuoxiajiao.js
 /js/ads_
+/js/adv-slide-toggle.
 /js/adv.
 /js/analitics.js
 /js/appfu.
@@ -10710,6 +10710,7 @@ $~xmlhttprequest,removeparam=r,domain=tv2.no|linode.com|ledger.*|mrgay.com|odyse
 /web/ad/*$domain=gamer.com.tw
 /web/push?
 /web8/ad/*
+/webAdvert.php?ad_name=
 /webAnalytics/*
 /webAnalytics/*$xmlhttprequest,script
 /web_analytics/*
@@ -12139,6 +12140,7 @@ $~xmlhttprequest,removeparam=r,domain=tv2.no|linode.com|ledger.*|mrgay.com|odyse
 ://*:*/oklist/vars.js
 ://*btbtt.*/imgs.js
 ://*btbtt.*/view/image/QT_
+://*mp4*/js/wcount.js$~third-party
 ://2ip.*/member_photo/$third-party
 ://8ox.cn/$third-party
 ://a02342.
@@ -12718,7 +12720,6 @@ $~xmlhttprequest,removeparam=r,domain=tv2.no|linode.com|ledger.*|mrgay.com|odyse
 @@||cdn.ampproject.org/v0.js$domain=amp.fakty.ua
 @@||cdn.ampproject.org/v0.js$domain=novosti-n.org
 @@||cdn.ampproject.org/v0.js$domain=politnavigator.net
-@@||cdn.ampproject.org/v0/amp-social-share-0.1.js$domain=gendai.media
 @@||cdn.bootcdn.net^$script,domain=38kanshu.net|tianz.la
 @@||cdn.bootcss.com/fuckadblock/3.2.1/fuckadblock.min.js$domain=1090ys8.com
 @@||cdn.bootcss.com/fuckadblock/3.2.1/fuckadblock.min.js$domain=share1223.com
@@ -14404,7 +14405,6 @@ arkansasmatters.com,kark.com#@#.meta-share
 armidaleexpress.com.au,bendigoadvertiser.com.au,canberratimes.com.au,centralwesterndaily.com.au,crookwellgazette.com.au,dailyadvertiser.com.au,dailyliberal.com.au,examiner.com.au,illawarramercury.com.au,newcastleherald.com.au,portnews.com.au,thecourier.com.au,thesenior.com.au##a[class^="gtm-hook-share-"]
 articles.sk,zh.singlelogin.re##z-social-sharing
 artnet.com,glamour.pl,businessinsider.com.pl,fakt.pl,politeka.net,e24.no,indiatimes.com##.article-share
-arukunet.jp,pay.line.me##.post-footer__sns
 asahi.com,soccerdigestweb.com,stadt-wien.at,ibispaint.com,demokratkocaeli.com,news.yahoo.co.jp##.shareArea
 asainvestments.com,qualy.com.br##div[data-component="cookiebar"]
 asmag.com.cn###adRightFix
@@ -14652,6 +14652,7 @@ baidu.com##.openall3
 baidu.com##.opening-season-dialog
 baidu.com##.opr-zhaopin-ad-ctn
 baidu.com##.optimus
+baidu.com##.page-head-queryarea
 baidu.com##.pageLeftFixedAD
 baidu.com##.pauseadv
 baidu.com##.picad
@@ -15016,7 +15017,6 @@ bilibili.com##.btn-ctnr
 bilibili.com##.clearfix.h5-download-bar
 bilibili.com##.container > div.bili-video-card.is-rcmd:not(:has(> *))
 bilibili.com##.container > div.feed-card:not(:has(> div > *))
-bilibili.com##.container.is-version8 > .feed-card:has(>div:only-child), .container.is-version8 > .bili-video-card:has(>div:only-child)
 bilibili.com##.desktop-download-tip
 bilibili.com##.download-client-trigger.download-entry
 bilibili.com##.eva-banner
@@ -15709,7 +15709,6 @@ comicat.org,dapenti.com,douyu.com,iqiyi.com,jinti.com,kisssub.org,libvio.me,mvca
 comichara.com,movient.net###text-6
 computerbild.de,autobild.de##.socialmedia
 computerhoy.20minutos.es,autobild.es##div[class^="share-bar"]
-computerperformance.co.uk,gazetemanset.com##.google
 contactmonkey.com/api/v1/tracker$image
 contents.internet.apps.samsung.com##.page-bar
 context.reverso.net,krautundrueben.de,irasutoya.com##.mobilead
@@ -17490,6 +17489,7 @@ hifidiy.net###part_left2
 hifidiy.net###part_right_gg7
 higashinada-journal.com,pokemon-matome.net##.copy_btn
 highload.today,mc.today##.social-share-yellow
+hightech.plus,sqool.net,caclubindia.com##div[class^="social"]
 hikaritube.com,poyopara.com##.mtb150p
 hindustantimes.com,rainews.it##.shareArticle
 hinews.cn##[id^="hi_gg_"],.h80
@@ -18975,7 +18975,6 @@ kuwo.cn##.tuiguang
 kuwo.cn##[class^="qr_wrapper_"],div.ad1,#qr_img,#qr_img+span[style],.tuiguang
 kxdw.com###downloadTop
 kxmusic.cn,kxmusic.top##a[href*="smsf8.com"]
-kyeongin.com,moidom.citylink.pro##.share_ico
 kyrtag.kg,uztag.info,tajikta.tj,irtag.info,silkroadnews.org,kaztag.kz##.t-share
 kyun2-girls.com,hapiee.com,2ch-c.net,4p.de,www-cbc-ca.cdn.ampproject.org,m.geboren.am,dictionary.com,transfermarkt.de,iyf.tv,macwelt.de,pcwelt.de,xataka.com.mx,shikiho.toyokeizai.net,newsee-media.com,rank1-media.com,m.proporn.com,sugoren.com,dailynewsonline.jp,yakuji.co.jp,asahi.com,m.winporn.com,slate.com,sankei.com,gameranbu.jp,seiga.nicovideo.jp,m.arukikata.co.jp,setn.com,hateblo.jp,hatenablog.com,hatenablog.jp,hatenadiary.com,hatenadiary.jp,hatenadiary.org,syosetu.org##.ad
 kyunto.com,krautundrueben.de,areamobile.de##.rectangle
@@ -20167,6 +20166,7 @@ nivod9.tv,nivod8.tv,nivod7.tv##.nav-ads
 nld.com.vn,tuoitre.vn##a[onclick^="fbClient.shareClick"]
 nmgnews.com.cn###div_ad4
 nmgnews.com.cn##[id^="div_ad"],[height="87"]
+nn.by,nashaniva.com,screencrush.com##.social-subscriptions
 nnchaber.com,cricxtasy.com,sonichits.com,broadwayworld.com,m.brigitte.de##.social-icon
 nnw.soundestlink.com$image
 node.bolt.eu*pixel$image
@@ -21908,7 +21908,6 @@ telex.hu,daskochrezept.de##.fb-box
 telkomsel.com,detik.com,lacapital.com.ar,binaryfork.com,withnews.jp,elitedaily.com##.sticky-share
 template/m1938pc/ads/*.js
 tempo.co#$?#section#update.list > .block-box:has(> h2:contains(/^Baca Juga$/) + div:last-child > .adsbygoogle) { visibility: hidden!important; }
-tempo.com,tiempo.com##.botonera > span.boton:has(> span.shared)
 ten-sura-m.bn-ent.net,ytv.co.jp,thehikaku.net##.footer_sns
 tencent.com##.cdc-commercial-swiper
 tencentvideo/script/webtips/
@@ -23312,10 +23311,6 @@ zhenhaoclub.com,zhenhaobbs.com##div.a_mu,div.a_pb,div.a_pt
 zhev.com.cn##[href^="https://item.taobao.com/item.htm?spm="],[src^="http://www.zhev.com.cn/file/weixin/"],[style="height:90px;"],[src^="/file/weixin/"],#wrap.wrap
 zhibo8.cc###m_adv
 zhibo8.cc###popautoapp
-zhibo8.cc##.ad_box_250
-zhibo8.cc##a[href*=".wanjiashe."]
-zhibo8.cc##div[class*="advert"]
-zhibo8.cc#@##ad_box
 zhidao.baidu.com###act-link-banner
 zhidao.baidu.com###feed-recommend
 zhidao.baidu.com###knowledge-answer-list
@@ -30009,7 +30004,6 @@ zzzyk.com###Tinfo
 ||zhengjie.com/a_d?
 ||zhenjiang365.cn/*/ad_
 ||zhev.com.cn/file/weixin/
-||zhibo8.cc/js/adv-slide-toggle.js
 ||zhidao.baidu.com/m/static^
 ||zhidao.baidu.com/mobile/ajax^
 ||zhidao.baidu.com^$removeparam=qbl
