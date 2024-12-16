@@ -1,10 +1,10 @@
 ![Adblock Plus 2.0]
-! Checksum: 4ZVLMMXFrfY6hqf2MpK7lg
-! Diff-Path: ../patches/17/17-s-1733740922-3600.patch
+! Checksum: jOiFRkX27aN6la9f9CRw+g
+! Diff-Path: ../patches/17/17-s-1734338489-3600.patch
 ! Title: AdGuard URL Tracking filter
 ! Description: Filter that enhances privacy by removing tracking parameters from URLs.
-! Version: 2.0.9.98
-! TimeUpdated: 2024-12-09T10:37:37+00:00
+! Version: 2.0.9.99
+! TimeUpdated: 2024-12-16T08:37:18+00:00
 ! Expires: 5 days (update frequency)
 ! Homepage: https://github.com/AdguardTeam/AdGuardFilters
 ! License: https://github.com/AdguardTeam/AdguardFilters/blob/master/LICENSE
@@ -383,6 +383,35 @@ $removeparam=fb_source
 ! Bad: ||example.org^$xmlhttprequest,redirect=noopvast-3.0 (for instance, should be in specific.txt)
 !
 !
+! no query param is needed in such url:
+! https://ca.indeed.com/cmp/Jaalatek-Design-Solutions-Inc.?from=mobviewjob&tk=1iej0ttmpjn3k80i&fromjk=6d06995b4430cdbf&attributionid=mobvjcmp
+||ca.indeed.com/cmp^$removeparam=from
+||ca.indeed.com/cmp^$removeparam=tk
+||ca.indeed.com/cmp^$removeparam=fromjk
+||ca.indeed.com/cmp^$removeparam=attributionid
+! only 'jk' is needed in the url:
+! https://ca.indeed.com/viewjob?jk=15a4522b76e29a15&q=full+time&l=Ontario&tk=1iej11rjbkgou89b&from=web&advn=5748246096235118&adid=438411828&ad=-6NYlbfkN0CaDkGG6htDuDKZp1WxG8u5H030IqM5pHd-LKiiIyMiAENIVrd31aATZJFK_T6vhObvePc-7o-J5eF_2RrZE5TMiFQ4RaVxfTWLFuG6xVCeuKnd8o7cr_ys966cYQJ3eqMu8YxSvY9jxHbW-WdP_77vOxIuWdxLb3-gqwCd2UdZfkHkWTIn9Hsy-snYcmGJPiZGPPwwxlDDlLWMcUuEbRGpgzDjJ4QYGpXrLXAlefZvPoJzbZLtUBHbHqyD7m96_vgBJ-nSCXTr8y7SDRm2bVXQ91G_iB4w9khBtrrOXOIw0CHO_2eAUk4BVSoVXGWPBnUTz2xHIKVLjFPU0-dWGsNAa_AhH82r6oqcGZu5436bpqvD692EvVtGeoMmFZXuHeAj84soOVDF53DM6GyXzeAJJBf4lRVWUyTKcP4SNbSI3sndetwjCoB3RfRZW1haWW6X5iFK1LxKQ9_rtUKLqdeB3y3bM5XsZzwxFMbvQL8E_Jer2oq4EBmAOy-BYf_FjrTLK3Tav4jvOZ2mwXOkwzPBQ8Bq5qBcArJSttpUurRA8CiDpyVBUOQT&pub=4a1b367933fd867b19b072952f68dceb&camk=nUmJqO2E8rj6vgsb6SFVGw%3D%3D&xkcb=SoCA6_M34TKIXNxUIp0MbzkdCdPP&xpse=SoAo6_I34TKGUKAHMT0PbzkdCdPP&xfps=e7ecf49c-0b7e-4e91-8a4a-47a96ba7f5d2&vjs=3
+||ca.indeed.com/viewjob^$removeparam=tk
+||ca.indeed.com/viewjob^$removeparam=from
+||ca.indeed.com/viewjob^$removeparam=vjs
+||ca.indeed.com/viewjob^$removeparam=cmp
+||ca.indeed.com/viewjob^$removeparam=t
+||ca.indeed.com/viewjob^$removeparam=q
+||ca.indeed.com/viewjob^$removeparam=l
+||ca.indeed.com/viewjob^$removeparam=xpse
+||ca.indeed.com/viewjob^$removeparam=xfps
+||ca.indeed.com/viewjob^$removeparam=xkcb
+||ca.indeed.com/viewjob^$removeparam=hl
+||ca.indeed.com/viewjob^$removeparam=rjptk
+||ca.indeed.com/viewjob^$removeparam=advn
+||ca.indeed.com/viewjob^$removeparam=adid
+||ca.indeed.com/viewjob^$removeparam=ad
+||ca.indeed.com/viewjob^$removeparam=sjdu
+||ca.indeed.com/viewjob^$removeparam=acatk
+||ca.indeed.com/viewjob^$removeparam=pub
+||ca.indeed.com/viewjob^$removeparam=i2af
+||ca.indeed.com/viewjob^$removeparam=camk
+||ca.indeed.com/viewjob^$removeparam=jrtk
 ! comfy.ua
 ||comfy.ua^$removeparam=sc_content
 ! https://github.com/AdguardTeam/AdguardFilters/issues/193936
