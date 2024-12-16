@@ -28,7 +28,7 @@
 | 规则 | 类型 | 原始链接 | 加速链接 | 更新日期 |
 |:-|:-|:-|:-|:-|
 | AdGuard DNS filter | filter | [原始链接](https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/AdGuard_DNS_filter.txt) | 2024/12/16 |
-| AdRules DNS List | filter | [原始链接](https://raw.githubusercontent.com/Cats-Team/AdRules/main/dns.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/AdRules_DNS_List.txt) | 2024/12/15 |
+| AdRules DNS List | filter | [原始链接](https://raw.githubusercontent.com/Cats-Team/AdRules/main/dns.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/AdRules_DNS_List.txt) | 2024/12/16 |
 | CJX's Annoyance List | filter | [原始链接](https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjx-annoyance.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/CJX's_Annoyance_List.txt) | 2024/09/26 |
 | EasyPrivacy | filter | [原始链接](https://easylist-downloads.adblockplus.org/easyprivacy.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/EasyPrivacy.txt) | 2024/12/16 |
 | xinggsf mv | filter | [原始链接](https://raw.githubusercontent.com/xinggsf/Adblock-Plus-Rule/master/mv.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/xinggsf_mv.txt) | 2024/12/15 |
@@ -38,7 +38,7 @@
 | AdGuard URL Tracking filter | filter | [原始链接](https://filters.adtidy.org/extension/ublock/filters/17.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/AdGuard_URL_Tracking_filter.txt) | 2024/12/09 |
 | LegitimateURLShortener | filter | [原始链接](https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/LegitimateURLShortener.txt) | 2024/12/13 |
 | AdGuard Tracking Protection filter | filter | [原始链接](https://filters.adtidy.org/ios/filters/3_optimized.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/AdGuard_Tracking_Protection_filter.txt) | 2024/12/16 |
-| YanFung Mobile filter | filter | [原始链接](https://raw.githubusercontent.com/YanFung/Ads/master/Mobile) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/YanFung_Mobile_filter.txt) | 2024/12/10 |
+| YanFung Mobile filter | filter | [原始链接](https://raw.githubusercontent.com/YanFung/Ads/master/Mobile) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/YanFung_Mobile_filter.txt) | 2024/12/16 |
 | Adfilter | filter | [原始链接](https://raw.githubusercontent.com/vokins/ad/main/ab.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/Adfilter.txt) | 2024/10/26 |
 | NoAppDownload | filter | [原始链接](https://raw.githubusercontent.com/Noyllopa/NoAppDownload/master/NoAppDownload.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/NoAppDownload.txt) | 2024/12/08 |
 | Ad Filter J | filter | [原始链接](https://raw.githubusercontent.com/jk278/Ad-J/main/Ad-J.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/Ad_Filter_J.txt) | 2024/10/26 |
@@ -55,7 +55,7 @@
 | AdAway | host | [原始链接](https://adaway.org/hosts.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/AdAway.txt) | 2024/09/24 |
 | yhost | host | [原始链接](https://raw.githubusercontent.com/VeleSila/yhosts/master/hosts.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/yhost.txt) | 2024/09/24 |
 | anti-ad | dns | [原始链接](https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-adguard.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/anti-ad.txt) | 2024/12/14 |
-| Blackmatrix7 | dns | [原始链接](https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/AdGuard/AdvertisingTest/AdvertisingTest.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/Blackmatrix7.txt) | 2024/12/15 |
+| Blackmatrix7 | dns | [原始链接](https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/AdGuard/AdvertisingTest/AdvertisingTest.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/Blackmatrix7.txt) | 2024/12/16 |
 | 217heidai | dns | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/refs/heads/main/rules/adblockdns.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/217heidai.txt) | 2024/12/16 |
 
 ## Star History
