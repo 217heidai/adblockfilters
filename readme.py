@@ -26,14 +26,22 @@ class ReadMe(object):
             for line in f:
                 line = line.replace('\r', '').replace('\n', '')
                 if line.find('|')==0 and line.rfind('|')==len(line)-1:
-                    rule = list(map(lambda x: x.strip(), line[1:].split('|')))
+                    rule = list(map(lambda x: x.strip(), line[1:-1].split('|')))
                     if rule[2].find('(') > 0 and rule[2].find(')') > 0 and len(rule) > 4:
                         url = rule[2][rule[2].find('(')+1:rule[2].find(')')]
                         matchObj1 = re.match('(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?', url)
                         if matchObj1:
                             self.ruleList.append(Rule(rule[0], rule[1], url, rule[4]))
         return self.ruleList
-    
+
+    def getRulesNames(self) -> str:
+        names = ""
+        
+        for rule in self.ruleList:
+            names += rule.name + '、'
+        
+        return names[:-1]
+
     def setRules(self, ruleList:List[Rule]):
         self.ruleList = ruleList
     
@@ -53,15 +61,20 @@ class ReadMe(object):
             f.write("3. 本项目仅对上游规则进行合并、去重、去除无效域名，不做任何修改。如发现误拦截情况，可临时添加放行规则（如 `@@||www.example.com^$important`），并向上游规则反馈。\n")
             f.write("\n")
             f.write("## 订阅链接\n")
+
             f.write("1. AdGuard Home 等 DNS 拦截服务使用规则1\n")
             f.write("2. AdGuard 等浏览器插件使用规则1 + 规则2\n")
-            f.write("3. 规则1’、规则2’为相应的 Lite 版，仅针对国内域名拦截\n\n")
-            f.write("| 规则 | 原始链接 | 加速链接 |\n")
-            f.write("|:-|:-|:-|\n")
-            f.write("| 规则1：DNS 拦截 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdns.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdns.txt) |\n")
-            f.write("| 规则1'：DNS 拦截 Lite | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnslite.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnslite.txt) |\n")
-            f.write("| 规则2：插件拦截 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt) |\n")
-            f.write("| 规则2'：插件拦截 Lite | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilterslite.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilterslite.txt) |\n")
+            f.write("3. InviZible Pro、personalDNSfilter 等 Domain 拦截服务使用规则3（规则3与规则1拦截域名一致，仅格式差异）\n")
+            f.write("4. 规则1’、2’、3’为规则1、2、3的 Lite 版，仅针对国内域名拦截，体积较小\n\n")
+            f.write("| 规则 | 原始链接 | 加速链接 | 适配说明 |\n")
+            f.write("|:-|:-|:-|:-|\n")
+            f.write("| 规则1：DNS 拦截 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdns.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdns.txt) | AdGuard、AdGuard Home 等 |\n")
+            f.write("| 规则1'：DNS 拦截 Lite | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnslite.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnslite.txt) | AdGuard、AdGuard Home 等 |\n")
+            f.write("| 规则2：插件拦截 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt) | AdGuard 等 |\n")
+            f.write("| 规则2'：插件拦截 Lite | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilterslite.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilterslite.txt) | AdGuard 等 |\n")
+            f.write("| 规则3：Domain 拦截 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdomain.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdomain.txt) | InviZible Pro、personalDNSfilter 等 |\n")
+            f.write("| 规则3'：Domain 拦截 Lite | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdomainlite.txt) | [加速链接](https://mirror.ghproxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdomainlite.txt) | InviZible Pro、personalDNSfilter 等 |\n")
+
             f.write("\n")
             f.write("## 上游规则源\n")
             f.write("1. 感谢各位广告过滤规则维护大佬们的辛苦付出。\n")

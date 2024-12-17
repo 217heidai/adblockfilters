@@ -31,7 +31,7 @@ class ADBlock(object):
         
         # 生成新规则
         filter = Filter(ruleList, self.pwd + '/rules')
-        filter.generate()
+        filter.generate(readme.getRulesNames())
         
         # 生成 readme.md
         readme.setRules(ruleList)
