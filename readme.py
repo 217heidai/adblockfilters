@@ -89,6 +89,8 @@ class ReadMe(object):
             f.write("2. AdGuard 等浏览器插件使用规则1 + 规则2\n")
             f.write("3. InviZible Pro、personalDNSfilter 等 Domain 拦截服务使用规则3（规则3与规则1拦截域名一致，仅格式差异）\n")
             f.write("4. 规则1’、2’、3’为规则1、2、3的 Lite 版，仅针对国内域名拦截，体积较小\n")
+            f.write("5. 已对 jsdelivr 缓存进行主动刷新，但 jsdelivr 加速链接仍可能存在一定延时\n")
+            f.write("\n")
             tmp = "| 规则 | 原始链接 |"
             for i in range(1, len(self.proxyList)):
                 tmp += " 加速链接%d |"%(i)
