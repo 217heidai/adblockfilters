@@ -1,10 +1,10 @@
 ![Adblock Plus 2.0]
-! Checksum: 0/bmyswiZZZMXDCbHf7vhQ
-! Diff-Path: ../patches/17/17-s-1734622885-3600.patch
+! Checksum: 1lOUVEDIQJlkcdta4roLOw
+! Diff-Path: ../patches/17/17-s-1734694922-3600.patch
 ! Title: AdGuard URL Tracking filter
 ! Description: Filter that enhances privacy by removing tracking parameters from URLs.
-! Version: 2.0.10.1
-! TimeUpdated: 2024-12-19T15:37:14+00:00
+! Version: 2.0.10.2
+! TimeUpdated: 2024-12-20T11:37:57+00:00
 ! Expires: 5 days (update frequency)
 ! Homepage: https://github.com/AdguardTeam/AdGuardFilters
 ! License: https://github.com/AdguardTeam/AdguardFilters/blob/master/LICENSE
@@ -553,8 +553,17 @@ $removeparam=cid,domain=nhk.jp|nhk.or.jp
 ||p.liadm.com/click?s=$removeparam=_lc2_fpi
 ||p.liadm.com/click?s=$removeparam=stpe
 ||p.liadm.com/click?s=$removeparam=li
-! Bing
-||bing.com^$document,removeparam=cvid
+!
+! Microsoft
+||msn.com^$removeparam=pc
+||msn.com^$removeparam=ei
+||microsoft.com^$removeparam=ranEAID
+||microsoft.com^$removeparam=ranSiteID
+||microsoft.com^$removeparam=ocid
+$removeparam=nclid,domain=microsoft.com
+$removeparam=cvid,domain=microsoft.com|msn.com|bing.com
+$removeparam=epi,domain=microsoft.com|xbox.com
+!
 ! https://github.com/AdguardTeam/AdguardFilters/issues/188889
 $removeparam=sub_rt,domain=comemo.nikkei.com|diehardtales.com|greenplanet.kaneka.co.jp|j-yokatsu2.edu.city.uruma.okinawa.jp|labo.rheos.jp|note-harumi.sbfoods.co.jp|note.basicinc.jp|note.bcnretail.com|note.calbee.jp|note.com|note.gallery.intage.com|note.kogakuin.ac.jp|note.jp|note.minne.com|note.montblanc.design|note.nhkso.or.jp|note.pokkasapporo-fb.jp|note.roxx.co.jp|note.smartnews-ads.com|note.universal-music.co.jp|note.yamap.com|note.zochang.com|refalover-note.mainichi.jp|shanaiho.itandi.co.jp|uragawa-note.jpn.panasonic.com|webtripper.jp
 ! https://github.com/AdguardTeam/AdguardFilters/issues/188662
@@ -1920,10 +1929,6 @@ $domain=atlanticcouncil.org|digikey.com,removeparam=/^mkt_tok/
 ||xkcd.com^$removeparam=trk
 ! https://github.com/AdguardTeam/AdguardFilters/issues/109834
 ||video.laxd.com^$removeparam=ref
-! https://support.mozilla.org/pl/questions/1364964#answer-1475794
-||msn.com^$removeparam=pc
-||msn.com^$removeparam=cvid
-||msn.com^$removeparam=ei
 ! https://github.com/AdguardTeam/AdguardFilters/issues/108915#issuecomment-1031525591
 ! https://github.com/AdguardTeam/AdguardFilters/issues/109244
 ||approach.yahoo.co.jp^$removeparam=code
@@ -2446,11 +2451,6 @@ $removeparam=s,domain=twitter.com|x.com
 !
 ||zerkalo.io^$removeparam=tg
 ||zerkalo.io^$removeparam=vk
-!
-||microsoft.com^$removeparam=ranEAID
-||microsoft.com^$removeparam=ranSiteID
-||microsoft.com^$removeparam=ocid
-$removeparam=epi,domain=microsoft.com|xbox.com
 !
 ! https://github.com/AdguardTeam/AdguardFilters/issues/88163
 ||nbcume.sc.omtrdc.net/id?d_visid_ver=$removeparam=/mcorgid|mid|ts/,domain=nbcdfw.com
