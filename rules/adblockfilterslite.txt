@@ -3,9 +3,9 @@
 ! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：1Hosts (Lite)、AdGuard Base filter、AdGuard Base filter、AdGuard DNS filter、AdRules DNS List、Hblock、NEO DEV HOST、OISD Basic、1024 hosts、ad-wars hosts、StevenBlack hosts、xinggsf、EasyList、Easylist China、EasyPrivacy、CJX's Annoyance List、SmartTV Blocklist、AWAvenue Ads Rule、jiekouAD。Lite 版仅针对国内域名拦截。
 ! Homepage: https://github.com/217heidai/adblockfilters
 ! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt
-! Version: 20241221083830
-! Last modified: 2024/12/21 08:38:30
-! Blocked Filters: 30118
+! Version: 20241221161022
+! Last modified: 2024/12/21 16:10:22
+! Blocked Filters: 30121
 !
 #%#var AG_abortInlineScript=function(g,b,c){var d=function(){if("currentScript"in document)return document.currentScript;var a=document.getElementsByTagName("script");return a[a.length-1]},e=Math.random().toString(36).substr(2,8),h=d();AG_defineProperty(b,{beforeGet:function(){var a=d();if(a instanceof HTMLScriptElement&&a!==h&&""===a.src&&g.test(a.textContent))throw c&&console.warn("AdGuard aborted execution of an inline script"),new ReferenceError(e);}});var f=window.onerror;window.onerror=function(a){if("string"===typeof a&&-1!==a.indexOf(e))return c&&console.warn("AdGuard has caught window.onerror: "+b),!0;if(f instanceof Function)return f.apply(this,arguments)}};
 #%#var AG_abortOnPropertyRead=function(a,b){var c=Math.random().toString(36).substr(2,8);AG_defineProperty(a,{beforeGet:function(){b&&console.warn("AdGuard aborted property read: "+a);throw new ReferenceError(c);}});var d=window.onerror;window.onerror=function(e){if("string"===typeof e&&-1!==e.indexOf(c))return b&&console.warn("AdGuard has caught window.onerror: "+a),!0;if(d instanceof Function)return d.apply(this,arguments)}};
@@ -1589,6 +1589,7 @@
 ##.shareButtons
 ##.shareLinks
 ##.shareSocialArticle
+##.shareThis__cue
 ##.shareThis__wrapper
 ##.shareWrapper
 ##.share__button
@@ -1663,6 +1664,7 @@
 ##.socFbShare
 ##.socLinks
 ##.socRight
+##.soc_button_sw
 ##.soc_buttons
 ##.soc_like
 ##.soc_share
@@ -9978,6 +9980,7 @@ $~xmlhttprequest,removeparam=r,domain=tv2.no|linode.com|ledger.*|mrgay.com|odyse
 /static/js/headad.js
 /static/js/miniyyrtv-config.js
 /static/js/pop_promotion.js?v=
+/static/lbsite/*/*.js?v=$third-party
 /static/localStorage.
 /static/peg_utils/peg_logger$domain=parship.de|elitepartner.de
 /statics/js/dddd.js
@@ -11729,7 +11732,6 @@ $~xmlhttprequest,removeparam=r,domain=tv2.no|linode.com|ledger.*|mrgay.com|odyse
 4gtv.tv,80s.ai,ft.com,ftchinese.com,ftchinese.com.sz-dns.net,kartinfo.me,long7.qq.com,reh.tw,typecho.wiki#@#.adsbox
 4k123.com##.comeing_wad,.a_pb
 4kzw.com,quanxiong.org,dijiuzww.com##[style="width:770px;height:260px"]
-4mama.ua,beauty.ua#?#.sidebar > div.sb-tabs:has(> ul > li[class] > div[class]:contains(Facebook))
 4pda.ru,4pda.to##amp-list[height="90"][width="728"]
 4pda.ru,4pda.to##body > [style*=";padding:0px;width:"][style*="zoom:"] > a[target="_blank"] > img
 4spaces.org,fuliba.net,fuliba2023.net,fuliba2025.net,uliba.net,ypojie.com##.widget_ui_orbui
@@ -14349,7 +14351,6 @@ apple.com.cn#$#html { margin-top: 0 !important; }
 aquitemfofoca.com.br,dusuncekatalogu.com,brd24.pl,summit.news,tehnofan.com.ua###mvp-soc-mob-wrap
 ar-anime.com,helck-anime.com,shadowshouse-anime.com##.p-footer__share
 archive.fo,archive.is,archive.li,archive.vn,archive.md,archive.ph###DIVSHARE > center#DIVSHARE2 button[onclick^="window.open"]
-ardahanhaberi.com#$?#.SocialTools > ul > li:not(:has(> a[href^="javascript:"])) { visibility: hidden !important; }
 areamobile.de,www-musixmatch-com.cdn.ampproject.org##.topBanner
 ariel.jp​#@#.social-media
 arkansasmatters.com,kark.com#@#.meta-share
@@ -16452,6 +16453,7 @@ emea.focusvision.com%2Ftracker%2F$image
 emea.focusvision.com/tracker/$image
 emlak365.com,kamugundemi.com,medyafaresi.com,chip.com.tr,hyser.com.ua##.post-socials
 emltrk.com$image
+emprendedorimbatible.com,vcgamers.com,tecnobreak.com,prostomob.com,scitechdaily.com,osnmedia.ru##footer + div.s_stk
 emumax.com##.tbanner
 en8848.com.cn##.adtexts
 en8848.com.cn##.list_adv
@@ -17092,7 +17094,6 @@ google.ae,google.ai,google.al,google.am,google.at,google.az,google.ba,google.be,
 google.ae,google.ai,google.al,google.am,google.at,google.az,google.ba,google.be,google.bg,google.biz,google.by,google.ca,google.cc,google.ch,google.ci,google.cl,google.cloud,google.cn,google.co,google.co.id,google.co.il,google.co.in,google.co.jp,google.co.ke,google.co.kr,google.co.nz,google.co.th,google.co.uk,google.co.za,google.com,google.com.ar,google.com.au,google.com.bd,google.com.br,google.com.co,google.com.hk,google.com.mx,google.com.my,google.com.ng,google.com.np,google.com.pe,google.com.ph,google.com.pk,google.com.sa,google.com.sg,google.com.tr,google.com.tw,google.com.ua,google.com.uy,google.com.vn,google.cz,google.de,google.dev,google.dk,google.dz,google.ee,google.es,google.eu,google.fi,google.fm,google.fr,google.ga,google.ge,google.gen.tr,google.gg,google.gr,google.hk,google.hr,google.hu,google.id,google.ie,google.in,google.info,google.io,google.ir,google.is,google.it,google.jp,google.kg,google.kr,google.kz,google.lk,google.lt,google.lv,google.ma,google.md,google.me,google.mk,google.ml,google.mn,google.mx,google.my,google.net,google.news,google.ng,google.nl,google.no,google.one,google.online,google.or.id,google.org,google.org.il,google.pe,google.ph,google.pk,google.pl,google.pt,google.ro,google.rs,google.ru,google.sa,google.se,google.sg,google.sh,google.si,google.site,google.sk,google.space,google.store,google.su,google.tech,google.tk,google.tn,google.to,google.tv,google.tw,google.ua,google.uk,google.us,google.uz,google.vn,google.ws##.gws-product_ads__close-button
 google.ae,google.ai,google.al,google.am,google.at,google.az,google.ba,google.be,google.bg,google.biz,google.by,google.ca,google.cc,google.ch,google.ci,google.cl,google.cloud,google.cn,google.co,google.co.id,google.co.il,google.co.in,google.co.jp,google.co.ke,google.co.kr,google.co.nz,google.co.th,google.co.uk,google.co.za,google.com,google.com.ar,google.com.au,google.com.bd,google.com.br,google.com.co,google.com.hk,google.com.mx,google.com.my,google.com.ng,google.com.np,google.com.pe,google.com.ph,google.com.pk,google.com.sa,google.com.sg,google.com.tr,google.com.tw,google.com.ua,google.com.uy,google.com.vn,google.cz,google.de,google.dev,google.dk,google.dz,google.ee,google.es,google.eu,google.fi,google.fm,google.fr,google.ga,google.ge,google.gen.tr,google.gg,google.gr,google.hk,google.hr,google.hu,google.id,google.ie,google.in,google.info,google.io,google.ir,google.is,google.it,google.jp,google.kg,google.kr,google.kz,google.lk,google.lt,google.lv,google.ma,google.md,google.me,google.mk,google.ml,google.mn,google.mx,google.my,google.net,google.news,google.ng,google.nl,google.no,google.one,google.online,google.or.id,google.org,google.org.il,google.pe,google.ph,google.pk,google.pl,google.pt,google.ro,google.rs,google.ru,google.sa,google.se,google.sg,google.sh,google.si,google.site,google.sk,google.space,google.store,google.su,google.tech,google.tk,google.tn,google.to,google.tv,google.tw,google.ua,google.uk,google.us,google.uz,google.vn,google.ws##.kp-wholepage div[role="button"][jscontroller="Wct42"][aria-label] > span > span
 google.ae,google.ai,google.al,google.am,google.at,google.az,google.ba,google.be,google.bg,google.biz,google.by,google.ca,google.cc,google.ch,google.ci,google.cl,google.cloud,google.cn,google.co,google.co.id,google.co.il,google.co.in,google.co.jp,google.co.ke,google.co.kr,google.co.nz,google.co.th,google.co.uk,google.co.za,google.com,google.com.ar,google.com.au,google.com.bd,google.com.br,google.com.co,google.com.hk,google.com.mx,google.com.my,google.com.ng,google.com.np,google.com.pe,google.com.ph,google.com.pk,google.com.sa,google.com.sg,google.com.tr,google.com.tw,google.com.ua,google.com.uy,google.com.vn,google.cz,google.de,google.dev,google.dk,google.dz,google.ee,google.es,google.eu,google.fi,google.fm,google.fr,google.ga,google.ge,google.gen.tr,google.gg,google.gr,google.hk,google.hr,google.hu,google.id,google.ie,google.in,google.info,google.io,google.ir,google.is,google.it,google.jp,google.kg,google.kr,google.kz,google.lk,google.lt,google.lv,google.ma,google.md,google.me,google.mk,google.ml,google.mn,google.mx,google.my,google.net,google.news,google.ng,google.nl,google.no,google.one,google.online,google.or.id,google.org,google.org.il,google.pe,google.ph,google.pk,google.pl,google.pt,google.ro,google.rs,google.ru,google.sa,google.se,google.sg,google.sh,google.si,google.site,google.sk,google.space,google.store,google.su,google.tech,google.tk,google.tn,google.to,google.tv,google.tw,google.ua,google.uk,google.us,google.uz,google.vn,google.ws##.obcontainer div.c63lMc
-google.ae,google.ai,google.al,google.am,google.at,google.az,google.ba,google.be,google.bg,google.biz,google.by,google.ca,google.cc,google.ch,google.ci,google.cl,google.cloud,google.cn,google.co,google.co.id,google.co.il,google.co.in,google.co.jp,google.co.ke,google.co.kr,google.co.nz,google.co.th,google.co.uk,google.co.za,google.com,google.com.ar,google.com.au,google.com.bd,google.com.br,google.com.co,google.com.hk,google.com.mx,google.com.my,google.com.ng,google.com.np,google.com.pe,google.com.ph,google.com.pk,google.com.sa,google.com.sg,google.com.tr,google.com.tw,google.com.ua,google.com.uy,google.com.vn,google.cz,google.de,google.dev,google.dk,google.dz,google.ee,google.es,google.eu,google.fi,google.fm,google.fr,google.ga,google.ge,google.gen.tr,google.gg,google.gr,google.hk,google.hr,google.hu,google.id,google.ie,google.in,google.info,google.io,google.ir,google.is,google.it,google.jp,google.kg,google.kr,google.kz,google.lk,google.lt,google.lv,google.ma,google.md,google.me,google.mk,google.ml,google.mn,google.mx,google.my,google.net,google.news,google.ng,google.nl,google.no,google.one,google.online,google.or.id,google.org,google.org.il,google.pe,google.ph,google.pk,google.pl,google.pt,google.ro,google.rs,google.ru,google.sa,google.se,google.sg,google.sh,google.si,google.site,google.sk,google.space,google.store,google.su,google.tech,google.tk,google.tn,google.to,google.tv,google.tw,google.ua,google.uk,google.us,google.uz,google.vn,google.ws##kno-share-button
 google.co.jp,search.yahoo.co.jp,bing.com,duckduckgo.com,google.ae,google.ai,google.al,google.am,google.at,google.az,google.ba,google.be,google.bg,google.biz,google.by,google.ca,google.cc,google.ch,google.ci,google.cl,google.cloud,google.cn,google.co,google.co.id,google.co.il,google.co.in,google.co.ke,google.co.kr,google.co.nz,google.co.th,google.co.uk,google.co.za,google.com,google.com.ar,google.com.au,google.com.bd,google.com.br,google.com.co,google.com.hk,google.com.mx,google.com.my,google.com.ng,google.com.np,google.com.pe,google.com.ph,google.com.pk,google.com.sa,google.com.sg,google.com.tr,google.com.tw,google.com.ua,google.com.uy,google.com.vn,google.cz,google.de,google.dev,google.dk,google.dz,google.ee,google.es,google.eu,google.fi,google.fm,google.fr,google.ga,google.ge,google.gen.tr,google.gg,google.gr,google.hk,google.hr,google.hu,google.id,google.ie,google.in,google.info,google.io,google.ir,google.is,google.it,google.jp,google.kg,google.kr,google.kz,google.lk,google.lt,google.lv,google.ma,google.md,google.me,google.mk,google.ml,google.mn,google.mx,google.my,google.net,google.news,google.ng,google.nl,google.no,google.one,google.online,google.or.id,google.org,google.org.il,google.pe,google.ph,google.pk,google.pl,google.pt,google.ro,google.rs,google.ru,google.sa,google.se,google.sg,google.sh,google.si,google.site,google.sk,google.space,google.store,google.su,google.tech,google.tk,google.tn,google.to,google.tv,google.tw,google.ua,google.uk,google.us,google.uz,google.vn,google.ws#@#a[href*="//b.hatena.ne.jp/add?"]
 google.co.jp,search.yahoo.co.jp,bing.com,duckduckgo.com,google.ae,google.ai,google.al,google.am,google.at,google.az,google.ba,google.be,google.bg,google.biz,google.by,google.ca,google.cc,google.ch,google.ci,google.cl,google.cloud,google.cn,google.co,google.co.id,google.co.il,google.co.in,google.co.ke,google.co.kr,google.co.nz,google.co.th,google.co.uk,google.co.za,google.com,google.com.ar,google.com.au,google.com.bd,google.com.br,google.com.co,google.com.hk,google.com.mx,google.com.my,google.com.ng,google.com.np,google.com.pe,google.com.ph,google.com.pk,google.com.sa,google.com.sg,google.com.tr,google.com.tw,google.com.ua,google.com.uy,google.com.vn,google.cz,google.de,google.dev,google.dk,google.dz,google.ee,google.es,google.eu,google.fi,google.fm,google.fr,google.ga,google.ge,google.gen.tr,google.gg,google.gr,google.hk,google.hr,google.hu,google.id,google.ie,google.in,google.info,google.io,google.ir,google.is,google.it,google.jp,google.kg,google.kr,google.kz,google.lk,google.lt,google.lv,google.ma,google.md,google.me,google.mk,google.ml,google.mn,google.mx,google.my,google.net,google.news,google.ng,google.nl,google.no,google.one,google.online,google.or.id,google.org,google.org.il,google.pe,google.ph,google.pk,google.pl,google.pt,google.ro,google.rs,google.ru,google.sa,google.se,google.sg,google.sh,google.si,google.site,google.sk,google.space,google.store,google.su,google.tech,google.tk,google.tn,google.to,google.tv,google.tw,google.ua,google.uk,google.us,google.uz,google.vn,google.ws#@#a[href*="//b.hatena.ne.jp/append?"]
 google.co.jp,search.yahoo.co.jp,bing.com,duckduckgo.com,google.ae,google.ai,google.al,google.am,google.at,google.az,google.ba,google.be,google.bg,google.biz,google.by,google.ca,google.cc,google.ch,google.ci,google.cl,google.cloud,google.cn,google.co,google.co.id,google.co.il,google.co.in,google.co.ke,google.co.kr,google.co.nz,google.co.th,google.co.uk,google.co.za,google.com,google.com.ar,google.com.au,google.com.bd,google.com.br,google.com.co,google.com.hk,google.com.mx,google.com.my,google.com.ng,google.com.np,google.com.pe,google.com.ph,google.com.pk,google.com.sa,google.com.sg,google.com.tr,google.com.tw,google.com.ua,google.com.uy,google.com.vn,google.cz,google.de,google.dev,google.dk,google.dz,google.ee,google.es,google.eu,google.fi,google.fm,google.fr,google.ga,google.ge,google.gen.tr,google.gg,google.gr,google.hk,google.hr,google.hu,google.id,google.ie,google.in,google.info,google.io,google.ir,google.is,google.it,google.jp,google.kg,google.kr,google.kz,google.lk,google.lt,google.lv,google.ma,google.md,google.me,google.mk,google.ml,google.mn,google.mx,google.my,google.net,google.news,google.ng,google.nl,google.no,google.one,google.online,google.or.id,google.org,google.org.il,google.pe,google.ph,google.pk,google.pl,google.pt,google.ro,google.rs,google.ru,google.sa,google.se,google.sg,google.sh,google.si,google.site,google.sk,google.space,google.store,google.su,google.tech,google.tk,google.tn,google.to,google.tv,google.tw,google.ua,google.uk,google.us,google.uz,google.vn,google.ws#@#a[href*="//b.hatena.ne.jp/entry/"]
@@ -19897,6 +19898,7 @@ mydrivers.com##div[class="baidu"]
 mydrivers.com##div[class="tj_box"]
 mydrivers.com##div[class^="jdong11"]
 mydrivers.com##div[style*="/ad/"]
+mydrivers.com##div[style="margin: auto;width: 800px;padding: 10px 0;"]
 mydrivers.com##div[style^="position:fixed;left:50%;bottom:200px;"]
 mydrivers.com##div[style^="width:728px; height:90px;"]
 mydrivers.com#?#.newslist > li:has(> span:contains(广 告))
@@ -21408,6 +21410,7 @@ sn-plus.com,cizgi.com.tr,vgr.by##.edgtf-blog-share
 sn-plus.com,vgr.by##.edgtf-share-label
 snapchat.com,amediateka.ru,tf1.fr##div[class^="ShareButton_"]
 snipcart.com,sol.de##.nav-share
+snobmagazin.com,tarsushaber.com,yenisakarya.com,usak.tv,ekohaber.com.tr,dunyabulteni.net##.social-buttons > a[data-platform-name]:not([data-platform-name="save"])
 so.com###bnbtm-banner
 so.com###bqPromote
 so.com###e_idea_left
