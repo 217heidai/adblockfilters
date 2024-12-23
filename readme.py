@@ -86,10 +86,11 @@ class ReadMe(object):
 
             f.write("## 订阅链接\n")
             f.write("1. AdGuard Home 等 DNS 拦截服务使用规则1\n")
-            f.write("2. AdGuard 等浏览器插件使用规则1 + 规则2\n")
-            f.write("3. InviZible Pro、personalDNSfilter 等 Domain 拦截服务使用规则3（规则3与规则1拦截域名一致，仅格式差异）\n")
-            f.write("4. 规则1’、2’、3’为规则1、2、3的 Lite 版，仅针对国内域名拦截，体积较小\n")
-            f.write("5. 已对 jsdelivr 缓存进行主动刷新，但 jsdelivr 加速链接仍可能存在一定延时\n")
+            f.write("2. AdGuard 等浏览器插件使用规则1 + 规则2（规则2为规则1的补充，仅适用浏览器插件）\n")
+            f.write("3. InviZible Pro、personalDNSfilter 使用规则3（规则3与规则1拦截域名一致，仅格式差异）\n")
+            f.write("4. DNSMasq 使用规则4（规则4与规则1拦截域名一致，仅格式差异）\n")
+            f.write("5. 规则1’、2’、3’、4'为规则1、2、3、4的 Lite 版，仅针对国内域名拦截，体积较小（如添加完整规则报错数量限制，请尝试 Lite 规则）\n")
+            f.write("6. 已对 jsdelivr 缓存进行主动刷新，但 jsdelivr 加速链接仍存在一定延时\n")
             f.write("\n")
             tmp = "| 规则 | 原始链接 |"
             for i in range(1, len(self.proxyList)):
@@ -98,12 +99,14 @@ class ReadMe(object):
             f.write(tmp)
             tmp = "|" + ":-|" * ( 1 + len(self.proxyList) + 1) + "\n"
             f.write(tmp)
-            f.write("| 规则1：DNS 拦截 |" + self.__subscribeLink("adblockdns.txt") + " AdGuard、AdGuard Home 等 |\n")
-            f.write("| 规则1'：DNS 拦截 Lite |" + self.__subscribeLink("adblockdnslite.txt") + " AdGuard、AdGuard Home 等 |\n")
-            f.write("| 规则2：插件拦截 |" + self.__subscribeLink("adblockfilters.txt") + " AdGuard 等 |\n")
-            f.write("| 规则2'：插件拦截 Lite |" + self.__subscribeLink("adblockfilterslite.txt") + " AdGuard 等 |\n")
-            f.write("| 规则3：Domain 拦截 |" + self.__subscribeLink("adblockdomain.txt") + " InviZible Pro、personalDNSfilter 等 |\n")
-            f.write("| 规则3'：Domain 拦截 Lite |" + self.__subscribeLink("adblockdomainlite.txt") + " InviZible Pro、personalDNSfilter 等 |\n")
+            f.write("| 规则1 |" + self.__subscribeLink("adblockdns.txt") + " AdGuard、AdGuard Home 等 |\n")
+            f.write("| 规则1' |" + self.__subscribeLink("adblockdnslite.txt") + " AdGuard、AdGuard Home 等 |\n")
+            f.write("| 规则2 |" + self.__subscribeLink("adblockfilters.txt") + " AdGuard 等 |\n")
+            f.write("| 规则2' |" + self.__subscribeLink("adblockfilterslite.txt") + " AdGuard 等 |\n")
+            f.write("| 规则3 |" + self.__subscribeLink("adblockdomain.txt") + " InviZible Pro、personalDNSfilter |\n")
+            f.write("| 规则3' |" + self.__subscribeLink("adblockdomainlite.txt") + " InviZible Pro、personalDNSfilter |\n")
+            f.write("| 规则4 |" + self.__subscribeLink("adblockdnsmasq.txt") + " DNSMasq |\n")
+            f.write("| 规则4' |" + self.__subscribeLink("adblockdnsmasqlite.txt") + " DNSMasq |\n")
             f.write("\n")
 
             f.write("## 上游规则源\n")

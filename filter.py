@@ -73,7 +73,7 @@ class Filter(object):
         logger.info("white list: %d"%(len(whiteSet)))
         return whiteSet
     
-    # 获取 China domian 清单
+    # 获取 China domain 清单
     def __getChinaList(self, fileName:str) -> Set[str]:
         logger.info("resolve China list...")
         ChinaSet = set()
@@ -156,7 +156,7 @@ class Filter(object):
         with open(fileName, 'a') as f:
             f.write("!\n")
             f.write("! Title: AdBlock DNS\n")
-            f.write("! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：%s。\n"%(sourceRule))
+            f.write("! Description: 适用于 AdGuard 的去广告合并规则，每 8 个小时更新一次。规则源：%s。\n"%(sourceRule))
             f.write("! Homepage: https://github.com/217heidai/adblockfilters\n")
             f.write("! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdns.txt\n")
             f.write("! Version: %s\n"%(time.strftime("%Y%m%d%H%M%S", time.localtime())))
@@ -192,7 +192,7 @@ class Filter(object):
         with open(fileName, 'a') as f:
             f.write("!\n")
             f.write("! Title: AdBlock DNS Lite\n")
-            f.write("! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：%s。Lite 版仅针对国内域名拦截。\n"%(sourceRule))
+            f.write("! Description: 适用于 AdGuard 的去广告合并规则，每 8 个小时更新一次。规则源：%s。Lite 版仅针对国内域名拦截。\n"%(sourceRule))
             f.write("! Homepage: https://github.com/217heidai/adblockfilters\n")
             f.write("! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnslite.txt\n")
             f.write("! Version: %s\n"%(time.strftime("%Y%m%d%H%M%S", time.localtime())))
@@ -246,7 +246,7 @@ class Filter(object):
         with open(fileName, 'a') as f:
             f.write("!\n")
             f.write("! Title: AdBlock Filter\n")
-            f.write("! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：%s。\n"%(sourceRule))
+            f.write("! Description: 适用于 AdGuard 的去广告合并规则，每 8 个小时更新一次。规则源：%s。\n"%(sourceRule))
             f.write("! Homepage: https://github.com/217heidai/adblockfilters\n")
             f.write("! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt\n")
             f.write("! Version: %s\n"%(time.strftime("%Y%m%d%H%M%S", time.localtime())))
@@ -279,7 +279,7 @@ class Filter(object):
         with open(fileName, 'a') as f:
             f.write("!\n")
             f.write("! Title: AdBlock Filter Lite\n")
-            f.write("! Description: 适用于AdGuard的去广告合并规则，每8个小时更新一次。规则源：%s。Lite 版仅针对国内域名拦截。\n"%(sourceRule))
+            f.write("! Description: 适用于 AdGuard 的去广告合并规则，每 8 个小时更新一次。规则源：%s。Lite 版仅针对国内域名拦截。\n"%(sourceRule))
             f.write("! Homepage: https://github.com/217heidai/adblockfilters\n")
             f.write("! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt\n")
             f.write("! Version: %s\n"%(time.strftime("%Y%m%d%H%M%S", time.localtime())))
@@ -303,15 +303,15 @@ class Filter(object):
         with open(fileName, 'a') as f:
             f.write("!\n")
             f.write("! Title: AdBlock Domain\n")
-            f.write("! Description: 适用于InviZible Pro、personalDNSfilter的去广告合并规则，每8个小时更新一次。规则源：%s。\n"%(sourceRule))
+            f.write("! Description: 适用于 InviZible Pro、personalDNSfilter 的去广告合并规则，每 8 个小时更新一次。规则源：%s。\n"%(sourceRule))
             f.write("! Homepage: https://github.com/217heidai/adblockfilters\n")
             f.write("! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdomain.txt\n")
             f.write("! Version: %s\n"%(time.strftime("%Y%m%d%H%M%S", time.localtime())))
             f.write("! Last modified: %s\n"%(time.strftime("%Y/%m/%d %H:%M:%S", time.localtime())))
             f.write("! Blocked domains: %s\n"%(len(blockList)))
             f.write("!\n")
-            for domian in blockList:
-                f.write("%s\n"%(domian))
+            for domain in blockList:
+                f.write("%s\n"%(domain))
         
         logger.info("adblock domain: block=%d"%(len(blockList)))
 
@@ -330,7 +330,7 @@ class Filter(object):
         with open(fileName, 'a') as f:
             f.write("!\n")
             f.write("! Title: AdBlock Domain Lite\n")
-            f.write("! Description: 适用于InviZible Pro、personalDNSfilter的去广告合并规则，每8个小时更新一次。规则源：%s。Lite 版仅针对国内域名拦截。\n"%(sourceRule))
+            f.write("! Description: 适用于 InviZible Pro、personalDNSfilter 的去广告合并规则，每 8 个小时更新一次。规则源：%s。Lite 版仅针对国内域名拦截。\n"%(sourceRule))
             f.write("! Homepage: https://github.com/217heidai/adblockfilters\n")
             f.write("! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdomainlite.txt\n")
             f.write("! Version: %s\n"%(time.strftime("%Y%m%d%H%M%S", time.localtime())))
@@ -341,6 +341,55 @@ class Filter(object):
                 f.write("%s\n"%(domain))
         
         logger.info("adblock domain: block=%d"%(len(blockList_lite)))
+
+    # 生成 DNSMasq 规则
+    def __generateDNSMasq(self, blockList:List[str], fileName:str, sourceRule:str):
+        logger.info("generate adblock DNSMasq...")
+
+        # 生成规则文件
+        if os.path.exists(fileName):
+            os.remove(fileName)    
+        with open(fileName, 'a') as f:
+            f.write("#\n")
+            f.write("# Title: AdBlock DNSMasq\n")
+            f.write("# Description: 适用于 DNSMasq 的去广告合并规则，每 8 个小时更新一次。规则源：%s。\n"%(sourceRule))
+            f.write("# Homepage: https://github.com/217heidai/adblockfilters\n")
+            f.write("# Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnsmasq.txt\n")
+            f.write("# Version: %s\n"%(time.strftime("%Y%m%d%H%M%S", time.localtime())))
+            f.write("# Last modified: %s\n"%(time.strftime("%Y/%m/%d %H:%M:%S", time.localtime())))
+            f.write("# Blocked domains: %s\n"%(len(blockList)))
+            f.write("#\n")
+            for domain in blockList:
+                f.write("local=/%s/\n"%(domain))
+        
+        logger.info("adblock DNSMasq: block=%d"%(len(blockList)))
+
+    # 生成 DNSMasq 规则
+    def __generateDNSMasqLite(self, blockList:List[str], ChinaSet:Set[str], fileName:str, sourceRule:str):
+        logger.info("generate adblock DNSMasq lite...")
+
+        blockList_lite = []
+        for domain in blockList:
+            if domain in ChinaSet:
+                blockList_lite.append(domain)
+
+        # 生成规则文件
+        if os.path.exists(fileName):
+            os.remove(fileName)    
+        with open(fileName, 'a') as f:
+            f.write("!\n")
+            f.write("# Title: AdBlock DNSMasq Lite\n")
+            f.write("# Description: 适用于 DNSMasq 的去广告合并规则，每 8 个小时更新一次。规则源：%s。Lite 版仅针对国内域名拦截。\n"%(sourceRule))
+            f.write("! Homepage: https://github.com/217heidai/adblockfilters\n")
+            f.write("! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnsmasqlite.txt\n")
+            f.write("! Version: %s\n"%(time.strftime("%Y%m%d%H%M%S", time.localtime())))
+            f.write("! Last modified: %s\n"%(time.strftime("%Y/%m/%d %H:%M:%S", time.localtime())))
+            f.write("! Blocked domains: %s\n"%(len(blockList_lite)))
+            f.write("!\n")
+            for domain in blockList_lite:
+                f.write("local=/%s/\n"%(domain))
+        
+        logger.info("adblock DNSMasq: block=%d"%(len(blockList_lite)))
 
     # 生成用于域名连通性检测的全域名清单
     def __generateDomainBackup(self, domainSet, fileName:str):
@@ -360,7 +409,7 @@ class Filter(object):
     def generate(self, sourceRule):
         # 提取规则
         blockDict,unblockDict,filterDict = self.__getFilters()
-        # 提取黑名单、白名单、China domian
+        # 提取黑名单、白名单、China domain
         blackSet = self.__getBlackList(self.path + "/black.txt")
         whiteSet = self.__getWhiteList(self.path + "/white.txt")
         ChinaSet = self.__getChinaList(self.path + "/china.txt")
@@ -368,10 +417,12 @@ class Filter(object):
         blockList, unblockList, domainSet_dns = self.__generateDNS(blockDict, unblockDict, blackSet, whiteSet, self.path + "/adblockdns.txt", sourceRule)
         filterList_var, filterList_final, domainSet_filter = self.__generateFilter(filterDict, set(blockList), set(unblockList), blackSet, whiteSet, self.path + "/adblockfilters.txt", sourceRule)
         self.__generateDomain(blockList, self.path + "/adblockdomain.txt", sourceRule)
+        self.__generateDNSMasq(blockList, self.path + "/adblockdnsmasq.txt", sourceRule)
         # 生成lite规则
         if len(ChinaSet) > 0:
             self.__generateDNSLite(blockList, unblockList, ChinaSet, self.path + "/adblockdnslite.txt", sourceRule)
             self.__generateFilterLite(filterDict, filterList_var, filterList_final, ChinaSet, self.path + "/adblockfilterslite.txt", sourceRule)
             self.__generateDomainLite(blockList, ChinaSet, self.path + "/adblockdomainlite.txt", sourceRule)
+            self.__generateDNSMasqLite(blockList, ChinaSet, self.path + "/adblockdnsmasqlite.txt", sourceRule)
         # 生成用于域名连通性检测的全域名清单
         self.__generateDomainBackup(domainSet_dns | domainSet_filter, self.path + "/domain.txt")
