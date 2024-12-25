@@ -380,15 +380,15 @@ class Filter(object):
         if os.path.exists(fileName):
             os.remove(fileName)    
         with open(fileName, 'a') as f:
-            f.write("!\n")
+            f.write("#\n")
             f.write("# Title: AdBlock DNSMasq Lite\n")
             f.write("# Description: 适用于 DNSMasq 的去广告合并规则，每 8 个小时更新一次。规则源：%s。Lite 版仅针对国内域名拦截。\n"%(sourceRule))
-            f.write("! Homepage: https://github.com/217heidai/adblockfilters\n")
-            f.write("! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnsmasqlite.txt\n")
-            f.write("! Version: %s\n"%(time.strftime("%Y%m%d%H%M%S", time.localtime())))
-            f.write("! Last modified: %s\n"%(time.strftime("%Y/%m/%d %H:%M:%S", time.localtime())))
-            f.write("! Blocked domains: %s\n"%(len(blockList_lite)))
-            f.write("!\n")
+            f.write("# Homepage: https://github.com/217heidai/adblockfilters\n")
+            f.write("# Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnsmasqlite.txt\n")
+            f.write("# Version: %s\n"%(time.strftime("%Y%m%d%H%M%S", time.localtime())))
+            f.write("# Last modified: %s\n"%(time.strftime("%Y/%m/%d %H:%M:%S", time.localtime())))
+            f.write("# Blocked domains: %s\n"%(len(blockList_lite)))
+            f.write("#\n")
             for domain in blockList_lite:
                 f.write("local=/%s/\n"%(domain))
         
