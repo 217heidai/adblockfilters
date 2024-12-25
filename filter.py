@@ -36,6 +36,9 @@ class Filter(object):
                 taskList.append(thread_pool.submit(resolver.resolveDNS, rule))
             if rule.type == "filter":
                 taskList.append(thread_pool.submit(resolver.resolveFilter, rule))
+        # 添加收集的补充规则
+        rule = Rule("myblock", "dns", "", "")
+        taskList.append(thread_pool.submit(resolver.resolveDNS, rule))
         
         # 获取解析结果
         blockDict:Dict[str,Set[str]] = dict()

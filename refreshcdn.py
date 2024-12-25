@@ -16,6 +16,7 @@ class RefreshCDN(object):
             "direct-list.txt",
             "domain.txt",
             "google-cn.txt",
+            "myblock.txt",
             "white.txt"
         ]
 
