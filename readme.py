@@ -21,7 +21,8 @@ class ReadMe(object):
         self.proxyList = [
             "",
             "https://gcore.jsdelivr.net/gh",
-            "https://github.boki.moe"
+            "https://github.boki.moe",
+            "https://ghgo.xyz"
         ]
 
     def getRules(self) -> List[Rule]:
