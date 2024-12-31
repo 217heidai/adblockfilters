@@ -3,9 +3,9 @@
 ! Description: 适用于 AdGuard 的去广告合并规则，每 8 个小时更新一次。规则源：AdGuard Base filter、AdGuard Chinese filter、AdGuard Mobile Ads filter、AdGuard DNS filter、AdRules DNS List、CJX's Annoyance List、EasyList、EasyList China、EasyPrivacy、xinggsf mv、xinggsf rule、jiekouAD、1Hosts (Lite)、AWAvenue Ads Rule、DNS-Blocklists Light、Hblock、OISD Basic、SmartTV Blocklist、1024 hosts、ad-wars hosts、StevenBlack hosts。Lite 版仅针对国内域名拦截。
 ! Homepage: https://github.com/217heidai/adblockfilters
 ! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt
-! Version: 20241231160916
-! Last modified: 2024/12/31 16:09:16
-! Blocked Filters: 41963
+! Version: 20250101000725
+! Last modified: 2025/01/01 00:07:25
+! Blocked Filters: 41966
 !
 #%#var AG_abortInlineScript=function(g,b,c){var d=function(){if("currentScript"in document)return document.currentScript;var a=document.getElementsByTagName("script");return a[a.length-1]},e=Math.random().toString(36).substr(2,8),h=d();AG_defineProperty(b,{beforeGet:function(){var a=d();if(a instanceof HTMLScriptElement&&a!==h&&""===a.src&&g.test(a.textContent))throw c&&console.warn("AdGuard aborted execution of an inline script"),new ReferenceError(e);}});var f=window.onerror;window.onerror=function(a){if("string"===typeof a&&-1!==a.indexOf(e))return c&&console.warn("AdGuard has caught window.onerror: "+b),!0;if(f instanceof Function)return f.apply(this,arguments)}};
 #%#var AG_abortOnPropertyRead=function(a,b){var c=Math.random().toString(36).substr(2,8);AG_defineProperty(a,{beforeGet:function(){b&&console.warn("AdGuard aborted property read: "+a);throw new ReferenceError(c);}});var d=window.onerror;window.onerror=function(e){if("string"===typeof e&&-1!==e.indexOf(c))return b&&console.warn("AdGuard has caught window.onerror: "+a),!0;if(d instanceof Function)return d.apply(this,arguments)}};
@@ -17451,6 +17451,7 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 /\.com\/[a-z-]+\.html$/$subdocument,~third-party,domain=imgadult.com|imgtaxi.com|imgwallet.com
 /\.com\/[a-zA-Z]{10}\.js$/$script,~third-party,domain=povaddict.com
 /\.com\/\d+/[0-9a-z]+\.js$/$script,~third-party,domain=hentai2w.com
+/\.com\/watch\?|\.com\/playlist\?list=|\/youtubei\/v.*\/(get_watch|player)\?/$xmlhttprequest,replace=/"(adPlacements|adSlots|playerAds)"/"no_ads"/,domain=youtubekids.com|youtube-nocookie.com|youtube.com
 /\.net\/[0-9a-f]+\.js$/$script,~third-party,domain=imgdrive.net
 /\.net\/[a-z-]+\.html$/$subdocument,~third-party,domain=imgdrive.net
 /\.tv\/[0-9a-z]{12}\.js$/$script,~third-party,domain=camlovers.tv
@@ -22164,8 +22165,8 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 /wp-content/plugins/wp-adblock-dedect/js/dedect.js^
 /wp-content/plugins/wp-click-track/js/ajax.js
 /wp-content/plugins/wp-clickmap/clickmap.js
-/wp-content/plugins/wp-super-popup-pro/*$script,stylesheet
-/wp-content/plugins/wp-super-popup/*$~stylesheet
+/wp-content/plugins/wp-super-popup-pro/*$script
+/wp-content/plugins/wp-super-popup/*$script
 /wp-content/plugins/wpadcenter-pro/public/*/wpadcenter-pro-public.min.
 /wp-content/themes/decibel/javascripts/musc.passive_display_adblockx.js
 /wp-content/themes/dooplay/nex1.$domain=mangoporn.co|playpornfree.xyz
@@ -22608,6 +22609,7 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 163.com##.gg200,.gg300,.gg200x300,[class$="_ad"],div.mod_ad_text,#bobo,#layout-bobo,.txt-bobo,#js_a_bobo,.bobo-area,.imglist-bobo-app,#layout-love,#layout-shop,.top-banner,div.post_adtop_main,div.post_adtop_side,a.tie-ad-bar,#fixed_foot_ad,#js-epTabDS,#js-epBobo
 163.com##.gkk_bj_yw
 163.com##.gkk_default_yw
+163.com##.hp_textlink1_ad
 163.com##.idx_textlink_ad
 163.com##.idx_tonglan_ad
 163.com##.idx_top_ad
@@ -22621,6 +22623,7 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 163.com##.mod_ad_toutu
 163.com##.ns-side-qrcode
 163.com##.post_adtop_main
+163.com##.post_columnad_top
 163.com##.post_recommend_ad
 163.com##.quickmark
 163.com##.redpacket-footer
@@ -34538,6 +34541,7 @@ poczta.o2.pl,poczta.wp.pl,www.wp.pl,money.pl#%#//scriptlet("abort-on-property-wr
 poczta.o2.pl,poczta.wp.pl,www.wp.pl,money.pl#%#//scriptlet('set-constant', 'rekid', 'undefined')
 podnikatel.cz,mesec.cz##.design-advert-placeholder
 poebuilds.net,stadiumgaming.gg,official-plus.com##.tpaw0
+pogoda.wp.pl#@?#.desktop > div[class*=" "]:-abp-has(div)
 pogoda.wp.pl,o2.pl,sportowefakty.wp.pl,autokult.pl,pudelek.pl##body > div[class^="_"]> a[href][target="_blank"]:only-child > div[style^="position:"][style*="background-image: url"]
 point2homes.com,propertyshark.com###fixedban
 point2homes.com,propertyshark.com##div[style^="margin-bottom: 10px;"]
@@ -35838,6 +35842,7 @@ sportnews.to,topsporter.net#%#//scriptlet('prevent-xhr', 'static.doubleclick.net
 sportowefakty.wp.pl#$?#.content div[class*=" "]:matches-css(background-image: /^url\(https:\/\/sfwp\.wpcdn.pl\/img\/placeholder_ad.png/) { remove: true; }
 sportowefakty.wp.pl#$?#div[class*=" "]:matches-css(background-image: /^url\(https:\/\/sportowefakty\.wp\.pl\//) { remove: true; }
 sportowefakty.wp.pl#@?#body > [class]:not([id]):matches-css(position: fixed):matches-css(top: 0px)
+sportowefakty.wp.pl,kobieta.wp.pl,moto.wp.pl,tech.wp.pl,gry.wp.pl,opinie.wp.pl,turystyka.wp.pl,pogoda.wp.pl,tv.wp.pl,finanse.wp.pl#@#* > DIV[style*="max-width: 100%;"]
 sports-stream.*,tv-sport-hd.com###reklama1
 sports.qq.com##.ad-wrapper,#focus_jordon,.ad_r_85,div[class|=gg],div.layout.mt35,div[adconfig_charset]
 sports.qq.com##.focus_con > .item > a[href^="http"]:not([href*=".qq."])
@@ -37820,7 +37825,6 @@ zzzyk.com###Tinfo
 ||0722fc.com/index/index.php?/ajax/get_adv/
 ||0722fc.com/index/tools/js.php
 ||073img.com/*/|
-||10000xing.cn/images/we
 ||100669.com^$third-party
 ||10086.cn/together/s?func=together:getAdvertInfos&
 ||100bt.com/dc?Url
@@ -40122,7 +40126,6 @@ zzzyk.com###Tinfo
 ||js.jialingmm.net/dm/history.js
 ||js.jialingmm.net/dm/tj.js
 ||js.letvcdn.com/js/*/stats/
-||js.passport.qihucdn.com/11.0.1.js
 ||js.static.m1905.cn/pingd.js
 ||js.tlt.cn/js/
 ||js0573.com/images/cus/
