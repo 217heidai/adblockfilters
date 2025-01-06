@@ -110,7 +110,7 @@ class ReadMe(object):
             f.write("| 规则4 |" + self.__subscribeLink("adblockdnsmasq.txt") + " DNSMasq |\n")
             f.write("| 规则4' |" + self.__subscribeLink("adblockdnsmasqlite.txt") + " DNSMasq |\n")
             f.write("| 规则5 |" + self.__subscribeLink("adblocksmartdns.conf") + " SmartDNS |\n")
-            f.write("| 规则5' |" + self.__subscribeLink("adblocksmartdns.conf") + " SmartDNS |\n")
+            f.write("| 规则5' |" + self.__subscribeLink("adblocksmartdnslite.conf") + " SmartDNS |\n")
             f.write("\n")
 
             f.write("## 上游规则源\n")
