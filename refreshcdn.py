@@ -22,13 +22,13 @@ class RefreshCDN(object):
 
     def __getRuleList(self, pwd:str) -> List[str]:
         L = []
-        cmd = 'cd %s && ls | grep .txt' %(pwd)
+        cmd = 'cd %s && ls' %(pwd)
         process = os.popen(cmd)
         output = process.read()
         process.close()
         result = output.split("\n")
         for fileName in result:
-            if len(fileName) >0 and fileName not in self.blockList:
+            if os.path.isfile("%s/%s"%(pwd, fileName)) and fileName not in self.blockList:
                 L.append(fileName)
         return L
 

@@ -12,8 +12,9 @@
 2. AdGuard 等浏览器插件使用规则1 + 规则2（规则2为规则1的补充，仅适用浏览器插件）
 3. InviZible Pro、personalDNSfilter 使用规则3（规则3与规则1拦截域名一致，仅格式差异）
 4. DNSMasq 使用规则4（规则4与规则1拦截域名一致，仅格式差异）
-5. 规则1’、2’、3’、4'为规则1、2、3、4的 Lite 版，仅针对国内域名拦截，体积较小（如添加完整规则报错数量限制，请尝试 Lite 规则）
-6. 已对 jsdelivr 缓存进行主动刷新，但 jsdelivr 加速链接仍存在一定延时
+5. SmartDNS 使用规则5（规则5与规则1拦截域名一致，仅格式差异）
+6. 规则1’、2’、3’、4'、5'为对应 Lite 版，仅针对国内域名拦截，体积较小（如添加完整规则报错数量限制，请尝试 Lite 规则）
+7. 已对 jsdelivr 缓存进行主动刷新，但 jsdelivr 加速链接仍存在一定延时
 
 | 规则 | 原始链接 | 加速链接1 | 加速链接2 | 加速链接3 | 适配说明 |
 |:-|:-|:-|:-|:-|:-|
@@ -25,6 +26,8 @@
 | 规则3' | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdomainlite.txt) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockdomainlite.txt) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdomainlite.txt) | [加速链接3](https://ghgo.xyz/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdomainlite.txt) | InviZible Pro、personalDNSfilter |
 | 规则4 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnsmasq.txt) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockdnsmasq.txt) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnsmasq.txt) | [加速链接3](https://ghgo.xyz/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnsmasq.txt) | DNSMasq |
 | 规则4' | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnsmasqlite.txt) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockdnsmasqlite.txt) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnsmasqlite.txt) | [加速链接3](https://ghgo.xyz/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnsmasqlite.txt) | DNSMasq |
+| 规则5 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksmartdns.conf) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblocksmartdns.conf) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksmartdns.conf) | [加速链接3](https://ghgo.xyz/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksmartdns.conf) | SmartDNS |
+| 规则5' | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksmartdns.conf) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblocksmartdns.conf) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksmartdns.conf) | [加速链接3](https://ghgo.xyz/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksmartdns.conf) | SmartDNS |
 
 ## 上游规则源
 1. 感谢各位广告过滤规则维护大佬们的辛苦付出。
