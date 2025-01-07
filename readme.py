@@ -75,7 +75,7 @@ class ReadMe(object):
         
         with open(self.filename, 'a') as f:
             f.write("# AdBlock DNS Filters\n")
-            f.write("适用于AdGuard的去广告合并规则，每8个小时更新一次。\n")
+            f.write("去广告合并规则，每8个小时更新一次。  \n")
             f.write("个人收藏了不少广告过滤规则，但是每次往新设备添加的时候很是头疼，于是写了这个项目，定时自动获取各规则源更新，生成合并规则库。\n")
             f.write("\n")
 
@@ -89,10 +89,12 @@ class ReadMe(object):
             f.write("1. AdGuard Home 等 DNS 拦截服务使用规则1\n")
             f.write("2. AdGuard 等浏览器插件使用规则1 + 规则2（规则2为规则1的补充，仅适用浏览器插件）\n")
             f.write("3. InviZible Pro、personalDNSfilter 使用规则3（规则3与规则1拦截域名一致，仅格式差异）\n")
-            f.write("4. DNSMasq 使用规则4（规则4与规则1拦截域名一致，仅格式差异）\n")
-            f.write("5. SmartDNS 使用规则5（规则5与规则1拦截域名一致，仅格式差异）\n")
-            f.write("6. 规则1’、2’、3’、4'、5'为对应 Lite 版，仅针对国内域名拦截，体积较小（如添加完整规则报错数量限制，请尝试 Lite 规则）\n")
-            f.write("7. 已对 jsdelivr 缓存进行主动刷新，但 jsdelivr 加速链接仍存在一定延时\n")
+            f.write("4. DNSMasq 使用规则4（与规则1拦截域名一致，仅格式差异）\n")
+            f.write("5. SmartDNS 使用规则5（与规则1拦截域名一致，仅格式差异）\n")
+            f.write("6. Clash 使用规则6（与规则1拦截域名一致，仅格式差异）\n")
+            f.write("7. QuantumultX 使用规则7（与规则1拦截域名一致，仅格式差异）\n")
+            f.write("8. 规则x’为规则x的 Lite 版，仅针对国内域名拦截，体积较小（如添加完整规则报错数量限制，请尝试 Lite 规则）\n")
+            f.write("9. 已对 jsdelivr 缓存进行主动刷新，但 jsdelivr 加速链接仍存在一定延时\n")
             f.write("\n")
             tmp = "| 规则 | 原始链接 |"
             for i in range(1, len(self.proxyList)):
@@ -111,6 +113,10 @@ class ReadMe(object):
             f.write("| 规则4' |" + self.__subscribeLink("adblockdnsmasqlite.txt") + " DNSMasq |\n")
             f.write("| 规则5 |" + self.__subscribeLink("adblocksmartdns.conf") + " SmartDNS |\n")
             f.write("| 规则5' |" + self.__subscribeLink("adblocksmartdnslite.conf") + " SmartDNS |\n")
+            f.write("| 规则6 |" + self.__subscribeLink("adblockclash.list") + " Clash |\n")
+            f.write("| 规则6' |" + self.__subscribeLink("adblockclashlite.list") + " Clash |\n")
+            f.write("| 规则7 |" + self.__subscribeLink("adblockqx.conf") + " QuantumultX |\n")
+            f.write("| 规则7' |" + self.__subscribeLink("adblockqxlite.conf") + " QuantumultX |\n")
             f.write("\n")
 
             f.write("## 上游规则源\n")

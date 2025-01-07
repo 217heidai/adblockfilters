@@ -6,7 +6,7 @@ from typing import List,Dict,Set,Tuple
 from loguru import logger
 from tld import get_tld
 
-from app import AdGuard, AdGuardHome, DNSMasq, InviZible, SmartDNS
+from app import AdGuard, AdGuardHome, Clash, DNSMasq, InviZible, QuantumultX, SmartDNS
 from readme import Rule
 from resolver import Resolver
 
@@ -211,10 +211,14 @@ class Filter(object):
         adguard.generateAll()
         adguardhome = AdGuardHome(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockdns.txt", sourceRule)
         adguardhome.generateAll()
+        clash = Clash(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockclash.list", sourceRule)
+        clash.generateAll()
         dnsmasq = DNSMasq(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockdnsmasq.txt", sourceRule)
         dnsmasq.generateAll()
         invizible = InviZible(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockdomain.txt", sourceRule)
         invizible.generateAll()
+        quantumultx = QuantumultX(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockqx.conf", sourceRule)
+        quantumultx.generateAll()
         smartdns = SmartDNS(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblocksmartdns.conf", sourceRule)
         smartdns.generateAll()
         # 生成用于域名连通性检测的全域名清单
