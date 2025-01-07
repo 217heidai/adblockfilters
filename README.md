@@ -1,5 +1,5 @@
 # AdBlock DNS Filters
-适用于AdGuard的去广告合并规则，每8个小时更新一次。
+去广告合并规则，每8个小时更新一次。  
 个人收藏了不少广告过滤规则，但是每次往新设备添加的时候很是头疼，于是写了这个项目，定时自动获取各规则源更新，生成合并规则库。
 
 ## 说明
@@ -11,10 +11,12 @@
 1. AdGuard Home 等 DNS 拦截服务使用规则1
 2. AdGuard 等浏览器插件使用规则1 + 规则2（规则2为规则1的补充，仅适用浏览器插件）
 3. InviZible Pro、personalDNSfilter 使用规则3（规则3与规则1拦截域名一致，仅格式差异）
-4. DNSMasq 使用规则4（规则4与规则1拦截域名一致，仅格式差异）
-5. SmartDNS 使用规则5（规则5与规则1拦截域名一致，仅格式差异）
-6. 规则1’、2’、3’、4'、5'为对应 Lite 版，仅针对国内域名拦截，体积较小（如添加完整规则报错数量限制，请尝试 Lite 规则）
-7. 已对 jsdelivr 缓存进行主动刷新，但 jsdelivr 加速链接仍存在一定延时
+4. DNSMasq 使用规则4（与规则1拦截域名一致，仅格式差异）
+5. SmartDNS 使用规则5（与规则1拦截域名一致，仅格式差异）
+6. Clash 使用规则6（与规则1拦截域名一致，仅格式差异）
+7. QuantumultX 使用规则7（与规则1拦截域名一致，仅格式差异）
+8. 规则x’为规则x的 Lite 版，仅针对国内域名拦截，体积较小（如添加完整规则报错数量限制，请尝试 Lite 规则）
+9. 已对 jsdelivr 缓存进行主动刷新，但 jsdelivr 加速链接仍存在一定延时
 
 | 规则 | 原始链接 | 加速链接1 | 加速链接2 | 加速链接3 | 适配说明 |
 |:-|:-|:-|:-|:-|:-|
@@ -28,6 +30,10 @@
 | 规则4' | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnsmasqlite.txt) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockdnsmasqlite.txt) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnsmasqlite.txt) | [加速链接3](https://ghgo.xyz/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdnsmasqlite.txt) | DNSMasq |
 | 规则5 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksmartdns.conf) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblocksmartdns.conf) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksmartdns.conf) | [加速链接3](https://ghgo.xyz/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksmartdns.conf) | SmartDNS |
 | 规则5' | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksmartdnslite.conf) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblocksmartdnslite.conf) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksmartdnslite.conf) | [加速链接3](https://ghgo.xyz/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksmartdnslite.conf) | SmartDNS |
+| 规则6 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockclash.list) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockclash.list) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockclash.list) | [加速链接3](https://ghgo.xyz/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockclash.list) | Clash |
+| 规则6' | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockclashlite.list) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockclashlite.list) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockclashlite.list) | [加速链接3](https://ghgo.xyz/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockclashlite.list) | Clash |
+| 规则7 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockqx.conf) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockqx.conf) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockqx.conf) | [加速链接3](https://ghgo.xyz/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockqx.conf) | QuantumultX |
+| 规则7' | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockqxlite.conf) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockqxlite.conf) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockqxlite.conf) | [加速链接3](https://ghgo.xyz/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockqxlite.conf) | QuantumultX |
 
 ## 上游规则源
 1. 感谢各位广告过滤规则维护大佬们的辛苦付出。
