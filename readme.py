@@ -22,7 +22,7 @@ class ReadMe(object):
             "",
             "https://gcore.jsdelivr.net/gh",
             "https://github.boki.moe",
-            "https://ghgo.xyz"
+            "https://mirror.ghproxy.com"
         ]
 
     def getRules(self) -> List[Rule]:
