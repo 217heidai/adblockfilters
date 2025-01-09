@@ -3,9 +3,9 @@
 ! Description: 适用于 AdGuard 的去广告合并规则，每 8 个小时更新一次。规则源：AdGuard Base filter、AdGuard Chinese filter、AdGuard Mobile Ads filter、AdGuard DNS filter、AdRules DNS List、CJX's Annoyance List、EasyList、EasyList China、EasyPrivacy、xinggsf mv、xinggsf rule、jiekouAD、1Hosts (Lite)、AWAvenue Ads Rule、DNS-Blocklists Light、Hblock、OISD Basic、SmartTV Blocklist、1024 hosts、ad-wars hosts、StevenBlack hosts。Lite 版仅针对国内域名拦截。
 ! Homepage: https://github.com/217heidai/adblockfilters
 ! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilterslite.txt
-! Version: 20250109160908
-! Last modified: 2025/01/09 16:09:08
-! Blocked Filters: 41928
+! Version: 20250110000750
+! Last modified: 2025/01/10 00:07:50
+! Blocked Filters: 41920
 !
 #%#var AG_abortInlineScript=function(g,b,c){var d=function(){if("currentScript"in document)return document.currentScript;var a=document.getElementsByTagName("script");return a[a.length-1]},e=Math.random().toString(36).substr(2,8),h=d();AG_defineProperty(b,{beforeGet:function(){var a=d();if(a instanceof HTMLScriptElement&&a!==h&&""===a.src&&g.test(a.textContent))throw c&&console.warn("AdGuard aborted execution of an inline script"),new ReferenceError(e);}});var f=window.onerror;window.onerror=function(a){if("string"===typeof a&&-1!==a.indexOf(e))return c&&console.warn("AdGuard has caught window.onerror: "+b),!0;if(f instanceof Function)return f.apply(this,arguments)}};
 #%#var AG_abortOnPropertyRead=function(a,b){var c=Math.random().toString(36).substr(2,8);AG_defineProperty(a,{beforeGet:function(){b&&console.warn("AdGuard aborted property read: "+a);throw new ReferenceError(c);}});var d=window.onerror;window.onerror=function(e){if("string"===typeof e&&-1!==e.indexOf(c))return b&&console.warn("AdGuard has caught window.onerror: "+a),!0;if(d instanceof Function)return d.apply(this,arguments)}};
@@ -14636,6 +14636,7 @@
 ##DIV[style='position: fixed; color: transparent; line-height: 100vh; width: 100vw; z-index: 288; top: 0px; left: 0px;']
 ##DIV[style='position: fixed; left: 0px; bottom: 0px; width: 100%; height: 120px; z-index: 2147483647 !important;']
 ##DIV[style='position: fixed; line-height: 100vh; width: 100vw; top: 0px; left: 0px;']
+##DIV[style='position:relative !important;padding:0px !important;margin:0px !important;width:100% !important;overflow:hidden !important;font-size:0px !important;line-height:0px !important;']
 ##DIV[style='width: 100%;background-color: black;color: white;padding: 15px 0;']
 ##DIV[style^='box-sizing: border-box; position: relative; left: 0px; z-index: 214748']
 ##DIV[style^='display: block; aspect-ratio: 728 / 90; background-image: url("/static/resources/lp.php']
@@ -16266,7 +16267,6 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 -applog*.fqnovel.com^
 -assets/ads.$~script
 -attr.appsflyersdk.com^
--auto-ads-
 -banner-ad_
 -banner-ads-$~script
 -bobo_recommend_
@@ -16292,7 +16292,6 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 -rtb.gravite.net^
 -s2s.sensic.net^
 -scroll-tracker.js
--sidebar-ad.
 -spiky.clevertap-prod.com^
 -sponsor-ad.
 -telemetry.officeapps.live.com.mcas.ms^
@@ -16345,7 +16344,6 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 .adriver.$~object,domain=~adriver.co
 .adrotate.
 .ads-lazy.
-.ads-min.
 .ads.controller.
 .ads.css
 .adsbox.
@@ -16404,7 +16402,7 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 .club/1clkn/
 .club/ads/
 .club/adv/
-.club/js/popunder.js
+.club/js/popunder.js$script
 .cmail19.com/t/$image
 .cmail19.com/ti/$image
 .cmail20.com/t/$image
@@ -18092,10 +18090,12 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 /amp-ad-$script
 /amp-analytics-
 /amp-analytics/*
+/amp-auto-ads-$script
 /amp-call-tracking-
 /amp-connatix-$script
 /amp-skimlinks-
 /amp-sticky-ad-$script
+/amp-story-auto-ads-$script
 /amp-story-auto-analytics-
 /amp-tealium?
 /amp.gif?
@@ -24034,6 +24034,7 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 @@/live/*/*jpeg|$xmlhttprequest,stealth=referrer,domain=weakspell.org|weakspell.to
 @@/log/report/*$script,domain=bilibili.com
 @@/mangakakalot/*$stealth,image,domain=mangakakalot.com
+@@/media/*$image,stealth=referrer,domain=bato.to
 @@/media/*/js/adblock_detector.js$domain=eska.pl|eskarock.pl|voxfm.pl|vibefm.pl|radiosupernova.pl
 @@/mobileads.$domain=naviking.localking.com.tw
 @@/mono.m3u8$stealth=referrer
@@ -24296,6 +24297,7 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 @@||ad.doubleclick.net/ddm/ad/*$domain=seekingalpha.com
 @@||ad.doubleclick.net/ddm/ad/*$domain=twitch.tv,third-party
 @@||ad.doubleclick.net/ddm/ad/*$domain=wiltshiretimes.co.uk|gazetteandherald.co.uk|theboltonnews.co.uk|oxfordmail.co.uk|swindonadvertiser.co.uk|southwalesargus.co.uk
+@@||ad.doubleclick.net/ddm/adj$third-party,xmlhttprequest,domain=idyllic.app
 @@||ad.doubleclick.net/ddm/clk/
 @@||ad.doubleclick.net/ddm/clk/$domain=pepper.pl
 @@||ad.doubleclick.net/ddm/clk/*http$popup
@@ -25955,6 +25957,7 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,domain=uploadmall.com
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,xmlhttprequest,domain=sportfacts.net|topsporter.net
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,xmlhttprequest,domain=topsporter.net
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$third-party,xmlhttprequest,domain=idyllic.app
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$xmlhttprequest,domain=10play.com.au
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$xmlhttprequest,domain=3dtuning.com
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$xmlhttprequest,domain=4fuk.me
@@ -26890,11 +26893,10 @@ _BannerAd_
 _Banner_Ads_
 _StickyAd.
 _WebVitalsReporter_
-_ad_250.
-_ad_300.
+_ad_250.$image
+_ad_300.$image
 _ad_banner.
 _ad_bottom.
-_ad_box.
 _ad_choices.
 _ad_content.
 _ad_header.
@@ -26903,7 +26905,6 @@ _ad_impression.
 _ad_layer_
 _ad_right.
 _ad_side.
-_ad_sidebar_
 _ad_skyscraper.
 _ad_wrapper.
 _adbanner_
@@ -26911,7 +26912,6 @@ _adchoice.
 _adchoices.
 _adhome.
 _adlabel_
-_adnetwork.
 _adobe_analytics.js
 _adpartner.
 _adplugin.
@@ -26922,7 +26922,6 @@ _ads.php?
 _ads_updater-
 _adserve.
 _adskin.
-_adskin_
 _adtitle.
 _adv_open_x/
 _advertise-$domain=~linkedin.com
@@ -26933,9 +26932,7 @@ _assets/ads/
 _asyncspc.
 _atblockdetector/
 _background_ad.
-_banner_ad.
 _banner_ad_
-_bannerad.
 _beacon?
 _billboard_320x100.iframe.
 _bottom_ads.
@@ -26960,12 +26957,10 @@ _images/ad_
 _images/ads/
 _imp?Log=
 _layerad.
-_left_ad.
 _logHuman=
 _naimabdd_
 _nedstat.js
 _panel_ads.
-_partner_ad.
 _popAds.
 _popunder_
 _prebid.js$script
@@ -26977,24 +26972,19 @@ _rightad.
 _rightad_
 _rony.js$script,third-party
 _rpc/log?
-_sidead.
 _sidebar_ad.
 _sidebar_ad_
 _social_tracking.js
-_square_ad.
 _stat.php?referer=
 _stat_counter.php?
 _sticky_ad.
-_text_ads.
 _tm11_pmt_
 _top_ad.
 _trackWebtrekkEvents.
 _track_pixel.gif?
-_vertical_ad.
 _view_pixel&$image
 _web-advert.
 _webanalytics.
-_widget_ad.
 _yad_jsonp_
 a-ads.com,ad-maven.com,adcash.com,admitad.com,adskeeper.co.uk,adskeeper.com,adspyglass.com,adstracker.info,adsupply.com,adsupplyads.com,adsupplyads.net,chpadblock.com,exoclick.com,hilltopads.com,join-admaven.com,joinpropeller.com,juicyads.com,luckyads.pro,monetag.com,myadcash.com,popads.net,propellerads.com,purpleads.io,trafficshop.com,yavli.com##HTML
 a-hentai.tv,javporn.tv##.support-frame
@@ -30829,6 +30819,7 @@ giantfood.com,giantfoodstores.com,martinsfoods.com##[data-product-id]:has(.flag_
 gifcompressor.com,heic2jpg.com,imagecompressor.com,jpg2png.com,mylocation.org,png2jpg.com,webptojpeg.com,wordtojpeg.com##.ha
 gifcompressor.com,heic2jpg.com,jpg2png.com,png2jpg.com,webptojpeg.com,wordtojpeg.com##.header__right
 gifmagic.com,lalovings.com#@##adcontainer
+gifyu.com,topperlearning.com,aap.org,bbcgoodfood.com,gardenersworld.com,historyextra.com,ndtv.com##.ad-banner
 gigacalculator.com,247hearts.com##.aspace
 girlstyle.com,thecatcity.com,urbanlifehk.com##.desktop-sidebar__block--ad
 girlstyle.com,thecatcity.com,urbanlifehk.com##.pl-main-article__ad-block
@@ -36164,6 +36155,8 @@ thelocal.*###article-comments + .article-single__worth
 thelocal.*##.header-content-ad-container
 thelocal.*##.tl-ad-container
 thelocal.*##div[data-hasbanner="yes"]
+thelocal.*#?#.hp-new__block > div[data-hasbanner="yes"]:has(> .hp-new__article--mpu:only-child)
+thelocal.*#?#main > .article-single__worth:has(> .read-also-recs > .tp-cxense-placeholder-inline)
 thelocal.at,thelocal.ch,thelocal.de,thelocal.es,thelocal.fr,thelocal.it,thelocal.no##.article--sponsored
 thelocal.com,thelocal.dk,thelocal.se##.article-sponsored
 thelocal.se,thelocal.no,thelocal.dk,thelocal.it,thelocal.at,thelocal.es,thelocal.de,thelocal.fr##.footer-sticker-ad
@@ -36354,7 +36347,6 @@ top1iq.com,thuthuatmoi.xyz#$#body { overflow: auto !important; }
 topeuropix.site,123europix.pro###closex
 tophub.today##.ax
 topnewsmp.com,link.vipurl.in,bhram.hydtech.in,moddingthrones.freemodsapp.xyz##.adb
-topperlearning.com,aap.org,bbcgoodfood.com,gardenersworld.com,historyextra.com,ndtv.com##.ad-banner
 topsporter.net,sportfacts.net#?#.footy-related-posts > .blog-wrapper > .post-item:has(:is(.adsbyvli, div[id^="div-gpt-"]))
 torkitty.com,torrentkitty.app,torrentkitty.io,torrentkitty.lol,torrentkitty.net,torrentkitty.se,torrentkitty.tv##a[href*="/aff_"]
 torkitty.com,torrentkitty.vip,torrentkitty.tv##a[href*=".affiliatescn.net/"]
