@@ -6,7 +6,7 @@ from typing import List,Dict,Set,Tuple
 from loguru import logger
 from tld import get_tld
 
-from app import AdGuard, AdGuardHome, Clash, DNSMasq, InviZible, QuantumultX, SmartDNS
+from app import APPBase, AdGuard, AdGuardHome, Clash, DNSMasq, InviZible, QuantumultX, SmartDNS
 from readme import Rule
 from resolver import Resolver
 
@@ -53,7 +53,7 @@ class Filter(object):
 
         return blockDict,unblockDict,filterDict
     
-    # 获取黑名单
+    # 获取黑名单，经测试已无法解析的域名
     def __getBlackList(self, fileName:str) -> Set[str]:
         logger.info("resolve black list...")
         blackSet = set()
@@ -64,7 +64,7 @@ class Filter(object):
         logger.info("black list: %d"%(len(blackSet)))
         return blackSet
 
-    # 获取白名单
+    # 获取白名单，收集的误杀规则
     def __getWhiteList(self, fileName:str) -> Set[str]:
         logger.info("resolve white list...")
         whiteSet = set()
@@ -76,7 +76,24 @@ class Filter(object):
         logger.info("white list: %d"%(len(whiteSet)))
         return whiteSet
     
-    # 获取 China domain 清单
+    def __getWhiteDict(self, whiteSet:Set[str]) -> Dict[str,Set[str]]:
+        whiteDict = dict()
+
+        for address in whiteSet:
+            try:
+                res = get_tld(address, fix_protocol=True, as_object=True)
+                fld = res.fld
+                subdomain = res.subdomain
+                if fld not in whiteDict:
+                    whiteDict[fld] = {subdomain}
+                else:
+                    whiteDict[fld] |= {subdomain}
+            except Exception as e:
+                pass
+        
+        return whiteDict
+    
+    # 获取 China domain 清单，国内域名
     def __getChinaList(self, fileName:str) -> Set[str]:
         logger.info("resolve China list...")
         ChinaSet = set()
@@ -86,15 +103,15 @@ class Filter(object):
                 ChinaSet = set(map(lambda x: x.replace("\n", ""), ChinaList))
         logger.info("China list: %d"%(len(ChinaSet)))
         return ChinaSet
-
+    
     # 去重、排序
-    def __domainSort(self, domainDict:Dict[str, Set[str]], blackSet:Set[str], whiteSet:Set[str]) -> Tuple[List[str], Set[str]]:
+    def __domainSort(self, domainDict:Dict[str, Set[str]], blackSet:Set[str], whiteDict:Dict[str,Set[str]]) -> Tuple[List[str], Set[str]]:
         def repetition(l): # 短域名已被拦截，则干掉所有长域名。如'a.example'、'b.example'、'example'，则只保留'example'
             l = sorted(l, key = lambda item:len(item), reverse=False) # 按从短到长排序
-            if l[0] == '':
-                return l[:1]
             if len(l) < 2:
                 return l
+            if l[0] == '':
+                return l[:1]
             tmp = set()
             for i in range(len(l) - 1):
                 for j in range(i+1, len(l)):
@@ -115,7 +132,7 @@ class Filter(object):
         fldList = list(domainDict.keys())
         fldList.sort() # 排序
         for fld in fldList:
-            subdomainList_origin = list(domainDict[fld])
+            subdomainList_origin = list(domainDict[fld] - whiteDict.get(fld, set())) # 去除需要保留的白名单域名
             subdomainList = repetition(subdomainList_origin) # 短域名已被拦截，则干掉所有长域名。如'a.example'、'b.example'、'example'，则只保留'example'
             for subdomain in subdomainList:
                 subdomain_not_black = False
@@ -133,12 +150,11 @@ class Filter(object):
                             break
                 
                 domain = get_domain(fld, subdomain)
-                if domain not in whiteSet:
-                    if domain not in blackSet:
+                if domain not in blackSet:
+                    domanList.append(domain)
+                else:
+                    if subdomain_not_black: # 只要子域名有一个未black，仍然保留
                         domanList.append(domain)
-                    else:
-                        if subdomain_not_black: # 只要子域名有一个未black，仍然保留
-                            domanList.append(domain)
 
             # 全域名保留，用于后续验证连通性
             for subdomain in subdomainList_origin: 
@@ -196,30 +212,32 @@ class Filter(object):
         logger.info("domain backup: %d"%(len(domainList)))
 
     def generate(self, sourceRule):
-        # 提取规则
+        # 从上游规则中提取规则
         blockDict,unblockDict,filterDict = self.__getFilters()
+
         # 提取黑名单、白名单、China domain
-        blackSet = self.__getBlackList(self.path + "/black.txt")
-        whiteSet = self.__getWhiteList(self.path + "/white.txt")
-        ChinaSet = self.__getChinaList(self.path + "/china.txt")
-        # 规则处理：合并、去重、排序、剔除白名单、剔除黑名单
-        blockList, blockSet_block = self.__domainSort(blockDict, blackSet, whiteSet)
-        unblockList, unblockSet_unblock = self.__domainSort(unblockDict, blackSet, whiteSet)
+        blackSet = self.__getBlackList(self.path + "/black.txt")  # 经测试已无法解析的域名
+        whiteSet = self.__getWhiteList(self.path + "/white.txt")  # 收集的误杀规则
+        whiteDict = self.__getWhiteDict(whiteSet)
+        ChinaSet = self.__getChinaList(self.path + "/china.txt")  # 国内域名
+
+        # 规则处理：合并、去重、排序、剔除剔除黑名单、剔除白名单
+        blockList, blockSet_block = self.__domainSort(blockDict, blackSet, whiteDict)
+        unblockList, unblockSet_unblock = self.__domainSort(unblockDict, blackSet, whiteDict)
         filterList_var, filterList, domainSet_filter = self.__filterSort(filterDict, set(blockList), set(unblockList), blackSet, whiteSet)
-        # 生成合并规则 AdGuard, AdGuardHome, DNSMasq, InviZible, SmartDNS
-        adguard = AdGuard(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockfilters.txt", sourceRule)
-        adguard.generateAll()
-        adguardhome = AdGuardHome(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockdns.txt", sourceRule)
-        adguardhome.generateAll()
-        clash = Clash(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockclash.list", sourceRule)
-        clash.generateAll()
-        dnsmasq = DNSMasq(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockdnsmasq.txt", sourceRule)
-        dnsmasq.generateAll()
-        invizible = InviZible(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockdomain.txt", sourceRule)
-        invizible.generateAll()
-        quantumultx = QuantumultX(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockqx.conf", sourceRule)
-        quantumultx.generateAll()
-        smartdns = SmartDNS(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblocksmartdns.conf", sourceRule)
-        smartdns.generateAll()
+
+        # 生成合并规则 AdGuard, AdGuardHome, DNSMasq, InviZible, SmartDNS等
+        generaterList:List[APPBase] = [
+            AdGuard    (blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockfilters.txt",   sourceRule),
+            AdGuardHome(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockdns.txt",       sourceRule),
+            Clash      (blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockclash.list",    sourceRule),
+            DNSMasq    (blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockdnsmasq.txt",   sourceRule),
+            InviZible  (blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockdomain.txt",    sourceRule),
+            QuantumultX(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockqx.conf",       sourceRule),
+            SmartDNS   (blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblocksmartdns.conf", sourceRule),
+        ]
+        for g in generaterList:
+            g.generateAll()
+        
         # 生成用于域名连通性检测的全域名清单
         self.__generateDomainBackup(blockSet_block | unblockSet_unblock | domainSet_filter, self.path + "/domain.txt")
