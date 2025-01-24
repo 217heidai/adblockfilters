@@ -13,6 +13,9 @@
 ! Bad: ||adssubdomain.legitwebsite.com^ (should be in adservers_firstparty.txt)
 !
 !
+||1iuh5l.com^
+||ydxdg.xyz^
+||aafns.xyz^
 ||fam-8.net^$third-party
 ||zbb.bbb.*.pics^
 ||towmfs.com^
@@ -1186,6 +1189,11 @@ mobile01.com$$script[tag-content="$.cookie(""fullscreenad"""][max-length="550"]
 ! Bad: .org/ads/$domain=example.org (for instance, should be in specific.txt)
 !
 !
+! Chinese online books
+! Examples:
+! - https://241028z.1iuh5l.com:9001/sc/1028?n=llvukcwa
+! - https://246xgtyyh.frify.xyz:9369/hm/6?x=u46hl2p1sb&r=0&t=2sb3yi92g9&v=2
+/\.[a-z]{2,3}:\d{4}\/[a-z]{2}\/\d+\?[a-z]+=[a-z0-9]{5,}/$script,third-party
 ! 91porny
 ! https://github.com/AdguardTeam/AdguardFilters/issues/190664
 /^https:\/\/zz\d{4}bb\d{4}\.com/$third-party,image
@@ -1261,6 +1269,10 @@ $script,third-party,denyallow=fastlycdn.com|doodcdn.co|intensedebate.com|vixclou
 !
 ! NOTE: Specific rules
 !
+||4275.com/css/91kf.gif
+4275.com##div[style="width:580px;margin:0 auto;"]
+m.shuhaige.net#%#//scriptlet('abort-current-inline-script', 'navigator', 'location.href')
+$script,third-party,denyallow=bsgslb.com|bytecdntp.com,domain=m.shuhaige.net
 ||topthink.com/uploads/assistant/$image,domain=doc.thinkphp.cn
 doc.thinkphp.cn#%#//scriptlet('inject-css-in-shadow-dom', 'a[href*="?utm_source="][target="_blank"] > img { display: none !important; }')
 ||cpu.baidu.com/block/wap/
@@ -1863,7 +1875,8 @@ wnflb2023.com##.GzList
 bdys03.com##.artplayer-plugin-ads
 ||u10*.com/*.gif$domain=bhuai.top
 ||ll.ibiqiuge.com/m.js
-axutongxue.net###uuuui
+axutongxue.net##body > div[id]:has(> ul[class] > li > img.icon + a[href])
+axutongxue.net#%#//scriptlet('trusted-suppress-native-method', 'document.write', '/ul class.*icon.*href/', 'prevent')
 sstv.pw##.container > a > img[style="width: 100%;"]
 cupfox.app##.t-img-box > a[target="_blank"] > img
 olevod.com##div[class^="ad"][style="margin-top: 0.05rem;"]
@@ -5153,6 +5166,8 @@ newduba.cn###jq_youxi
 ||pevpbx.icu^
 ||e1s.fun^
 ||nvpokyko.icu^
+||xulkervf.com^
+||p2v.fun^
 ||scigzetg.com^
 ||bjfsk.xyz^
 ||jltwxisa.icu^
