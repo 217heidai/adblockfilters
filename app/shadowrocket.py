@@ -5,18 +5,18 @@ from loguru import logger
 
 from app.base import APPBase
 
-class Clash(APPBase):
+class Shadowrocket(APPBase):
     def __init__(self, blockList:List[str], unblockList:List[str], filterDict:Dict[str,str], filterList:List[str], filterList_var:List[str], ChinaSet:Set[str], fileName:str, sourceRule:str):
-        super(Clash, self).__init__(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, fileName, sourceRule)
+        super(Shadowrocket, self).__init__(blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, fileName, sourceRule)
 
     def generate(self, isLite=False):
         try:
             if isLite:
-                logger.info("generate adblock Clash Lite...")
+                logger.info("generate adblock Shadowrocket Lite...")
                 fileName = self.fileNameLite
                 blockList = self.blockListLite
             else:
-                logger.info("generate adblock Clash...")
+                logger.info("generate adblock Shadowrocket...")
                 fileName = self.fileName
                 blockList = self.blockList
             
@@ -27,11 +27,11 @@ class Clash(APPBase):
             with open(fileName, 'a') as f:
                 f.write("#\n")
                 if isLite:
-                    f.write("# Title: AdBlock Clash Lite\n")
-                    f.write("# Description: 适用于 Clash 的去广告合并规则，每 8 个小时更新一次。规则源：%s。Lite 版仅针对国内域名拦截。\n"%(self.sourceRule))
+                    f.write("# Title: AdBlock Shadowrocket Lite\n")
+                    f.write("# Description: 适用于 Shadowrocket 的去广告合并规则，每 8 个小时更新一次。规则源：%s。Lite 版仅针对国内域名拦截。\n"%(self.sourceRule))
                 else:
-                    f.write("# Title: AdBlock Clash\n")
-                    f.write("# Description: 适用于 Clash 的去广告合并规则，每 8 个小时更新一次。规则源：%s。\n"%(self.sourceRule))
+                    f.write("# Title: AdBlock Shadowrocket\n")
+                    f.write("# Description: 适用于 Shadowrocket 的去广告合并规则，每 8 个小时更新一次。规则源：%s。\n"%(self.sourceRule))
                 f.write("# Homepage: %s\n"%(self.homepage))
                 f.write("# Source: %s/%s\n"%(self.source, os.path.basename(fileName)))
                 f.write("# Version: %s\n"%(self.version))
@@ -42,8 +42,8 @@ class Clash(APPBase):
                     f.write("DOMAIN-SUFFIX,%s\n"%(domain))
             
             if isLite:
-                logger.info("adblock Clash Lite: block=%d"%(len(blockList)))
+                logger.info("adblock Shadowrocket Lite: block=%d"%(len(blockList)))
             else:
-                logger.info("adblock Clash: block=%d"%(len(blockList)))
+                logger.info("adblock Shadowrocket: block=%d"%(len(blockList)))
         except Exception as e:
             logger.error("%s"%(e))

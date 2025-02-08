@@ -22,7 +22,7 @@ class ReadMe(object):
             "",
             "https://gcore.jsdelivr.net/gh",
             "https://github.boki.moe",
-            "https://mirror.ghproxy.com"
+            "https://ghfast.top"
         ]
 
     def getRules(self) -> List[Rule]:
@@ -86,15 +86,16 @@ class ReadMe(object):
             f.write("\n")
 
             f.write("## 订阅链接\n")
-            f.write("1. AdGuard Home 等 DNS 拦截服务使用规则1\n")
-            f.write("2. AdGuard 等浏览器插件使用规则1 + 规则2（规则2为规则1的补充，仅适用浏览器插件）\n")
-            f.write("3. InviZible Pro、personalDNSfilter 使用规则3（规则3与规则1拦截域名一致，仅格式差异）\n")
-            f.write("4. DNSMasq 使用规则4（与规则1拦截域名一致，仅格式差异）\n")
-            f.write("5. SmartDNS 使用规则5（与规则1拦截域名一致，仅格式差异）\n")
-            f.write("6. Clash 使用规则6（与规则1拦截域名一致，仅格式差异）\n")
-            f.write("7. QuantumultX 使用规则7（与规则1拦截域名一致，仅格式差异）\n")
-            f.write("8. 规则x’为规则x的 Lite 版，仅针对国内域名拦截，体积较小（如添加完整规则报错数量限制，请尝试 Lite 规则）\n")
-            f.write("9. 已对 jsdelivr 缓存进行主动刷新，但 jsdelivr 加速链接仍存在一定延时\n")
+            f.write("1. 规则x’为规则x的 Lite 版，仅针对国内域名拦截，体积较小（如添加完整规则报错数量限制，请尝试 Lite 规则）\n")
+            f.write("2. 已对 jsdelivr(加速链接1) 缓存进行主动刷新，但仍存在一定刷新延时\n")
+            f.write("3. AdGuard Home 等 DNS 拦截服务使用规则1\n")
+            f.write("4. AdGuard 等浏览器插件使用规则1 + 规则2（规则2为规则1的补充，仅适用浏览器插件）\n")
+            f.write("5. InviZible Pro、personalDNSfilter 使用规则3（规则3与规则1拦截域名一致，仅格式差异）\n")
+            f.write("6. DNSMasq 使用规则4（与规则1拦截域名一致，仅格式差异）\n")
+            f.write("7. SmartDNS 使用规则5（与规则1拦截域名一致，仅格式差异）\n")
+            f.write("8. Shadowrocket 使用规则6（与规则1拦截域名一致，仅格式差异）\n")
+            f.write("9. QuantumultX 使用规则7（与规则1拦截域名一致，仅格式差异）\n")
+            f.write("10. Clash Meta(Mihomo) 使用规则8（与规则1拦截域名一致，仅格式差异）\n")
             f.write("\n")
             tmp = "| 规则 | 原始链接 |"
             for i in range(1, len(self.proxyList)):
@@ -113,10 +114,12 @@ class ReadMe(object):
             f.write("| 规则4' |" + self.__subscribeLink("adblockdnsmasqlite.txt") + " DNSMasq |\n")
             f.write("| 规则5 |" + self.__subscribeLink("adblocksmartdns.conf") + " SmartDNS |\n")
             f.write("| 规则5' |" + self.__subscribeLink("adblocksmartdnslite.conf") + " SmartDNS |\n")
-            f.write("| 规则6 |" + self.__subscribeLink("adblockclash.list") + " Clash |\n")
-            f.write("| 规则6' |" + self.__subscribeLink("adblockclashlite.list") + " Clash |\n")
+            f.write("| 规则6 |" + self.__subscribeLink("adblockclash.list") + " Shadowrocket |\n")
+            f.write("| 规则6' |" + self.__subscribeLink("adblockclashlite.list") + " Shadowrocket |\n")
             f.write("| 规则7 |" + self.__subscribeLink("adblockqx.conf") + " QuantumultX |\n")
             f.write("| 规则7' |" + self.__subscribeLink("adblockqxlite.conf") + " QuantumultX |\n")
+            f.write("| 规则8 |" + self.__subscribeLink("adblockmihomo.yaml") + " Clash Meta(Mihomo) |\n")
+            f.write("| 规则8' |" + self.__subscribeLink("adblockmihomolite.yaml") + " Clash Meta(Mihomo) |\n")
             f.write("\n")
 
             f.write("## 上游规则源\n")
