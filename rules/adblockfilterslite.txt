@@ -3,9 +3,9 @@
 ! Description: 适用于 AdGuard 的去广告合并规则，每 8 个小时更新一次。规则源：AdGuard Base filter、AdGuard Chinese filter、AdGuard Mobile Ads filter、AdGuard DNS filter、AdRules DNS List、CJX's Annoyance List、EasyList、EasyList China、EasyPrivacy、xinggsf mv、xinggsf rule、jiekouAD、1Hosts (Lite)、AWAvenue Ads Rule、DNS-Blocklists Light、Hblock、OISD Basic、SmartTV Blocklist、1024 hosts、ad-wars hosts、StevenBlack hosts。Lite 版仅针对国内域名拦截。
 ! Homepage: https://github.com/217heidai/adblockfilters
 ! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilterslite.txt
-! Version: 20250210160938
-! Last modified: 2025/02/10 16:09:38
-! Blocked Filters: 41973
+! Version: 20250211000825
+! Last modified: 2025/02/11 00:08:25
+! Blocked Filters: 41983
 !
 ###AC_ad
 ###AD_160
@@ -4726,7 +4726,6 @@
 ##.ADTop
 ##.ADVBig
 ##.ADVFLEX_250
-##.ADVParallax
 ##.ADV_Mobile
 ##.AD_2
 ##.AD_TAC_BOX
@@ -15279,6 +15278,7 @@
 ##html[lang*="-"] > body[style="width:100%;height:100%;margin:0;"] > div[class^="img_"][style="width:100%; height:100%;"]
 ##iframe.ad-frame
 ##iframe[src*=".html-load.com/contents/"] + div[id^="img_"]:empty
+##iframe[src*=".html-load.com/contents/"][style="display:none"][aria-hidden="true"] + div:not([class]):not([id])
 ##iframe[src*=".xxmh"][src*="?u="]
 ##iframe[src="javascript:false"] ~ div[style="display:inline"]
 ##iframe[src^="//ad.a-ads.com/"]
@@ -15356,6 +15356,7 @@
 ##section > SPAN[style='display: block; clear: both; overflow: hidden;']
 ##section.global_video_bottom_dbtc
 ##section.wrap > section.f0
+##section[class^="img_"] > div[id^="img_"][class^="img_"][draggable="false"]
 ##section[data-e2e="advertisement"]
 ##span > A[href='###']
 ##span[data-ez-ph-id]
@@ -15376,6 +15377,8 @@
 ##vg-pause-ads
 ##vg-pause-f
 ##video[class^="img_"][playsinline]
+##video[id^="img_"][muted]
+##video[poster*=".html-load.com/contents/"]
 ##zeus-ad
 $$script[wildcard="*adcashMacros*zoneSett*"][min-length="2000"][max-length="25000"]
 $cookie=/^adb\$|adb\.key/,domain=iprima.cz
@@ -18042,8 +18045,11 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 /ajax-track-page-view/*
 /ajax/analytics/*
 /ajax/banner/list?$domain=primewire.today|newprimewire.site|solarmovies.video
+/ajax/banner/vpn|$~third-party,xmlhttprequest
+/ajax/banners?page=$~third-party,xmlhttprequest
 /ajax/bz?_
 /ajax/counter?ctr=
+/ajax/embed-4/banners|$~third-party,xmlhttprequest
 /ajax/eulerian/*
 /ajax/log?
 /ajax/stat/*
@@ -20382,6 +20388,7 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 /np?log=
 /npm/perfops-rom
 /nr-spa-1216.min.js
+/ns.html?id=GTM-
 /ntes-ad-cloud.
 /ntfc.php?$script
 /ntpagetag.gif
@@ -23230,7 +23237,7 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 52ch.net##div[style^="margin-top:5px; height:60px;"]
 52che.com##a[href^="http://count.52che.com/goto.html?"]
 52fx.cn##.nex_index_top_ads
-52fzwg.com,79tao.com,hqol.cn,icabbs.com,k7d.com,kxdao.net,sunwy.org,twunbbs.com,wnflb.com,wnflb2023.com,wnflb66.com,xkeba.com,zn511.cc##.GzList
+52fzwg.com,79tao.com,hqol.cn,icabbs.com,k7d.com,kxdao.net,sunwy.org,twunbbs.com,wnflb.com,wnflb2023.com,wnflb66.com,xkeba.com,zn513.cc##.GzList
 52kd.com###frame2cu3VU
 52movieba.com,acglala.cc,awaker.cn,bimiacg4.net,bimiacg5.net,ccav1.com,cgown.com,cn163.net,comicat.org,cosersuki.org,dzbhdm.net,epinv.com,eroacg.com,galacg.me,gmgard.com,haochi123.com,hexieshe.cn,hexieshe.com,hexieshe.xyz,hggard.com,hmghmg.com,hmoe11.net,idanmu.ee,ifenpaidy.com,jitapu.com,jitashe.org,kelatv.com,kisssub.org,languang.co,llss.bz,mtrend.cn,mydrivers.com,mzh.ren,nxing.cn,oyksoft.com,souxue8.com,speedtest.cn,tingroom.com,touchgal.org,whsir.com,xxshe.info,xxshe.xyz##a[href*=".taobao.com"]
 52movieba.com,acglala.me,acglala.net,awaker.cn,bimiacg4.net,bimiacg5.net,ccav1.com,cdsoso.me,cgown.com,cn163.net,comicat.org,cosersuki.org,dzbhdm.net,epinv.com,eroacg.com,galacg.me,gmgard.com,haochi123.com,hexieshe.cn,hexieshe.com,hexieshe.xyz,hggard.com,hmghmg.com,hmoe11.net,idanmu.ee,ifenpaidy.com,jitapu.com,jitashe.org,jiyingw.vip,kelatv.com,kisssub.org,languang.co,llss.bz,mtrend.cn,mydrivers.com,mzh.ren,nxing.cn,oyksoft.com,souxue8.com,speedtest.cn,tingroom.com,whsir.com,xxshe.info,xxshe.xyz##a[href*=".taobao.com"]
@@ -25885,6 +25892,7 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=uiadmin.net|4horlover.com|23qb.net|4spaces.org|aboluowang.com|assbbs.com|bilinovel.com|chaojizhibo.net|chtoen.com|daxiaamu.com|demo.ama.pub|dizhishengcheng.com|doitwell.tw|ekamus.info|eu4cn.com|ff14angler.com|freedidi.com|fsbot.xyz|haoweichi.com|it365.abctool.info|linovelib.com|logi.im|mens1069.com|monnsutogatya.com|mpyit.com|myqqjd.com|numberempire.com|ozabc.com|pansearch.me|patch.ali213.net|pc3mag.com|reh.tw|shenfendaquan.com|sistersbedroom.com|sto520.com|vaptcha.com|wandhi.com|wenxuecity.com|wuyong.fun|xbeibeix.com|xiebruce.top|xugaoxiang.com|xxxxx520.com|yodu.org|yummy.best|zaixianjisuan.com
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=ujszo.com
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=ultimateclassicrock.com
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=unityassetpack.com
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=unityassets4free.com
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=unlimitdownloads.com
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=unlockapk.com
@@ -28365,6 +28373,7 @@ box-core.net,mma-core.com###rrec
 box-core.net,mma-core.com###tlbrd
 box-core.net,mma-core.com##.resp_ban
 box-core.net,mma-core.com##.rsky
+boxingnewsonline.net,lewdgames.to,pokemongohub.net,romslab.com,lokkio.it,sharetheurls.com,opfanpage.com,canonrumors.com,flamecomics.me,repacklab.com,proserialkey.com,fullmatch.info,spielanime.com,torrentmac.net,game-repack.site,ispreview.co.uk,nxbrew.net,news.fidelityhouse.eu,poscigi.pl,environmentenergyleader.com,econostrum.info,repack-games.com,cryptopolitan.com,windowsactivators.org,asuratoon.com,chatgbt.one,njbeachcams.com,nokiapoweruser.com,tricksndtips.com,naijaremix.com,rockandrollgarage.com,firstcuriosity.com,bigbrothernetwork.com,flamescans.org,tech-latest.com,nintendoeverything.com,game-2u.com,ps4pkg.com,asurascans.com,anime7.download,netchimp.co.uk,howifx.com,9xflix.qpon,digitbin.com,coffeenerd.blog,nsw2u.*,thegeekpage.com,crewbase.net,watchseinfeld.cc,dandadanmanga.org,vgkami.com,tvtonight.com.au,pornstash.in,warsawnow.pl,silverspoon.site,asura.gg,getdroidtips.com,crackshere.com,watchasian.ac,qzlyrics.com,bollywoodhindi.in,marugujarat.in,linuxcapable.com,apkmb.com,techgeekbuzz.com,designcorral.com,otakukan.com,movies07.art,monsterspost.com,policeresults.com,mpnrc.org,browserhow.com,chromeunboxed.com,journeybytes.com,tutcourse.com,opportunitydesk.info,freecoursesites.net,tektutorialshub.com,fossbytes.com,borncity.com,profitableventure.com,guru99.com,whatisthemeaningofname.com,techpp.com,troypoint.com,bakabuzz.com,conservativebrief.com,xyzcomics.com,desiflix.club,jujmanga.com,myhealthgazette.com,cryptodirectories.com,secondlifetranslations.com,thewincentral.com,firmwarefile.com,bicfic.com##body .code-block
 boxingstreams.cc,crackstreams.gg,cricketstreams.cc,footybite.cc,formula1stream.cc,mlbshow.com,nbabite.com###nordd
 boxofficemojo.com,imdb.com##.slot_wrapper
 boxthislap.org,ticgn.com,wtf1.co.uk##.td-footer-wrapper
@@ -32532,22 +32541,6 @@ kaitao.cn###ad-tit
 kaitao.cn##a[href*="/a.php?id="]
 kakashiyt.com,eldawly.xyz,poptech.online,elbadr.xyz,trilog3.net,abda3.xyz,wisw.online,stelux.online,gooltok.com,cgcosplay.org,loiz.store,myprivatejobs.com,bestloanoffer.net,techconnection.in,towerofgod.me,happyy.online,chevalmag.com,glo-n.online,jolk.online,infinityskull.com,audiotools.blog,fattelodasolo.it,koume-in-huistenbosch.net,spidergame.online,pedalpower.online,offeergames.online,sealat.com,dent-de-lion.net,mens1069.com,english-dubbed.com,fx4ever.com,businessnews-nigeria.com,day4news.com,net4you.xyz,gameblog.jp,ster-blog.xyz,yazilidayim.net,pandanote.info,forexrw7.com,3rabsports.com,hyogo.ie-t.net,chatgbt.one,shrinklinker.com,felicetommasino.com,chatgptfree.ai,keroseed.net,ewybory.eu,nghetruyenma.net,south-park-tv.biz,telewizja-streamer.xyz,azrom.net,mitaku.net,siirtolayhaber.com,japannihon.com,kllproject.lv,telephone-soudan.com###page + div[id][class]
 kalaydo.de,cyberghostvpn.com#@##adbox
-kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me###ad
-kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me###adxbox
-kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##.div-over
-kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##.visible-block
-kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##body > #sticky
-kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##body > div[class^="content"][class*="-block"]
-kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##center > a[target="_blank"] > button[onclick="hideButton()"]
-kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##div[class^="adbn"][class*="wrap"]
-kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##div[class^="dr"][class*="-udr"]
-kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##div[class^="rts"][class*="-urts"]
-kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##div[id^="fixedban"]
-kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me#%#//scriptlet('abort-on-property-write', 'openPopUnder')
-kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me#%#//scriptlet('prevent-addEventListener', 'click', 'window.open(_0x')
-kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me#%#//scriptlet('prevent-element-src-loading', 'script', '/profitsence\.com|pagead2\.googlesyndication\.com|doubleclick\.net|headerbidding\.ai/')
-kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me#%#//scriptlet('prevent-fetch', 'method:HEAD')
-kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me#%#//scriptlet('prevent-setTimeout', '/new Request[\s\S]*?Promise\.all[\s\S]*?\.status|function _0x|\.onerror|\.style\.display|=== .none./')
 kalvin.cn##.fell_advertisement_box
 kankanmi.com##.listnewli
 kanman.com###\5f _acgn-virtual-coin__
@@ -32898,7 +32891,6 @@ letv.com##.vip_popBox
 letv8.cc,zhibo1.cc#%#//scriptlet('trusted-set-constant', 'adsv', '"Y"')
 lewat.club,sekilastekno.com,miuiku.com##div[style="text-align: center;"] > a[href] > img
 lewdgames.to,afterschoolafrica.com,asianhobbyist.com###ai_widget-4
-lewdgames.to,pokemongohub.net,romslab.com,lokkio.it,sharetheurls.com,opfanpage.com,canonrumors.com,flamecomics.me,repacklab.com,proserialkey.com,fullmatch.info,spielanime.com,torrentmac.net,game-repack.site,ispreview.co.uk,nxbrew.net,news.fidelityhouse.eu,poscigi.pl,environmentenergyleader.com,econostrum.info,repack-games.com,cryptopolitan.com,windowsactivators.org,asuratoon.com,chatgbt.one,njbeachcams.com,nokiapoweruser.com,tricksndtips.com,naijaremix.com,rockandrollgarage.com,firstcuriosity.com,bigbrothernetwork.com,flamescans.org,tech-latest.com,nintendoeverything.com,game-2u.com,ps4pkg.com,asurascans.com,anime7.download,netchimp.co.uk,howifx.com,9xflix.qpon,digitbin.com,coffeenerd.blog,nsw2u.*,thegeekpage.com,crewbase.net,watchseinfeld.cc,dandadanmanga.org,vgkami.com,tvtonight.com.au,pornstash.in,warsawnow.pl,silverspoon.site,asura.gg,getdroidtips.com,crackshere.com,watchasian.ac,qzlyrics.com,bollywoodhindi.in,marugujarat.in,linuxcapable.com,apkmb.com,techgeekbuzz.com,designcorral.com,otakukan.com,movies07.art,monsterspost.com,policeresults.com,mpnrc.org,browserhow.com,chromeunboxed.com,journeybytes.com,tutcourse.com,opportunitydesk.info,freecoursesites.net,tektutorialshub.com,fossbytes.com,borncity.com,profitableventure.com,guru99.com,whatisthemeaningofname.com,techpp.com,troypoint.com,bakabuzz.com,conservativebrief.com,xyzcomics.com,desiflix.club,jujmanga.com,myhealthgazette.com,cryptodirectories.com,secondlifetranslations.com,thewincentral.com,firmwarefile.com,bicfic.com##body .code-block
 lewdninja.com,new.lewd.ninja#%#(function(){window.adnPopConfig={zoneId:"149"}})();
 lewdspot.com,mopoga.com###belowGameAdContainerPause
 lewdspot.com,mopoga.com##a[href*="/gm/"]
@@ -33541,6 +33533,22 @@ moonbit.co.in,moondoge.co.in,moonliteco.in,moondash.co.in##.flexContentAd
 mop.com##.post-content[href*=".taobao.com"]
 mop.com##.rel-item-gg
 morningstarthailand.com,morningstar.*###ad_top_page
+moshakes.site,gamevault.cam,kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me###ad
+moshakes.site,gamevault.cam,kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me###adxbox
+moshakes.site,gamevault.cam,kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##.div-over
+moshakes.site,gamevault.cam,kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##.visible-block
+moshakes.site,gamevault.cam,kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##body > #sticky
+moshakes.site,gamevault.cam,kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##body > div[class^="content"][class*="-block"]
+moshakes.site,gamevault.cam,kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##center > a[target="_blank"] > button[onclick="hideButton()"]
+moshakes.site,gamevault.cam,kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##div[class^="adbn"][class*="wrap"]
+moshakes.site,gamevault.cam,kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##div[class^="dr"][class*="-udr"]
+moshakes.site,gamevault.cam,kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##div[class^="rts"][class*="-urts"]
+moshakes.site,gamevault.cam,kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me##div[id^="fixedban"]
+moshakes.site,gamevault.cam,kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me#%#//scriptlet('abort-on-property-write', 'openPopUnder')
+moshakes.site,gamevault.cam,kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me#%#//scriptlet('prevent-addEventListener', 'click', 'window.open(_0x')
+moshakes.site,gamevault.cam,kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me#%#//scriptlet('prevent-element-src-loading', 'script', '/profitsence\.com|pagead2\.googlesyndication\.com|doubleclick\.net|headerbidding\.ai/')
+moshakes.site,gamevault.cam,kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me#%#//scriptlet('prevent-fetch', 'method:HEAD')
+moshakes.site,gamevault.cam,kalosha.site,ofre15.online,forgee.xyz,monafes.site,regenzi.site,hegra.cam,migration.cam,reviewpalace.net,techplanet.cam,techland.live,gameplanet.cam,topgames.cam,techsoul.cam,gamehub.cam,gameland.click,gamestation.cam,gamezone.cam,gamesera.online,free-games.cam,top-games.live,gulftech.live,reviewhub.vip,reviewtech.me,pcreview.me#%#//scriptlet('prevent-setTimeout', '/new Request[\s\S]*?Promise\.all[\s\S]*?\.status|function _0x|\.onerror|\.style\.display|=== .none./')
 mostlyblogging.com,sarkarideals.com,tvarticles.me###custom_html-3
 mostlyblogging.com,sonyalpharumors.com###custom_html-15
 motachashma.com,ordertracker.com##.partnerbanner
@@ -36596,6 +36604,7 @@ unique-tutorials.info,getintopc.com,solvetube.site,tech-platform.info#%#//script
 unique-tutorials.info,getintopc.com,solvetube.site,tech-platform.info#%#//scriptlet("set-constant", "qckyta", "false")
 unique-tutorials.info,getintopc.com,solvetube.site,tech-platform.info$$script[wildcard="*String.fromCharCode*b64*"][min-length="10000"][max-length="20000"]
 unique-tutorials.info,getintopc.com,solvetube.site,tech-platform.info$$script[wildcard="*constructor===Object*"][min-length="10000"][max-length="20000"]
+unityassetpack.com$$script:contains(noteAlert)
 unitystr.com,azrotv.com,uptoplay.net,reviewtech.me##.adbn-wrap
 unitystr.com,azrotv.com,uptoplay.net,reviewtech.me#%#//scriptlet('prevent-fetch', '/histats\.com|pagead2\.googlesyndication\.com/')
 unpkg.com/aladug/*.js
@@ -41249,6 +41258,7 @@ zzzyk.com###Tinfo
 ||sports-stream.*/ads/
 ||sports24.*/ol.php?t=
 ||springserve.com^$~media,third-party
+||srmdata-*.com^
 ||ssaiplayback.*.boltdns.net/playback/once/v*/hls/*.m3u8$replace=/(#EXT-X-TARGETDURATION:[\S]*?)\n[\s\S]*?#EXT-X-DISCONTINUITY/\$1/,domain=news.com.au
 ||ssh.*.com^*!$script,third-party
 ||ssl4us.*/pro.js^$third-party
