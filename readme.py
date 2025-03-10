@@ -96,6 +96,7 @@ class ReadMe(object):
             f.write("8. Shadowrocket 使用规则6（与规则1拦截域名一致，仅格式差异）\n")
             f.write("9. QuantumultX 使用规则7（与规则1拦截域名一致，仅格式差异）\n")
             f.write("10. Clash Meta(Mihomo) 使用规则8（与规则1拦截域名一致，仅格式差异）\n")
+            f.write("11. Hosts 使用规则9（与规则1拦截域名一致，仅格式差异）\n")
             f.write("\n")
             tmp = "| 规则 | 原始链接 |"
             for i in range(1, len(self.proxyList)):
@@ -120,6 +121,8 @@ class ReadMe(object):
             f.write("| 规则7' |" + self.__subscribeLink("adblockqxlite.conf") + " QuantumultX |\n")
             f.write("| 规则8 |" + self.__subscribeLink("adblockmihomo.yaml") + " Clash Meta(Mihomo) |\n")
             f.write("| 规则8' |" + self.__subscribeLink("adblockmihomolite.yaml") + " Clash Meta(Mihomo) |\n")
+            f.write("| 规则9 |" + self.__subscribeLink("adblockhosts.txt") + " Hosts |\n")
+            f.write("| 规则9' |" + self.__subscribeLink("adblockhostslite.txt") + " Hosts |\n")
             f.write("\n")
 
             f.write("## 上游规则源\n")

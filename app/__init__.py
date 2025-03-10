@@ -2,6 +2,7 @@ from .base import APPBase
 from .adguard import AdGuard
 from .adguardhome import AdGuardHome
 from .dnsmasq import DNSMasq
+from .hosts import Hosts
 from .invizible import InviZible
 from .mihomo import Mihomo
 from .quantumultx import QuantumultX
