@@ -18,6 +18,7 @@
 8. Shadowrocket 使用规则6（与规则1拦截域名一致，仅格式差异）
 9. QuantumultX 使用规则7（与规则1拦截域名一致，仅格式差异）
 10. Clash Meta(Mihomo) 使用规则8（与规则1拦截域名一致，仅格式差异）
+11. Hosts 使用规则9（与规则1拦截域名一致，仅格式差异）
 
 | 规则 | 原始链接 | 加速链接1 | 加速链接2 | 加速链接3 | 适配说明 |
 |:-|:-|:-|:-|:-|:-|
@@ -37,6 +38,8 @@
 | 规则7' | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockqxlite.conf) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockqxlite.conf) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockqxlite.conf) | [加速链接3](https://ghfast.top/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockqxlite.conf) | QuantumultX |
 | 规则8 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomo.yaml) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockmihomo.yaml) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomo.yaml) | [加速链接3](https://ghfast.top/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomo.yaml) | Clash Meta(Mihomo) |
 | 规则8' | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomolite.yaml) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockmihomolite.yaml) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomolite.yaml) | [加速链接3](https://ghfast.top/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomolite.yaml) | Clash Meta(Mihomo) |
+| 规则9 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhosts.txt) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockhosts.txt) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhosts.txt) | [加速链接3](https://ghfast.top/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhosts.txt) | Hosts |
+| 规则9' | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.txt) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockhostslite.txt) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.txt) | [加速链接3](https://ghfast.top/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.txt) | Hosts |
 
 ## 上游规则源
 1. 感谢各位广告过滤规则维护大佬们的辛苦付出。
