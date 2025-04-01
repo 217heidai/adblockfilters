@@ -13,6 +13,7 @@
 ! Bad: ||adssubdomain.legitwebsite.com^ (should be in adservers_firstparty.txt)
 !
 !
+||telecome.cn^
 ||aizhantj.com^
 ||sm-cloud.yunsafe.top^
 ||dwyeuy.com^
@@ -257,6 +258,12 @@
 ||ulukaris.com^$third-party
 ||itadapi.ithome.com.tw^
 ||zjgfq.com^$third-party
+!
+! https://github.com/AdguardTeam/AdguardFilters/issues/202102
+! Example: https://tue1.so04011koaq.com/1743505326147.9zccJaC99jD7hB9PkCyWSr.1739.psd?1743505326147
+/(mon|tue|wed|thu|fri|sat|sun)\d{1,2}\.so\d{1,6}koaq\.com\//$script,third-party
+! For DNS
+/^(mon|tue|wed|thu|fri|sat|sun)\d{1,2}\.so\d{1,6}koaq\.com$/
 
 !
 ! This section contains the list of advertising networks domains, which are hosted on non advertising sites as subdomains.
@@ -1311,6 +1318,7 @@ $script,third-party,denyallow=ilfcdn.li|bytecdntp.com|fastlycdn.com|doodcdn.co|i
 !
 ! NOTE: Specific rules
 !
+||apppc.chinaz.com/statics/images/tuan
 ai-chatbot.top##header ~ form ~ div.fixed.right-14
 blog.sina.com.cn##.top-ad-info
 3dmgame.com#$#body > div.content { margin-top: 0 !important; }
