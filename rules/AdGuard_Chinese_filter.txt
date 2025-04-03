@@ -13,6 +13,10 @@
 ! Bad: ||adssubdomain.legitwebsite.com^ (should be in adservers_firstparty.txt)
 !
 !
+||xj-oss.com^
+||ookaso.com^
+||uuaisp.com^
+||hauqoa.com^
 ||telecome.cn^
 ||aizhantj.com^
 ||sm-cloud.yunsafe.top^
@@ -259,11 +263,18 @@
 ||itadapi.ithome.com.tw^
 ||zjgfq.com^$third-party
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/202195
 ! https://github.com/AdguardTeam/AdguardFilters/issues/202102
-! Example: https://tue1.so04011koaq.com/1743505326147.9zccJaC99jD7hB9PkCyWSr.1739.psd?1743505326147
-/(mon|tue|wed|thu|fri|sat|sun)\d{1,2}\.so\d{1,6}koaq\.com\//$script,third-party
-! For DNS
-/^(mon|tue|wed|thu|fri|sat|sun)\d{1,2}\.so\d{1,6}koaq\.com$/
+! Examples:
+!    https://tue1.so04011koaq.com/1743505326147.9zccJaC99jD7hB9PkCyWSr.1739.psd?1743505326147
+!    https://xon58l.ookaso.com/5fy2z0m.AnKa2Um26LLgQHbLsfCuNB.1440.pdf?1743611404431
+!    https://4p646njjzp09.ookaso.com/x8378iv4n9.FPR2F8SfedAXHspKwmHmr3.1436.js?1743611407956
+!    https://eqm89.uuaisp.com/9yc9/AnKa2Um26LLgQHbLsfCuNB.1440.doc?1743611606374
+!    https://4mw8ja.hauqoa.com/wb92rq0w6c.FPR2F8SfedAXHspKwmHmr3.1436.sxml?1743611611021
+!    https://62t.hauqoa.com/1sycx7uha4r3/AnKa2Um26LLgQHbLsfCuNB.1440.jpeg?1743612160952
+!    https://8l97w.uuaisp.com/7j9u3/FPR2F8SfedAXHspKwmHmr3.1436.jpeg?1743612509926
+! Similar code: )(window, "FPR2F8SfedAXHspKwmHmr3", "1436", "1", "https://{randomstr}.ookaso.com/-https://{randomstr}.hauqoa.com/-https://{randomstr}.uuaisp.com/");
+/^https:\/\/[a-z0-9-]{3,12}\.[a-z0-9]+\.com\/([A-Za-z0-9.]+)(?:\/([A-Za-z0-9.]+))?\.\d{4}\.(doc|docx|html|jpeg|jpg|js|json|odf|pdf|png|ppt|psd|rtf|shtml|sxml|txt|wedp|wps|xml|xps)\?\d{13}$/$third-party,match-case
 
 !
 ! This section contains the list of advertising networks domains, which are hosted on non advertising sites as subdomains.
@@ -5251,6 +5262,8 @@ newduba.cn###jq_youxi
 .z.dkt-ib.com
 ||cnzz.trafficmanager.net^
 ||cupfox.app^$third-party
+||dreiquksz.com^
+||so04030koaq.com^
 ||dhorzivnn.com^
 ||nrlupu.top^
 ||biabfqq.icu^
@@ -20835,6 +20848,7 @@ _rony.js$script,third-party
 .012*sop.xyz/$script,third-party
 .apk0*oo.xyz/$script,third-party
 .okpp0*.xyz/$script,third-party
+.so0*koaq.com/$script,third-party
 .fun/nd389.js
 .fun/In390hG2.js
 .pw/nd389.js
