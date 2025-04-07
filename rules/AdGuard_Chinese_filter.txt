@@ -351,6 +351,11 @@
 ! Bad: ||ad.doubleclick.net^ (should be in adservers.txt)
 !
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/202439
+mcappx.com#%#//scriptlet('prevent-element-src-loading', 'script', 'pagead2.googlesyndication.com')
+||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,redirect=noopjs,domain=mcappx.com
+!+ NOT_PLATFORM(ios, ext_android_cb, ext_safari)
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=mcappx.com
 ! https://github.com/AdguardTeam/AdguardFilters/issues/201354
 !+ NOT_PLATFORM(ios, ext_android_cb, ext_safari)
 @@||yeeach.com^$generichide,badfilter
@@ -1375,6 +1380,7 @@ $script,third-party,denyallow=ilfcdn.li|bytecdntp.com|fastlycdn.com|doodcdn.co|i
 !
 ! NOTE: Specific rules
 !
+1ppt.com##.lpadlist
 ||apppc.chinaz.com/statics/images/tuan
 ai-chatbot.top##header ~ form ~ div.fixed.right-14
 blog.sina.com.cn##.top-ad-info
@@ -3155,21 +3161,21 @@ netfly.*,netfly.tv##div[class*="tt-"] > a[target="_blank"] + span.tt-icon-close
 ! https://user-images.githubusercontent.com/3976203/273172163-25ff30a0-c988-4ec3-9e51-cf4722a90976.jpg
 ! bilibili.com#?#.bili-video-card.is-rcmd > div > a[href*="cm.bilibili.com"][data-target-url]:not([data-target-url*=".bili"]) + .bili-video-card__info:upward(2)
 bilibili.com#$#.container > div[class*="-card"]:has(div[style="display: none !important;"]) { position: absolute !important; left: -3000px !important; }
-bilibili.com#$?#.container > div.feed-card:not(:has(> div > *)) { remove: true; }
-bilibili.com##.container > div.feed-card:not(:has(> div > *))
-bilibili.com#$?#.container > div.floor-single-card:has(> div.skeleton) { remove: true; }
 bilibili.com#%#//scriptlet('json-prune', 'data.cm_info.ads')
 bilibili.com##.container > div.bili-video-card.is-rcmd:not(:has(> *))
 bilibili.com##.floor-single-card:has(.floor-skeleton):not(:has(> div.bili-video-card__skeleton))
-search.bilibili.com##.video-list > div.col_3:has(> div.bili-video-card > div.bili-video-card__wrap > a[href*="&csource="])
-search.bilibili.com#?#.video-list > div.col_3:has(> div.bili-video-card a[href*="//cm.bilibili.com/"])
 bilibili.com#$?#.ex-card-common:has(.gg-icon) { remove: true; }
 bilibili.com#$?#.van-slide > .item:has(.bypb-icon) { remove: true; }
 ||api.live.bilibili.com/*/Banner
-bilibili.com##.bili-video-card:has(.bili-video-card__info--ad) > .bili-video-card__wrap
-bilibili.com##.bili-video-card:has(.bili-video-card__info--creative-ad) > .bili-video-card__wrap
-bilibili.com#$#.bili-video-card:has(.bili-video-card__info--ad) > .bili-video-card__skeleton { visibility: visible !important; }
-bilibili.com#$#.bili-video-card:has(.bili-video-card__info--creative-ad) > .bili-video-card__skeleton { visibility: visible !important; }
+! bilibili.com#$?#.container > div.feed-card:not(:has(> div > *)) { remove: true; }
+! bilibili.com##.container > div.feed-card:not(:has(> div > *))
+! bilibili.com#$?#.container > div.floor-single-card:has(> div.skeleton) { remove: true; }
+! search.bilibili.com##.video-list > div.col_3:has(> div.bili-video-card > div.bili-video-card__wrap > a[href*="&csource="])
+! search.bilibili.com#?#.video-list > div.col_3:has(> div.bili-video-card a[href*="//cm.bilibili.com/"])
+! bilibili.com##.bili-video-card:has(.bili-video-card__info--ad) > .bili-video-card__wrap
+! bilibili.com##.bili-video-card:has(.bili-video-card__info--creative-ad) > .bili-video-card__wrap
+! bilibili.com#$#.bili-video-card:has(.bili-video-card__info--ad) > .bili-video-card__skeleton { visibility: visible !important; }
+! bilibili.com#$#.bili-video-card:has(.bili-video-card__info--creative-ad) > .bili-video-card__skeleton { visibility: visible !important; }
 !
 ! nivod.tv (pairs .tv + .com)
 nivod9.tv,nivod8.tv,nivod7.tv##.nav-ads
@@ -5314,6 +5320,7 @@ newduba.cn###jq_youxi
 ||mevedyru.com^
 ||ifej.cn^
 ||ttdgbh.top^
+||einzeaxop.com^
 ||stigzeal.com^
 ||lfflvh.icu^
 ||rubmdu.top^
@@ -8456,6 +8463,7 @@ newduba.cn###jq_youxi
 ||zwzdjb.xyz^
 ||zxqiwe.cn^
 ||zyfnbl.xyz^
+||deafeningphone.com^
 ||7299tu75.cc^
 ||twrank.com^$third-party
 ||uu11881.com^
@@ -13078,7 +13086,6 @@ hxsame.hexun.com$domain=~quote.hexun.com
 ||178.com/misc/self/*_ads
 ||xlmp4.cc/js/wcount.js
 .sinaimg.cn/large/008qC0LFgy1hyp0pc9jz3g30jg01otpp.
-||kmeiju.cc/kangeqiu.
 ||dzbhdm.com/wp-content/uploads/2021/10/c278390aead8a2f7caea15eb42b36314.
 ||i8tq.com/adImg/
 ||csgola.com/Public/img/lala/1.jpg
@@ -13088,6 +13095,8 @@ hxsame.hexun.com$domain=~quote.hexun.com
 ||chinaz.com/statics/images/tuan
 ||ad.parkvv.com^
 ||bing.com/AdsFetch?
+hcbbs.com##.pcbanner
+yalishi.com##.ad
 uiadmin.net##.jump-linker
 6parknews.com##div[class^="InContent_"]
 zzbaike.com#?#.ceo-margin-bottom:-abp-has(img[width="340"])
@@ -13141,7 +13150,7 @@ appinn.com##a[href*=".houdeyun.cn"]
 fitacg.com##a[href*="ifift.com"]
 cnys.tv###player_pause
 twkan.com##.txtcenter
-element-plus.org##div[class*="-panel-"]
+element-plus.org##.doc-content-side
 hcbbs.com##.wp > div:not([id]):not([class]) > a > img[src*=".imgdb.cn"]
 sehuatang.net##DIV[class^="show-text"]
 ghxi.com##.widget_html_ad + div[style]
