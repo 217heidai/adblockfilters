@@ -38,6 +38,7 @@ class Shadowrocket(APPBase):
                 f.write("# Last modified: %s\n"%(self.time))
                 f.write("# Blocked domains: %s\n"%(len(blockList)))
                 f.write("#\n")
+                f.write("[Rule]\n")
                 for domain in blockList:
                     f.write("DOMAIN-SUFFIX,%s\n"%(domain))
             
