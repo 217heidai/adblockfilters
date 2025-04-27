@@ -19,10 +19,10 @@ class Shadowrocket(APPBase):
                 logger.info("generate adblock Shadowrocket...")
                 fileName = self.fileName
                 blockList = self.blockList
-            
+
             if os.path.exists(fileName):
                 os.remove(fileName)
-            
+
             # 生成规则文件
             with open(fileName, 'a') as f:
                 f.write("#\n")
@@ -40,8 +40,8 @@ class Shadowrocket(APPBase):
                 f.write("#\n")
                 f.write("[Rule]\n")
                 for domain in blockList:
-                    f.write("DOMAIN-SUFFIX,%s\n"%(domain))
-            
+                    f.write("DOMAIN-SUFFIX,%s,REJECT-DROP\n"%(domain))
+
             if isLite:
                 logger.info("adblock Shadowrocket Lite: block=%d"%(len(blockList)))
             else:
