@@ -346,10 +346,14 @@
 !
 !
 ! https://github.com/AdguardTeam/AdguardFilters/issues/202439
-mcappx.com#%#//scriptlet('prevent-element-src-loading', 'script', 'pagead2.googlesyndication.com')
+mcappx.com#%#//scriptlet('abort-on-stack-trace', 'alert', '.onerror')
+mcappx.com#%#//scriptlet('prevent-element-src-loading', 'script', '/pagead2\.googlesyndication\.com|r\.bat\.bing\.com\/\?ld=/')
+||r.bat.bing.com/?ld=$script,redirect=noopjs,domain=mcappx.com
 ||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,redirect=noopjs,domain=mcappx.com
-!+ NOT_PLATFORM(ios, ext_android_cb, ext_safari)
+!#if (adguard_app_ios || adguard_ext_safari || adguard_ext_android_cb)
+@@||r.bat.bing.com/?ld=test$domain=mcappx.com
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=mcappx.com
+!#endif
 ! https://github.com/AdguardTeam/AdguardFilters/issues/201354
 !+ NOT_PLATFORM(ios, ext_android_cb, ext_safari)
 @@||yeeach.com^$generichide,badfilter
@@ -5377,6 +5381,11 @@ newduba.cn###jq_youxi
 ||tiboha.top^
 ||knwuamd.top^
 ||bwcnmtv.top^
+||wwok04281kl.com^
+||qwti.cn^
+||gekhasaks.com^
+||snwuamb.top^
+||gbiathrilzik.com^
 ||zbislaernv.com^
 ||xebetp.icu^
 ||inwuamo.top^
@@ -11665,8 +11674,8 @@ hxsame.hexun.com$domain=~quote.hexun.com
 ||kokojia.com^$third-party
 ||kostool.cn/screenshot/
 ||koyi.pub/wp-content/plugins/dh-anti-adblocker/
-||koyso.com/static/js/abc.
-||koyso.com/z-
+||koyso.com/static/js/abcd.
+||koyso.com/aclib.js
 ||kppt.cc/zb_system/script/common.js
 ||kppt.cc/zhifu.jpg
 ||kt51.com/images/kt51.gif
