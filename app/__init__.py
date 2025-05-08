@@ -7,4 +7,5 @@ from .invizible import InviZible
 from .mihomo import Mihomo
 from .quantumultx import QuantumultX
 from .shadowrocket import Shadowrocket
+from .singbox import SingBox
 from .smartdns import SmartDNS

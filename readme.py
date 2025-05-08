@@ -90,13 +90,15 @@ class ReadMe(object):
             f.write("2. 已对 jsdelivr(加速链接1) 缓存进行主动刷新，但仍存在一定刷新延时\n")
             f.write("3. AdGuard Home 等 DNS 拦截服务使用规则1\n")
             f.write("4. AdGuard 等浏览器插件使用规则1 + 规则2（规则2为规则1的补充，仅适用浏览器插件）\n")
-            f.write("5. InviZible Pro、personalDNSfilter 使用规则3（规则3与规则1拦截域名一致，仅格式差异）\n")
+            f.write("5. InviZible Pro、personalDNSfilter 使用规则3（与规则1拦截域名一致，仅格式差异）\n")
             f.write("6. DNSMasq 使用规则4（与规则1拦截域名一致，仅格式差异）\n")
             f.write("7. SmartDNS 使用规则5（与规则1拦截域名一致，仅格式差异）\n")
             f.write("8. Shadowrocket 使用规则6（与规则1拦截域名一致，仅格式差异）\n")
             f.write("9. QuantumultX 使用规则7（与规则1拦截域名一致，仅格式差异）\n")
             f.write("10. Clash Meta(Mihomo) 使用规则8（与规则1拦截域名一致，仅格式差异）\n")
             f.write("11. Hosts 使用规则9（与规则1拦截域名一致，仅格式差异）\n")
+            f.write("12. sing-box 1.12.x json 使用规则10（与规则1拦截域名一致，仅格式差异）\n")
+            f.write("13. sing-box 1.12.x srs 使用规则11（与规则1拦截域名一致，仅格式差异）\n")
             f.write("\n")
             tmp = "| 规则 | 原始链接 |"
             for i in range(1, len(self.proxyList)):
@@ -123,6 +125,10 @@ class ReadMe(object):
             f.write("| 规则8' |" + self.__subscribeLink("adblockmihomolite.yaml") + " Clash Meta(Mihomo) |\n")
             f.write("| 规则9 |" + self.__subscribeLink("adblockhosts.txt") + " Hosts |\n")
             f.write("| 规则9' |" + self.__subscribeLink("adblockhostslite.txt") + " Hosts |\n")
+            f.write("| 规则10 |" + self.__subscribeLink("adblocksing.json") + " sing-box 1.12.x json |\n")
+            f.write("| 规则10' |" + self.__subscribeLink("adblockhostslite.json") + " sing-box 1.12.x json |\n")
+            f.write("| 规则11 |" + self.__subscribeLink("adblocksing.srs") + " sing-box 1.12.x srs |\n")
+            f.write("| 规则11' |" + self.__subscribeLink("adblockhostslite.srs") + " sing-box 1.12.x srs |\n")
             f.write("\n")
 
             f.write("## 上游规则源\n")
