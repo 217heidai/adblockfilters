@@ -7,7 +7,7 @@ on:
 env:
   TZ: Asia/Shanghai
   SINGBOX_VERSION: 1.12.0-beta.11
-  SINGBOX_URL: https://github.com/SagerNet/sing-box/releases/download/v1.12.0-beta.11/sing-box-${{SINGBOX_VERSION}}-linux-amd64.tar.gz
+  SINGBOX_URL: https://github.com/SagerNet/sing-box/releases/download/v1.12.0-beta.11/sing-box-${{env.SINGBOX_VERSION}}-linux-amd64.tar.gz
 
 jobs:
   Update_Filters:
@@ -38,11 +38,11 @@ jobs:
 
       - name: Compile Sing-Box filters
         run: |
-          wget $SINGBOX_URL -O sing-box-${{SINGBOX_VERSION}}-linux-amd64.tar.gz
-          tar -zxvf sing-box-${{SINGBOX_VERSION}}-linux-amd64.tar.gz
-          ./sing-box-${{SINGBOX_VERSION}}-linux-amd64/sing-box rule-set compile --output rules/adblocksingbox.srs rules/adblocksingbox.json
-          ./sing-box-${{SINGBOX_VERSION}}-linux-amd64/sing-box rule-set compile --output rules/adblocksingboxlite.srs rules/adblocksingboxlite.json
-          rm -rf sing-box-${{SINGBOX_VERSION}}-linux-amd64/sing-box*
+          wget $SINGBOX_URL -O sing-box-${{env.SINGBOX_VERSION}}-linux-amd64.tar.gz
+          tar -zxvf sing-box-${{env.SINGBOX_VERSION}}-linux-amd64.tar.gz
+          ./sing-box-${{env.SINGBOX_VERSION}}-linux-amd64/sing-box rule-set compile --output rules/adblocksingbox.srs rules/adblocksingbox.json
+          ./sing-box-${{env.SINGBOX_VERSION}}-linux-amd64/sing-box rule-set compile --output rules/adblocksingboxlite.srs rules/adblocksingboxlite.json
+          rm -rf sing-box-${{env.SINGBOX_VERSION}}-linux-amd64/sing-box*
       
       - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v5
