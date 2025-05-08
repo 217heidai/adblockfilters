@@ -12,13 +12,15 @@
 2. 已对 jsdelivr(加速链接1) 缓存进行主动刷新，但仍存在一定刷新延时
 3. AdGuard Home 等 DNS 拦截服务使用规则1
 4. AdGuard 等浏览器插件使用规则1 + 规则2（规则2为规则1的补充，仅适用浏览器插件）
-5. InviZible Pro、personalDNSfilter 使用规则3（规则3与规则1拦截域名一致，仅格式差异）
+5. InviZible Pro、personalDNSfilter 使用规则3（与规则1拦截域名一致，仅格式差异）
 6. DNSMasq 使用规则4（与规则1拦截域名一致，仅格式差异）
 7. SmartDNS 使用规则5（与规则1拦截域名一致，仅格式差异）
 8. Shadowrocket 使用规则6（与规则1拦截域名一致，仅格式差异）
 9. QuantumultX 使用规则7（与规则1拦截域名一致，仅格式差异）
 10. Clash Meta(Mihomo) 使用规则8（与规则1拦截域名一致，仅格式差异）
 11. Hosts 使用规则9（与规则1拦截域名一致，仅格式差异）
+12. sing-box 1.12.x json 使用规则10（与规则1拦截域名一致，仅格式差异）
+13. sing-box 1.12.x srs 使用规则11（与规则1拦截域名一致，仅格式差异）
 
 | 规则 | 原始链接 | 加速链接1 | 加速链接2 | 加速链接3 | 适配说明 |
 |:-|:-|:-|:-|:-|:-|
@@ -40,6 +42,10 @@
 | 规则8' | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomolite.yaml) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockmihomolite.yaml) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomolite.yaml) | [加速链接3](https://ghfast.top/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomolite.yaml) | Clash Meta(Mihomo) |
 | 规则9 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhosts.txt) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockhosts.txt) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhosts.txt) | [加速链接3](https://ghfast.top/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhosts.txt) | Hosts |
 | 规则9' | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.txt) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockhostslite.txt) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.txt) | [加速链接3](https://ghfast.top/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.txt) | Hosts |
+| 规则10 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksing.json) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblocksing.json) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksing.json) | [加速链接3](https://ghfast.top/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksing.json) | sing-box 1.12.x json |
+| 规则10' | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.json) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockhostslite.json) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.json) | [加速链接3](https://ghfast.top/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.json) | sing-box 1.12.x json |
+| 规则11 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksing.srs) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblocksing.srs) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksing.srs) | [加速链接3](https://ghfast.top/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblocksing.srs) | sing-box 1.12.x srs |
+| 规则11' | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.srs) | [加速链接1](https://gcore.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockhostslite.srs) | [加速链接2](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.srs) | [加速链接3](https://ghfast.top/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.srs) | sing-box 1.12.x srs |
 
 ## 上游规则源
 1. 感谢各位广告过滤规则维护大佬们的辛苦付出。
