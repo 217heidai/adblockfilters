@@ -29,7 +29,7 @@ class SingBox(APPBase):
                 f.write('  "version": 3,\n')
                 f.write('  "rules": [\n')
                 f.write('    {\n')
-                f.write('      "domain": [\n')
+                f.write('      "domain_suffix": [\n')
                 for i in range(len(blockList) - 1):
                     f.write('        "%s",\n'%(blockList[i]))
                 f.write('        "%s"\n'%(blockList[-1]))
