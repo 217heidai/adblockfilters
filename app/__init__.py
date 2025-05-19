@@ -4,6 +4,7 @@ from .adguardhome import AdGuardHome
 from .dnsmasq import DNSMasq
 from .hosts import Hosts
 from .invizible import InviZible
+from .loon import Loon
 from .mihomo import Mihomo
 from .quantumultx import QuantumultX
 from .shadowrocket import Shadowrocket
