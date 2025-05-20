@@ -76,6 +76,8 @@ class Resolver(object):
                 if match('^#.*', line):
                     break
 
+                line = line.replace('\t', ' ')
+                
                 if line.find('#') > 0:
                     line = line[:line.find('#')].strip()
                 
