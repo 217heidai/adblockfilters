@@ -226,6 +226,7 @@
 ! Bad: ||legitwebsite.com^$third-party (should be in adservers.txt)
 !
 !
+||wap.qqbiquge.net^
 ||fc.3dmgame.com^
 ||xmm.wxc.cc^
 ||srtb.msn.cn^
@@ -1237,6 +1238,10 @@ $script,xmlhttprequest,third-party,domain=00ksw.com|01zww.com|0biquge.com|114zw.
 !
 ! NOTE: Specific rules
 !
+right.com.cn##.wp > .a_t:has(> table > tbody > tr > td > .adsbygoogle)
+/^https:\/\/m\.2shuqu\.net\/static\/[a-z0-9]+\/[a-z0-9]+\.js/$script,domain=m.2shuqu.net
+||gl.ali213.net/images/jsq_gl.jpg
+/youziks\.com\/[0-9]+\.js/$domain=youziks.com,script
 *$denyallow=xpxs.net|jiasucdn.com,domain=xpxs.net,xmlhttprequest,image,script
 pttweb.cc##.mt-2 > div:has(.adswrapper) + hr.v-divider
 erciyan.com#%#//scriptlet('prevent-setTimeout', 'window.location.href')
@@ -3198,6 +3203,11 @@ adguard.info,adguard.com,adguard.app#$#.hello_from_adguard_advanced_protection_i
 ! Good: ||example.org/video-links$replace=/vast":/vast_":/
 ! Bad:  ||example.org/video-links (should be in specific.txt)
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/211243
+! https://github.com/AdguardTeam/CoreLibs/issues/2003
+! TODO: Remove when CoreLibs issue is fixed
+!+ PLATFORM(windows, mac, android)
+||cdn.dingxiang-inc.com/ctu-group/constid-js/index.js$replace=/(^\/\*!.*?\*\/)/\$1try{const t=document.head\,e=document.createElement("style");e.type="text\/css"\,e.textContent=".wp > .a_t:has(> table > tbody > tr > td > .adsbygoogle) { display: none !important; }"\,t.appendChild(e)}catch(t){};/,domain=right.com.cn
 ! https://github.com/AdguardTeam/AdguardFilters/issues/158639
 ||yfsp.tv/app/*.js$replace=/this\.shouldSkipAds\|\|/!0||/
 ||iyf.tv/app/*.js$replace=/this\.shouldSkipAds\|\|/!0||/
@@ -5212,6 +5222,9 @@ newduba.cn###jq_youxi
 ||naarnurm.com^
 ||fe4c0422j.com^
 ||r0hpdbkqs.com^
+||ufeuca.icu^
+||goi08130kh.com^
+||mmoba8myv.com^
 ||dzv56b1o0y.com^
 ||otoieku.icu^
 ||wiiytwd.top^
