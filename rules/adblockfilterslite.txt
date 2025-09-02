@@ -3,9 +3,9 @@
 ! Description: 适用于 AdGuard 的去广告合并规则，每 8 个小时更新一次。规则源：AdGuard Base filter、AdGuard Chinese filter、AdGuard Mobile Ads filter、AdGuard DNS filter、AdRules DNS List、CJX's Annoyance List、EasyList、EasyList China、EasyPrivacy、xinggsf mv、jiekouAD、AWAvenue Ads Rule、DNS-Blocklists Light、Hblock、OISD Basic、StevenBlack hosts、Pollock hosts。Lite 版仅针对国内域名拦截。
 ! Homepage: https://github.com/217heidai/adblockfilters
 ! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilterslite.txt
-! Version: 20250902000847
-! Last modified: 2025/09/02 00:08:47
-! Blocked Filters: 40945
+! Version: 20250902083047
+! Last modified: 2025/09/02 08:30:47
+! Blocked Filters: 40951
 !
 ###AC_ad
 ###AD_160
@@ -16612,8 +16612,11 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 /FduttjAlivqpo/*
 /Fingerprintjs2/fpt2.js
 /GTag/general_tracker.js
+/GetPlaybackResources?$all,removeparam=deviceAdInsertionTypeOverride,domain=amazon.com|amazon.co.jp|amazon.de|amazon.co.uk|primevideo.com
 /GetPlaybackResources?$jsonprune=\$.cuepointPlaylist,all,domain=amazon.com|amazon.co.jp|amazon.de|amazon.co.uk|primevideo.com
 /GetPlaybackResources?$jsonprune=\$.vodPlaybackUrls.result.playbackUrls.cuepoints,all,domain=amazon.com|amazon.co.jp|amazon.de|amazon.co.uk|primevideo.com
+/GetPlaybackResources?$xmlhttprequest,removeparam=deviceAdInsertionTypeOverride,domain=amazon.com|amazon.co.jp|amazon.de|amazon.co.uk|primevideo.com
+/GetPlaybackResources?*%2CCuepointPlaylist$all,urltransform=/%2CCuepointPlaylist//,domain=amazon.com|amazon.co.jp|amazon.de|amazon.co.uk|primevideo.com
 /GetVodPlaybackResources?$jsonprune=\$.cuepointPlaylist,xmlhttprequest,domain=amazon.com|amazon.co.jp|amazon.de|amazon.co.uk|primevideo.com
 /GetVodPlaybackResources?$jsonprune=\$.vodPlaybackUrls.result.playbackUrls.cuepoints,xmlhttprequest,domain=amazon.com|amazon.co.jp|amazon.de|amazon.co.uk|primevideo.com
 /GlanceCobrowseLoader_
@@ -22919,7 +22922,7 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 ://m.*.pw/*.js?ssid=_
 ://m.*.pw/*/*.js?$third-party
 ://m.*.top/*.js?ssid=_
-://matomo.$domain=~matomo.org
+://matomo.$domain=~matomo.dhjensen.dk|~matomo.org
 ://metrics-collector.
 ://mine.torrent.pw^
 ://mint.*/?js
@@ -33875,7 +33878,10 @@ pricespy.co.nz,pricespy.co.uk##.pjra-w-\[970px\]
 pricespy.co.nz,pricespy.co.uk##div[class^="AdPlacement"]
 primeindianporn.com,doxxxindians.com,orientalasianporn.com##.bottom-hor-block > .bottom-hor-b
 primeradivision.pl,fcbarca.com##.banner
-primevideo.com,amazon.co.uk,amazon.de,amazon.co.jp,amazon.com#%#//scriptlet('xml-prune', 'xpath(//*[name()="Period"][.//*[@value="Ad"]] | //*[name()="Period"]/@start)', '[value="Ad"]', '.mpd')
+primevideo.com,amazon.co.uk,amazon.de,amazon.co.jp,amazon.com#%#((e,t)=>{const p={apply:(p,o,n)=>{if(n[0]&&n[1]&&n[1].includes(t)){const t=new URL(n[1]);t.searchParams.delete(e),n[1]=t.href.replace("%2CCuepointPlaylist","")}return Reflect.apply(p,o,n)}};window.XMLHttpRequest.prototype.open=new Proxy(window.XMLHttpRequest.prototype.open,p)})("deviceAdInsertionTypeOverride","/GetPlaybackResources?");
+primevideo.com,amazon.co.uk,amazon.de,amazon.co.jp,amazon.com#%#//scriptlet('xml-prune', 'xpath(//*[name()="Period"][.//*[@value="Ad"]] | /*[name()="MPD"]/@mediaPresentationDuration | //*[name()="Period"]/@start)', '[value="Ad"]', '.mpd')
+primevideo.com,amazon.co.uk,amazon.de,amazon.co.jp,amazon.com#%#//scriptlet('xml-prune', 'xpath(//*[name()="Period"][.//*[@value="Draper"]] | /*[name()="MPD"]/@mediaPresentationDuration | //*[name()="Period"]/@start)', '[value="Draper"]', '.mpd')
+primevideo.com,amazon.co.uk,amazon.de,amazon.co.jp,amazon.com#%#//scriptlet('xml-prune', 'xpath(//*[name()="Period"][.//*[name()="BaseURL" and contains(text(),"/interstitial/")]] | /*[name()="MPD"][.//*[name()="BaseURL" and contains(text(),"/interstitial/")]]/@mediaPresentationDuration | /*[name()="MPD"][.//*[name()="BaseURL" and contains(text(),"/interstitial/")]]/*[name()="Period"]/@start)', '', '.mpd')
 prismmarketingco.com,questloops.com##body > div.site-outer ~ div[id][class*=" "]
 privatehomeclips.com,hclips.com##span[style="display:flex !important"] > div:first-child
 privatehomeclips.com,porntop.com,thegay.*##.video-page__content > .right
@@ -35788,11 +35794,8 @@ up-4.net$$script[tag-content="document:{currentScript:null}"][min-length="40000"
 up-4ever.net,helpnetsecurity.com,files.im,readsnk.com,tokyoghoulre.com,demonslayermanga.com,thelittleslush.com,famousinternetgirls.com,fake-it.ws,sexasia.net,groundedtechs.com,lowendbox.com##img[width="300"][height="250"]
 up-load.io$@$script[tag-content="zfgloaded"][min-length="30000"][max-length="80000"]
 updoc.site,pornoplay.online##div[class^="happy-"]
-upfion.com,upfiles.app,upfiles-urls.com,falpus.com,fooak.com#%#//scriptlet('prevent-fetch', 'pagead2.googlesyndication.com')
 upfion.com,upfiles.app,upfiles-urls.com,falpus.com,fooak.com#%#//scriptlet('prevent-window-open')
 upfion.com,upfiles.app,upfiles-urls.com,falpus.com,fooak.com#%#//scriptlet('set-constant', 'shouldOpenPopUp', 'false')
-upfion.com,upfiles.app,upfiles-urls.com,falpus.com,fooak.com#@#.ad-element
-upfion.com,upfiles.app,upfiles-urls.com,falpus.com,fooak.com#@#.ad-inner
 uploadbox.io$$script[tag-content="replaceContentWithAdBlockerContent"][max-length="1500"]
 uploadfile.cc,upindia.*##.soundy
 uploadfiles.*#%#//scriptlet("prevent-window-open")
@@ -35813,6 +35816,9 @@ upornia.com,upornia.tube##.underplayer > section
 upornia.com,upornia.tube##.video-page__related + h5
 upornia.com,upornia.tube##.wcccswvsyvk
 upornia.com,upornia.tube##.wssvkvkyyee
+upplinks.net,upfion.com,upfiles.app,upfiles-urls.com,falpus.com,fooak.com#%#//scriptlet('prevent-fetch', 'pagead2.googlesyndication.com')
+upplinks.net,upfion.com,upfiles.app,upfiles-urls.com,falpus.com,fooak.com#@#.ad-element
+upplinks.net,upfion.com,upfiles.app,upfiles-urls.com,falpus.com,fooak.com#@#.ad-inner
 upshrink.com,techcyan.com#$#body { overflow: auto !important; }
 upshrink.com,techcyan.com#%#//scriptlet("prevent-addEventListener", "DOMContentLoaded", "/_0x|\\x|google_ads_iframe/")
 upshrink.com,techcyan.com#?#section#xx:has(> span:contains(Detected))
