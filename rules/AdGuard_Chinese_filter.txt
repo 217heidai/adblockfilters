@@ -256,6 +256,18 @@
 ! Bad: ||ad.doubleclick.net^ (should be in adservers.txt)
 !
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/212973
+helper-employer.com#%#//scriptlet('prevent-fetch', 'adsbygoogle.js')
+helper-employer.com#%#//scriptlet('prevent-element-src-loading', 'script', 'clarity.ms/tag/')
+helper-employer.com#%#//scriptlet('spoof-css', '.adsbygoogle', 'display', 'block')
+!#if (adguard_app_ios || adguard_ext_android_cb || adguard_ext_safari)
+!#safari_cb_affinity(privacy)
+@@||clarity.ms/tag/$script,domain=helper-employer.com
+!#safari_cb_affinity
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$xmlhttprequest,domain=helper-employer.com
+helper-employer.com#@#ins.adsbygoogle[data-ad-slot]
+helper-employer.com#@#ins.adsbygoogle[data-ad-client]
+!#endif
 ! https://github.com/AdguardTeam/AdguardFilters/issues/209673
 slashview.com#%#//scriptlet('prevent-fetch', 'pagead2.googlesyndication.com')
 !+ PLATFORM(ios, ext_android_cb, ext_safari)
@@ -1240,6 +1252,7 @@ $script,xmlhttprequest,third-party,domain=00ksw.com|01zww.com|0biquge.com|114zw.
 !
 ! NOTE: Specific rules
 !
+helper-employer.com##div[class^="mantine-"][style^="display:"]
 /[a-z0-9]+\.[a-z0-9]+\//$denyallow=cidetxt.cc,domain=cidetxt.cc,subdocument,script
 .icu/$domain=cidetxt.cc
 cidetxt.cc#%#//scriptlet('prevent-setTimeout', 'try{e()}catch(e){if(t[e.message])return;')
@@ -5285,6 +5298,10 @@ newduba.cn###jq_youxi
 ||3x5h6x434.com^
 ||fsu1cg19c.com^
 ||joi09071pt.com^
+||eboobuv0rk.com^
+||joi09080pt.com^
+||tongueq2.top^
+||4p04u96158.com^
 ||ilgt04vkw4.com^
 ||d7fl3a3vwh.com^
 ||joi09060pt.com^
@@ -21120,7 +21137,7 @@ wss://*.*.top/$third-party
 ||bqge9.com/static/ad01.js
 ||440012.xyz/js/wapm.js
 ||116xs.com/js/backbone.js
-||38ksw.com^*/082903.
+||38ksw.com^*/0
 ||d1bz.xyz/static/book/static.
 ##.row.nav-bottom + div[style^="display: block; position: relative; width: 0px; height:"]
 ##a[href*="aHR0cHM6Ly9xc2Z2bDExLmFsYXp2LmNvbS8zNzA4Lmh0bWw="]
