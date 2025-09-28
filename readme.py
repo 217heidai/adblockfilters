@@ -121,8 +121,8 @@ class ReadMe(object):
             f.write("| 规则11' |" + self.__subscribeLink("adblocksingboxlite.json") + " sing-box 1.12.x json |\n")
             f.write("| 规则12 |" + self.__subscribeLink("adblocksingbox.srs") + " sing-box 1.12.x srs |\n")
             f.write("| 规则12' |" + self.__subscribeLink("adblocksingboxlite.srs") + " sing-box 1.12.x srs |\n")
-            f.write("| 规则13 |" + self.__subscribeLink("adblockloon.list") + " Loon、Sugar |\n")
-            f.write("| 规则13' |" + self.__subscribeLink("adblockloonlite.list") + " Loon、Sugar |\n")
+            f.write("| 规则13 |" + self.__subscribeLink("adblockloon.list") + " Loon、Surge |\n")
+            f.write("| 规则13' |" + self.__subscribeLink("adblockloonlite.list") + " Loon、Surge |\n")
             f.write("\n")
 
             f.write("## 上游规则源\n")
