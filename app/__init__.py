@@ -10,3 +10,4 @@ from .quantumultx import QuantumultX
 from .shadowrocket import Shadowrocket
 from .singbox import SingBox
 from .smartdns import SmartDNS
+from .surge import Surge
