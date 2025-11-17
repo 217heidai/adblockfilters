@@ -1255,6 +1255,7 @@ $script,xmlhttprequest,third-party,domain=00ksw.com|01zww.com|0biquge.com|114zw.
 !
 ! NOTE: Specific rules
 !
+eprice.com.hk##.main-section > .text-center[style^="min-height:"]:has(> div[class^="ad-"])
 ||nodejs.cn/_static/js/common.js
 ||img.jin10.com/event/*_
 ||lpl.qq.com/*/data/LOL_MATCH2_NEWS_RECOMMEND_*_INFO.js
@@ -1553,7 +1554,7 @@ ctinews.com##.show-in-md:has(> .ad-container)
 $script,third-party,denyallow=unpkg.zhihu.com,domain=52niuyan.cc
 sailtool.com##body > div[style^="position:fixed;right:0;top:"]
 aii.life###index-left-bn
-ddcar.com.tw##.popup-adv
+eprice.com.hk,ddcar.com.tw##.popup-adv
 ddcar.com.tw##div[id^="div-adsense-"]
 ddcar.com.tw##.section-page-articles > .text-center[style="min-width: 970px; min-height: 250px;"]
 runoob.com##.article-heading-ad
@@ -3160,9 +3161,9 @@ sports.qq.com,lpl.qq.com,v.qq.com#%#//scriptlet('set-constant', 'CreativePlayerw
 sports.qq.com,news.qq.com,www.qq.com,v.qq.com,new.qq.com#%#//scriptlet('json-prune', 'ads')
 ! "v.qq.com" creates an iframe to obtain native "JSON" method, so we need to "patch" it
 !+ NOT_PLATFORM(ext_ff)
-v.qq.com#%#(()=>{const e={apply:(e,n,t)=>{const o=Reflect.apply(e,n,t);try{o instanceof HTMLIFrameElement&&o.matches('iframe[style="display: none;"]:not([src], [id])')&&o.contentWindow&&(o.contentWindow.JSON=window.JSON)}catch(e){}return o}};Node.prototype.appendChild=new Proxy(Node.prototype.appendChild,e)})();
+v.qq.com#%#(()=>{const e={apply:(e,t,n)=>{const o=Reflect.apply(e,t,n);try{o instanceof HTMLIFrameElement&&o.matches('iframe[style="display: none;"]:not([src], [id])')&&o.contentWindow&&(o.contentWindow.JSON=window.JSON)}catch(e){}return o}};Node.prototype.appendChild=new Proxy(Node.prototype.appendChild,e),Element.prototype.insertAdjacentElement=new Proxy(Element.prototype.insertAdjacentElement,e)})();
 !+ PLATFORM(ext_ff)
-v.qq.com#%#//scriptlet('trusted-create-element', 'head', 'script', '', '(()=>{const e={apply:(e,n,t)=>{const o=Reflect.apply(e,n,t);try{o instanceof HTMLIFrameElement&&o.matches(`iframe[style="display: none;"]:not([src], [id])`)&&o.contentWindow&&(o.contentWindow.JSON=window.JSON)}catch(e){}return o}};Node.prototype.appendChild=new Proxy(Node.prototype.appendChild,e)})();')
+v.qq.com#%#//scriptlet('trusted-create-element', 'head', 'script', '', '(()=>{const e={apply:(e,t,n)=>{const o=Reflect.apply(e,t,n);try{o instanceof HTMLIFrameElement&&o.matches(`iframe[style="display: none;"]:not([src], [id])`)&&o.contentWindow&&(o.contentWindow.JSON=window.JSON)}catch(e){}return o}};Node.prototype.appendChild=new Proxy(Node.prototype.appendChild,e),Element.prototype.insertAdjacentElement=new Proxy(Element.prototype.insertAdjacentElement,e)})();')
 ! https://github.com/AdguardTeam/AdguardFilters/issues/30701
 ~sports.qq.com,~work.weixin.qq.com,qq.com#%#//scriptlet('json-prune', 'ad')
 !
@@ -3377,6 +3378,8 @@ adguard.info,adguard.com,adguard.app#$#.hello_from_adguard_advanced_protection_i
 !+ PLATFORM(ext_chromium_mv3)
 @@||uniqlo.com^$jsinject,content
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/218056
+dlsite.com#@#body[onresize="stopDebugger()"][onbeforecopy="return!1"] > div#root div:has(> img[src$=".gif"])
 ! https://github.com/AdguardTeam/AdguardFilters/issues/216942
 sudokugame.org#%#//scriptlet('trusted-replace-node-text', 'script', 'adjump', 'function adjump', 'function adjump(nd){var fy=document.getElementById("y").value;var fm=document.getElementById("m").value;var fd=document.getElementById("d").value;jump(nd,fy,fm,fd);};function _adjump')
 ||sudokugame.org/archive/online*.php$subdocument,document,replace=/adBreak\(\{[\s\S]+?(jump\([^)]+\))[\s\S]+?\}\);/\$1;/
@@ -5390,6 +5393,10 @@ newduba.cn###jq_youxi
 ||qheg.cn^
 ||iiahutvaa.com^
 ||qq2tdd0xx.com^
+||49ioqq6kt.com^
+||xxts11171zs.com^
+||frchavvati.com^
+||carlinaframh.com^
 ||uetx75ibcu.com^
 ||dh8ypn3lq8.com^
 ||xxts11160zs.com^
