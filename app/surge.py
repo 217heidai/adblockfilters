@@ -37,7 +37,7 @@ class Surge(APPBase):
                 f.write("#!tag=AdBlock, 217heidai\n")
                 f.write("# Example snippet:\n")
                 f.write("# [Rule]\n")
-                f.write("# DOMSIN-SET,%s/%s,REJECT-DROP\n"%(self.source, os.path.basename(fileName)))
+                f.write("# DOMAIN-SET,%s/%s,REJECT-DROP\n"%(self.source, os.path.basename(fileName)))
                 f.write("#!system=iOS, iPadOS\n")
                 f.write("#!system_version=\n")
                 f.write("#!loon_version=\n")
