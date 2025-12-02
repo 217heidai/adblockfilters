@@ -321,7 +321,8 @@ colamanga.com#@#.ADFooter
 colamanga.com#@#.ADInfo
 colamanga.com#@#.ADLeader
 ! https://github.com/AdguardTeam/AdguardFilters/issues/195203
-xchina.co#%#//scriptlet('prevent-addEventListener', '/DOMContentLoaded|load|complete/', '/check|detected/')
+xchina.*##.block-overlay
+xchina.*#%#//scriptlet('prevent-addEventListener', '/DOMContentLoaded|load|complete/', '/check|detected/')
 ! https://github.com/AdguardTeam/AdguardFilters/issues/194144
 2urs.com#%#//scriptlet('abort-on-property-read', 'ads')
 !+ PLATFORM(ios, ext_android_cb)
@@ -1258,6 +1259,7 @@ $script,xmlhttprequest,third-party,domain=00ksw.com|01zww.com|0biquge.com|114zw.
 !
 ! NOTE: Specific rules
 !
+news.cnyes.com##.a133dm9s
 ||xchina.$domain=crxs.me
 crxs.me#%#//scriptlet('abort-current-inline-script', 'document.createElement', 'visitUrl')
 crxs.me##.push-top
@@ -1436,6 +1438,8 @@ hk.yahoo.com,tw.yahoo.com#%#//scriptlet('trusted-set-attr', 'div#Homepage', 'dat
 tw.yahoo.com##iframe[src^="https://tw.buy.yahoo.com/smartbanner/"]
 tw.yahoo.com##.col1-bottom > .border-solid:not([id]):has(> iframe[src^="https://tw.buy.yahoo.com/smartbanner/"])
 chigua69.com##.video-list > div.video-item:has(> a[adv_id])
+hk01.com#$#div[class^="placeholder-top-"] { min-height: 0 !important; }
+hk01.com##div[class*="placeholder"]:has(> .lazyload-wrapper > .js-ad-slot)
 hk01.com##article > .items-center:has(.lazyload-wrapper > .js-ad-slot)
 hk01.com##.article-grid__desktop-rhs-section > .items-center:has(.lazyload-wrapper > .js-ad-slot)
 dqzboy.com##body > #popup[style^="position: fixed; bottom:"]
@@ -1533,12 +1537,6 @@ $script,third-party,denyallow=bsgslb.com|bytecdntp.com,domain=m.shuhaige.net
 ||topthink.com/uploads/assistant/$image,domain=doc.thinkphp.cn
 doc.thinkphp.cn#%#//scriptlet('inject-css-in-shadow-dom', 'a[href*="?utm_source="][target="_blank"] > img { display: none !important; }')
 ||cpu.baidu.com/block/wap/
-xchina.co#%#//scriptlet('abort-current-inline-script', '$', 'adModal')
-xchina.co##.content-box > .list > .item:not(.photo-image):has(> a[clickmode="cpt"])
-xchina.co##.content-box > .list > .item:not(.photo-image):has(> div > ins[data-zoneid])
-xchina.co##.photos > div.item:has(> div > a[target="_blank"])
-xchina.co##.photos > div.item:has(> div[class^="exoclick_"])
-xchina.co##div[class^="item photo zone"]
 qq3009qq.link##.box li:has(> a[href] > img[onclick])
 cnbeta.com.tw##.meta > .fr > a[target="_blank"] > img
 read.thisiscm.com##.gadBlock
@@ -1643,8 +1641,14 @@ enews.tw##.newsCardForLeftAdGadCode
 ||upload.xchina.biz/ad/
 ||xchina.click/upload/*.webp
 ||xchina.co/scripts/push_*.js
-xchina.co##div:has(> div:only-child > .media img[src*="/ad/"])
-xchina.co##.outer-banner
+xchina.*#%#//scriptlet('abort-current-inline-script', '$', 'adModal')
+xchina.*##.content-box > .list > .item:not(.photo-image):has(> a[clickmode="cpt"])
+xchina.*##.content-box > .list > .item:not(.photo-image):has(> div > ins[data-zoneid])
+xchina.*##.photos > div.item:has(> div > a[target="_blank"])
+xchina.*##.photos > div.item:has(> div[class^="exoclick_"])
+xchina.*##div[class^="item photo zone"]
+xchina.*##.push-top
+xchina.*##div[style*="width: 300px;"][style*="height: 455px;"]
 ||goosedaily.com/advertise/
 goosedaily.com##div[class^="ad-area-"]
 goosedaily.com##.lightboxbnr
@@ -1989,7 +1993,7 @@ liantu.cn##.side > .h250
 liantu.cn##.wrapper > .inner.h90
 world68.com##.content_l_flml.zzs
 world68.com##.head_m
-fabconvert.com,knews.com.tw,1905.com,news.ltn.com.tw,commonhealth.com.tw,health.tvbs.com.tw,idreamx.com,xchina.co,manhuafen.com,world68.com##.ad
+fabconvert.com,knews.com.tw,1905.com,news.ltn.com.tw,commonhealth.com.tw,health.tvbs.com.tw,idreamx.com,xchina.*,manhuafen.com,world68.com##.ad
 world68.com##.guanggao
 world68.com##.zzs_ad
 onebox.mydown.com##.fcGg
@@ -2533,8 +2537,6 @@ huya.com##.nav-expand-list #J_tt_hd_category_ad
 hk.xfastest.com##.adv_v2
 hk.xfastest.com##.adv-side-wrap
 huaban.com##.hb-ad
-xchina.co##.push-top
-xchina.co##div[style*="width: 300px;"][style*="height: 455px;"]
 emumax.com##.tbanner
 news.ebc.net.tw##a[href^="http://www.ebcbuzz.com/url/"]
 hkmovie6.com##.hotmobad
@@ -3233,7 +3235,7 @@ huaren.live#%#//scriptlet('trusted-replace-node-text', 'script', 'ConFig', 'let 
 ! https://github.com/AdguardTeam/AdguardFilters/issues/134240
 ! Do not hide .bili-video-card container to not mess up content, related - https://github.com/AdguardTeam/AdguardFilters/issues/147194#issuecomment-1500803042
 ! https://user-images.githubusercontent.com/3976203/273172163-25ff30a0-c988-4ec3-9e51-cf4722a90976.jpg
-bilibili.com##.container > .bili-feed-card:has(> div.bili-video-card  div.bili-video-card__info--no-interest + h3 > a[target="_blank"]:not([href^="https://www.bilibili.com/"]))
+bilibili.com##.container > .bili-feed-card:has(> div.bili-video-card div.bili-video-card__info--no-interest + h3 > a[target="_blank"]:not([href^="https://www.bilibili.com/"]))
 bilibili.com#?#.recommended-container_floor-aside .container > div[class$="feed-card"]:has(div[style$="56.25%;"] > div[class]:matches-css(before, content: /AdGuard/))
 ! bilibili.com#?#.bili-video-card.is-rcmd > div > a[href*="cm.bilibili.com"][data-target-url]:not([data-target-url*=".bili"]) + .bili-video-card__info:upward(2)
 bilibili.com##.feed-card:has(> div.bili-feed-card > div > div > div.bili-video-card__no-interest + a[target="_blank"]:not([href^="https://www.bilibili.com/"]))
@@ -5432,6 +5434,10 @@ newduba.cn###jq_youxi
 ||uimr.cn^
 ||ycikokryl.com^
 ||n2xj2mxg3z.com^
+||jywn7lkbdw.com^
+||tphurqalq.com^
+||niuk12021gi.com^
+||wraataikep.com^
 ||9a4v0clpi.com^
 ||xjoiteee8.com^
 ||engineer66.com^
