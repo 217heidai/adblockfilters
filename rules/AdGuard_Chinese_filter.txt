@@ -12,6 +12,7 @@
 ! Bad: /banner.jpg (should be in general_url.txt)
 ! Bad: ||adssubdomain.legitwebsite.com^ (should be in adservers_firstparty.txt)
 !
+||hs.178yc.com^
 ||aa67678156.com^$third-party
 ||shieryuefajkix.com^
 ||shisanmaozser.com^
@@ -1176,6 +1177,7 @@ mobile01.com$$script[tag-content="$.cookie(""fullscreenad"""][max-length="550"]
 !
 ! Good: .org/ads/
 ! Bad: .org/ads/$domain=example.org (for instance, should be in specific.txt)
+!
 !
 !
 ! 91porny
@@ -3133,10 +3135,13 @@ banzhu1111111.com,banzhu2222222.com,banzhu3333333.com,banzhu4444444.com,banzhu55
 ~github.com$$script:contains(/document\.write[^|&%$#@!]{0,400}:8007"\+"\/cc\//)
 !#endif
 !
+! Chinese online books
 ! https://github.com/AdguardTeam/AdguardFilters/issues/202277
 ! Periodically updated, so placed in this filter
+:800*/d/*n=$script,third-party,xmlhttprequest
+:800*/d/*?t=$script,third-party,xmlhttprequest
+.top:9956/$third-party
 .com:8007/sc/*?n=$third-party,script
-! Chinese online books
 ! Site with mirrors: https://cxysb.com/
 ! https://m.xddxsw.net/723/723946/7041611.html
 ! Examples:
@@ -3152,13 +3157,15 @@ banzhu1111111.com,banzhu2222222.com,banzhu3333333.com,banzhu4444444.com,banzhu55
 ! - https://241028z.1iuh5l.com:9001/sc/1028?n=llvukcwa
 ! - https://246xgtyyh.frify.xyz:9369/hm/6?x=u46hl2p1sb&r=0&t=2sb3yi92g9&v=2
 ! - wss://17667nwyoht.rpwvu.xyz:2919/6637?x=a3iuljp50h&r=2&t=u50zxjo55k&v=2
+~github.com$$script:contains(F6O2cY=Fa[67c}vFvvcY85cYaa)
 ~github.com$$script:contains(var d10={win:false,mac:false,xll:false};)
+$$div[style="display: none !important;"]:contains(return atob()
 $$div[style="display: none !important;"]:contains('ed2k://)
 $$div[style="display: none !important;"]:contains(!function(){function a(a){var _idx=)
 ~github.com$$script:contains(!function(){function a(a){var _idx=)
 ~github.com$$script:contains(||!navigator.platform){setTimeout(function () {w.location.href=url)
 ~github.com$$script:contains(?is_not=1&target=1&ty=2)
-##div[style^="position:fixed; bottom:0vw; left:"][style$="vw;background: #000;opacity:0.01;"]
+##div[style^="position:fixed; bottom:"][style$="vw;background: #000;opacity:0.01;"]
 /^(https|ws|wss):\/\/[a-z0-9]+\.[a-z0-9]+\.[a-z]{2,3}:\d{1,6}\/([a-z]{1,3}\/){0,1}\d+\?[a-z]+=[a-z0-9]+($|&)/$script,websocket,third-party
 /^https:\/\/[a-z0-9]+\.[a-z0-9]+\.[a-z]{2,3}:\d{1,6}\/bug\?i=\d+$/
 /^https:\/\/[a-z0-9]+\.[a-z0-9]+\.[a-z]{2,3}:\d{1,6}\/[a-z]{1,3}\/\d+\?is_not=/$all
@@ -5503,6 +5510,10 @@ newduba.cn###jq_youxi
 ||ppxqhx.icu^
 ||fawb62hh9.com^
 ||vpw1lig85.com^
+||ainb01031zh.com^
+||48dswtxkw.com^
+||w505cb.cc^
+||cgcg01031ht.com^
 ||0hagal2csg.com^
 ||5hu7hee0pt.com^
 ||ainb01020zh.com^
