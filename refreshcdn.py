@@ -52,6 +52,8 @@ class RefreshCDN(object):
             logger.info("refresh %s..."%(rule))
             task = asyncio.ensure_future(self.__refresh(rule))
             taskList.append(task)
+        if not taskList:
+            return
         # 等待异步任务结束
         loop.run_until_complete(asyncio.wait(taskList))
 
