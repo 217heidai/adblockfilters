@@ -104,6 +104,7 @@ class BlackList(object):
         self.__domainlistUrl_CN_Google = "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/refs/heads/release/google-cn.txt"
         self.__iplistFile_CN = os.getcwd() + "/rules/CN-ip-cidr.txt"
         self.__iplistUrl_CN = "https://raw.githubusercontent.com/Hackl0us/GeoIP2-CN/refs/heads/release/CN-ip-cidr.txt"
+        self.__allowDomainSet = {"ai.shouji.360.cn"}
         self.__maxTask = 500
 
     def __getDomainList(self):
@@ -117,6 +118,7 @@ class BlackList(object):
         except Exception as e:
             logger.error("%s"%(e))
         finally:
+            domainList = list(filter(lambda x: x.lower() not in self.__allowDomainSet, domainList))
             logger.info("adblock dns backup: %d"%(len(domainList)))
             return domainList
         
