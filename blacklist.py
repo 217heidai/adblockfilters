@@ -105,6 +105,7 @@ class BlackList(object):
         self.__iplistFile_CN = os.getcwd() + "/rules/CN-ip-cidr.txt"
         self.__iplistUrl_CN = "https://raw.githubusercontent.com/Hackl0us/GeoIP2-CN/refs/heads/release/CN-ip-cidr.txt"
         self.__maxTask = 500
+        self.__globalUnblockPattern = re.compile(r'(^|[.\-])v3mh([.\-]|$)')
 
     def __getDomainList(self):
         logger.info("resolve adblock dns backup...")
@@ -117,6 +118,7 @@ class BlackList(object):
         except Exception as e:
             logger.error("%s"%(e))
         finally:
+            domainList = list(filter(lambda x: not self.__globalUnblockPattern.search(x), domainList))
             logger.info("adblock dns backup: %d"%(len(domainList)))
             return domainList
         
