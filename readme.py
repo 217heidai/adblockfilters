@@ -4,6 +4,22 @@ from typing import List
 
 from loguru import logger
 
+IOS_GUIDE_SECTION = """## iOS 使用说明
+### 规则推荐
+- Safari + AdGuard：订阅规则1 + 规则2（规则2为规则1补充，仅适用于浏览器插件）。
+- AdGuard Home / DNS 类工具：优先使用规则1；若有数量限制，使用规则1'。
+- 仅需域名规则时：可选规则3 / 规则3'。
+
+### 能力边界
+- 本仓库仅合并、去重并剔除失效域名，不修改上游规则语义。
+- 无法保证所有广告都可拦截，也无法避免所有误拦截。
+- iOS 不同应用的网络栈和策略不同，实际拦截效果会有差异。
+
+### FAQ
+- 规则启用后未生效：先更新订阅并清理 DNS 缓存，必要时重启应用或设备。
+- 出现误拦截：临时添加放行规则（如 `@@||www.example.com^$important`），并反馈对应上游规则。
+- 规则过大导入失败：优先使用 Lite 版本。"""
+
 class Rule(object):
     def __init__(self, name:str, type:str, url:str, latest:str, update:bool=False):
         self.name = name
@@ -90,6 +106,8 @@ class ReadMe(object):
             f.write("2. 已对 jsdelivr(加速链接1) 缓存进行主动刷新，但仍存在一定刷新延时\n")
             f.write("3. AdGuard 等浏览器插件使用规则1 + 规则2（规则2为规则1的补充，仅适用浏览器插件）\n")
             f.write("\n")
+            f.write(IOS_GUIDE_SECTION)
+            f.write("\n\n")
             tmp = "| 规则 | 原始链接 |"
             for i in range(1, len(self.proxyList)):
                 tmp += " 加速链接%d |"%(i)
