@@ -30,9 +30,11 @@ class SingBox(APPBase):
                 f.write('  "rules": [\n')
                 f.write('    {\n')
                 f.write('      "domain_suffix": [\n')
-                for i in range(len(blockList) - 1):
-                    f.write('        "%s",\n'%(blockList[i]))
-                f.write('        "%s"\n'%(blockList[-1]))
+                for i in range(len(blockList)):
+                    if i == len(blockList) - 1:
+                        f.write('        "%s"\n'%(blockList[i]))
+                    else:
+                        f.write('        "%s",\n'%(blockList[i]))
                 f.write('      ]\n')
                 f.write('    }\n')
                 f.write('  ]\n')
