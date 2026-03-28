@@ -73,6 +73,7 @@ class Filter(object):
                 for line in f.readlines():
                     if not line.startswith("#") and len(line.replace("\n", "")) > 4:
                         whiteSet.add(line.replace("\n", ""))
+        whiteSet.add("v6.pic.upqzfile.com")
         logger.info("white list: %d"%(len(whiteSet)))
         return whiteSet
     
