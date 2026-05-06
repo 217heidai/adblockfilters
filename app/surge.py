@@ -37,16 +37,16 @@ class Surge(APPBase):
                 f.write("#!tag=AdBlock, 217heidai\n")
                 f.write("# Example snippet:\n")
                 f.write("# [Rule]\n")
-                f.write("# DOMAIN-SET,%s/%s,REJECT-DROP\n"%(self.source, os.path.basename(fileName)))
+                f.write("# DOMAIN-SET,%s/%s,REJECT\n"%(self.source, os.path.basename(fileName)))
                 f.write("#!system=iOS, iPadOS\n")
                 f.write("#!system_version=\n")
                 f.write("#!loon_version=\n")
                 f.write("#!date=%s\n"%(self.time))
                 f.write("#!support=%s\n"%(len(blockList)))
-                f.write("#!proxy-select=REJECT-DROP\n")
+                f.write("#!proxy-select=REJECT\n")
                 f.write("#\n")
                 for domain in blockList:
-                    f.write(f".{domain}\n")
+                    f.write(f"DOMAIN-SUFFIX,{domain}\n")
 
             if isLite:
                 logger.info("adblock Surge Lite: block=%d" % (len(blockList)))
