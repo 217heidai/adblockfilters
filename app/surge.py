@@ -46,7 +46,7 @@ class Surge(APPBase):
                 f.write("#!proxy-select=REJECT\n")
                 f.write("#\n")
                 for domain in blockList:
-                    f.write(f"DOMAIN-SUFFIX,{domain}\n")
+                    f.write(f".{domain}\n")
 
             if isLite:
                 logger.info("adblock Surge Lite: block=%d" % (len(blockList)))
