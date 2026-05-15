@@ -1,6 +1,6 @@
 import os
 
-GITHUB_OWNER = os.getenv("GITHUB_OWNER", "217heidai")
+GITHUB_OWNER = os.getenv("GITHUB_OWNER", "1314520lovelsc")
 GITHUB_REPO = os.getenv("GITHUB_REPO", "adblockfilters")
 GITHUB_BRANCH = os.getenv("GITHUB_BRANCH", "main")
 
