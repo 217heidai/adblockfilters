@@ -4,6 +4,8 @@ from typing import List
 
 from loguru import logger
 
+from repo_config import GITHUB_HOME, JSDELIVR_GH_BASE, RAW_RULES_BASE, STAR_HISTORY_REPO
+
 class Rule(object):
     def __init__(self, name:str, type:str, url:str, latest:str, update:bool=False):
         self.name = name
@@ -57,14 +59,14 @@ class ReadMe(object):
         if url:
             link += " [原始链接](%s) |"%(url)
         else:
-            link += " [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/%s) |"%(fileName)
+            link += " [原始链接](%s/%s) |" % (RAW_RULES_BASE, fileName)
         
         for i in range(1, len(self.proxyList)):
             proxy = self.proxyList[i]
             if proxy.startswith("https://gcore.jsdelivr.net/"):
-                link += " [加速链接%d](%s/217heidai/adblockfilters@main/rules/%s) |"%(i, proxy, fileName)
+                link += " [加速链接%d](%s/%s) |" % (i, JSDELIVR_GH_BASE, fileName)
             else:
-                link += " [加速链接%d](%s/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/%s) |"%(i, proxy, fileName)
+                link += " [加速链接%d](%s/%s/%s) |" % (i, proxy, RAW_RULES_BASE, fileName)
         
         return link
     
@@ -136,7 +138,7 @@ class ReadMe(object):
             f.write("2. 不再引用[anti-AD](https://anti-ad.net/adguard.txt)、[yhosts](https://raw.githubusercontent.com/VeleSila/yhosts/master/hosts.txt)，具体原因见[Mosney/anti-anti-AD](https://github.com/Mosney/anti-anti-AD)。\n")
             f.write("3. 移除[Notracking blocklist](https://raw.githubusercontent.com/notracking/hosts-blocklists/master/adblock/adblock.txt)，原项目[已停止维护](https://github.com/notracking/hosts-blocklists/issues/900)。\n")
             f.write("4. 移除[ADgk](https://raw.githubusercontent.com/banbendalao/ADgk/master/ADgk.txt)、[SmartTV Blocklist](https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV-AGH.txt)、[1024 hosts](https://raw.githubusercontent.com/Goooler/1024_hosts/master/hosts)、[ad-wars hosts](https://raw.githubusercontent.com/jdlingyu/ad-wars/master/hosts)规则长时间未更新。\n")
-            f.write("5. 不再引用[NEO DEV HOST](https://github.com/neodevpro/neodevhost/blob/master/lite_adblocker)，原因见[Issues 85](https://github.com/217heidai/adblockfilters/issues/85)。\n")
+            f.write("5. 不再引用[NEO DEV HOST](https://github.com/neodevpro/neodevhost/blob/master/lite_adblocker)，原因见[Issues 85](%s/issues/85)。\n" % GITHUB_HOME)
             f.write("6. 不再引用[xinggsf rule](https://raw.githubusercontent.com/xinggsf/Adblock-Plus-Rule/master/rule.txt)、[1Hosts (Lite)](https://raw.githubusercontent.com/badmojr/1Hosts/master/Lite/adblock.txt)，误杀较多。\n")
             f.write("\n")
 
@@ -152,7 +154,7 @@ class ReadMe(object):
             f.write("\n")
             
             f.write("## Star History\n")
-            f.write("[![Star History Chart](https://api.star-history.com/svg?repos=217heidai/adblockfilters&type=Date)](https://star-history.com/#217heidai/adblockfilters&Date)\n")
+            f.write("[![Star History Chart](https://api.star-history.com/svg?repos=%s&type=Date)](https://star-history.com/#%s&Date)\n" % (STAR_HISTORY_REPO, STAR_HISTORY_REPO))
             '''
             f.write("\n")
             f.write("## 以下是广告\n")
