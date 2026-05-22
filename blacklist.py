@@ -297,7 +297,7 @@ class BlackList(object):
                         break
                     # keyword:
                     for keyword in keywordSet_CN:
-                        if re.match(".*%s.*"%(keyword), domain):
+                        if re.match(r".*%s.*"%(keyword), domain):
                             isChinaDomain = True
                             break
                     if isChinaDomain:

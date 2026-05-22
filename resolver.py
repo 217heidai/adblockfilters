@@ -73,7 +73,7 @@ class Resolver(object):
             block=None
             while True:
                 # #* 注释
-                if match('^#.*', line):
+                if match(r'^#.*', line):
                     break
 
                 line = line.replace('\t', ' ')
@@ -115,25 +115,25 @@ class Resolver(object):
                 if filter.startswith('##') and filter.find('://') < 0:
                     break
 
-                if match('^/.*/$', filter):
+                if match(r'^/.*/$', filter):
                     break
 
-                if match('^\|\|.*\*.*\^$', filter):
+                if match(r'^\|\|.*\*.*\^$', filter):
                     break
 
                 # ||example.org^$option
                 # @@||example.org^$option
-                if match('^\|\|.*\^\$.*', filter) or match('^@@\|\|.*\^\$.*', filter):
+                if match(r'^\|\|.*\^\$.*', filter) or match(r'^@@\|\|.*\^\$.*', filter):
                     for opt in self.options:
-                        if match('^\|\|.*\^\$%s'%(opt), filter):
+                        if match(r'^\|\|.*\^\$%s'%(opt), filter):
                             domain_tmp = filter[len('||'):filter.find('^$%s'%(opt))]
                             break
-                        if match('^@@\|\|.*\^\$%s'%(opt), filter):
+                        if match(r'^@@\|\|.*\^\$%s'%(opt), filter):
                             domain_tmp = filter[len('@@||'):filter.find('^$%s'%(opt))]
                             break
                     break
                 # ||example.org
-                if match('^\|\|.*', filter):
+                if match(r'^\|\|.*', filter):
                     domain_tmp = filter[len('||'):]
                     if domain_tmp.find('/') > 0:
                         domain_tmp = domain_tmp[:domain_tmp.find('/')]
@@ -145,7 +145,7 @@ class Resolver(object):
                         domain_tmp = domain_tmp[:domain_tmp.find('*')]
                     break
                 # @@||example.org
-                if match('^@@\|\|.*', filter):
+                if match(r'^@@\|\|.*', filter):
                     domain_tmp = filter[len('@@||'):]
                     if domain_tmp.find('/') > 0:
                         domain_tmp = domain_tmp[:domain_tmp.find('/')]
@@ -158,14 +158,14 @@ class Resolver(object):
                     break
 
                 # ip$network
-                if match('.*\$network$', filter):
+                if match(r'.*\$network$', filter):
                     domain_tmp = filter[:-len('$network')]
                     if domain_tmp.startswith('@@'):
                         domain_tmp = domain_tmp[2:]
                     break
 
                 # example.org^
-                if match('.*\^$', filter):
+                if match(r'.*\^$', filter):
                     domain_tmp = filter[:-1]
                     break
                 
@@ -175,7 +175,7 @@ class Resolver(object):
                 # example.com,example.edu##selector
                 # example.com,~mail.example.com##selector
                 connector = '##'
-                if match('.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
+                if match(r'.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
                     domain_tmp = filter[ : filter.find(connector)]
                     if domain_tmp.find(',') > 0:
                         domain_tmp = None
@@ -186,7 +186,7 @@ class Resolver(object):
                 # example.com,example.edu#?#selector
                 # example.com,~mail.example.com#?#selector
                 connector = '#\?#'
-                if match('.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
+                if match(r'.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
                     domain_tmp = filter[ : filter.find('#?#')] # 需去掉转义符'#\?#' -> '#?#'
                     if domain_tmp.find(',') > 0:
                         domain_tmp = None
@@ -197,7 +197,7 @@ class Resolver(object):
                 # example.com,example.edu#@#selector
                 # example.com,~mail.example.com#@#selector
                 connector = '#@#'
-                if match('.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
+                if match(r'.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
                     domain_tmp = filter[ : filter.find(connector)]
                     if domain_tmp.find(',') > 0:
                         domain_tmp = None
@@ -208,7 +208,7 @@ class Resolver(object):
                 # example.com,example.edu#$#selector
                 # example.com,~mail.example.com#$#selector
                 connector = '#\$#'
-                if match('.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
+                if match(r'.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
                     domain_tmp = filter[ : filter.find('#$#')] # 需去掉转义符'#\$#' -> '#$#'
                     if domain_tmp.find(',') > 0:
                         domain_tmp = None
@@ -219,14 +219,14 @@ class Resolver(object):
                 # example.com,example.edu#%#selector
                 # example.com,~mail.example.com#%#selector
                 connector = '#%#'
-                if match('.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
+                if match(r'.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
                     domain_tmp = filter[ : filter.find(connector)]
                     if domain_tmp.find(',') > 0:
                         domain_tmp = None
                     break
                 
                 # a[href^="http://sarcasmadvisor.com/"]
-                if match('.*http:\/\/.*', filter):
+                if match(r'.*http:\/\/.*', filter):
                     domain_tmp = filter[filter.find('http://') + len('http://'):]
                     if domain_tmp.startswith('*.'):
                         domain_tmp = domain_tmp[2:]
@@ -241,7 +241,7 @@ class Resolver(object):
                     break
 
                 # a[href^="https://sarcasmadvisor.com/"]
-                if match('.*https:\/\/.*', filter):
+                if match(r'.*https:\/\/.*', filter):
                     domain_tmp = filter[filter.find('https://') + len('https://'):]
                     if domain_tmp.startswith('*.'):
                         domain_tmp = domain_tmp[2:]
@@ -292,13 +292,13 @@ class Resolver(object):
             block,unblock,filter=None,None,None
             while True:
                 # !* 注释
-                if match('^!.*', line):
+                if match(r'^!.*', line):
                     break
                 # [*] 注释
-                if match('^\[.*\]$', line):
+                if match(r'^\[.*\]$', line):
                     break
                 # #* 注释
-                if match('^#.*', line):
+                if match(r'^#.*', line):
                     break
 
                 # 干掉注释
@@ -306,7 +306,7 @@ class Resolver(object):
                     line = line[:line.find('#')].strip()
 
                 # ||example.org^
-                if match('^\|\|.*\^$', line):
+                if match(r'^\|\|.*\^$', line):
                     domain = line[2:-1]
                     if domain.find('*') >= 0:
                         if domain.startswith('*.') and domain[2:].find('*')<0:
@@ -318,7 +318,7 @@ class Resolver(object):
                     block = self.__analysis(domain)
                     break
                 # @@||example.org^
-                if match('^@@\|\|.*\^$', line):
+                if match(r'^@@\|\|.*\^$', line):
                     domain = line[4:-1]
                     if domain.find('*') >= 0:
                         if domain.startswith('*.') and domain[2:].find('*')<0:
@@ -330,11 +330,11 @@ class Resolver(object):
                     unblock = self.__analysis(domain)
                     break
                 # /REGEX/
-                if match('^/.*/$', line):
+                if match(r'^/.*/$', line):
                     filter = line
                     break
                 # ||example. or ||example.org^$ctag=device_tv
-                if match('^\|\|.*', line):
+                if match(r'^\|\|.*', line):
                     filter = line
                     break
                 # other
@@ -355,21 +355,21 @@ class Resolver(object):
             block,unblock,filter=None,None,None
             while True:
                 # !* 注释
-                if match('^!.*', line):
+                if match(r'^!.*', line):
                     break
                 # [*] 注释
-                if match('^\[.*\]$', line):
+                if match(r'^\[.*\]$', line):
                     break
                 # ## or ###
-                if match('^##.*', line):
+                if match(r'^##.*', line):
                     filter = line
                     break
                 # #%#
-                if match('^#%#.*', line):
+                if match(r'^#%#.*', line):
                     filter = line
                     break
                 # #* 注释
-                if match('^#.*', line):
+                if match(r'^#.*', line):
                     break
 
                 # 干掉注释
@@ -377,7 +377,7 @@ class Resolver(object):
                 #    line = line[:line.find(' #')].strip()
 
                 # ||example.org^: block access to the example.org domain and all its subdomains, like www.example.org.
-                if match('^\|\|.*\^$', line):
+                if match(r'^\|\|.*\^$', line):
                     domain = line[2:-1]
                     if domain.find('/') >= 0:
                         filter = line
@@ -393,7 +393,7 @@ class Resolver(object):
                     block = self.__analysis(domain)
                     break
                 # @@||example.org^: unblock access to the example.org domain and all its subdomains.
-                if match('^@@\|\|.*\^$', line):
+                if match(r'^@@\|\|.*\^$', line):
                     domain = line[4:-1]
                     if domain.find('*') >= 0 or domain.find('/') >= 0:
                         filter = line
@@ -401,7 +401,7 @@ class Resolver(object):
                     unblock = self.__analysis(domain)
                     break
                 # @@||example.org^|: unblock access to the example.org domain and all its subdomains.
-                if match('^@@\|\|.*\^\|$', line):
+                if match(r'^@@\|\|.*\^\|$', line):
                     domain = line[4:-2]
                     if domain.find('*') >= 0 or domain.find('/') >= 0:
                         filter = line
@@ -409,7 +409,7 @@ class Resolver(object):
                     unblock = self.__analysis(domain)
                     break
                 # /REGEX/: block access to the domains matching the specified regular expression
-                if match('^/.*/$', line):
+                if match(r'^/.*/$', line):
                     filter = line
                     break
                 # 判断是否为单纯的域名

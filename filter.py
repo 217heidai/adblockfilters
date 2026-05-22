@@ -115,7 +115,7 @@ class Filter(object):
             tmp = set()
             for i in range(len(l) - 1):
                 for j in range(i+1, len(l)):
-                    if re.match('.*\.%s$'%(l[i]), l[j]):
+                    if re.match(r'.*\.%s$'%(l[i]), l[j]):
                         tmp.add(l[j])
             l = list(set(l)-tmp)
             l.sort()
@@ -138,7 +138,7 @@ class Filter(object):
                 subdomain_not_black = False
                 for _subdomain in list(set(subdomainList_origin) - set(subdomainList)):
                     if len(subdomain) > 0:
-                        if re.match('.*\.%s$'%(subdomain), _subdomain):
+                        if re.match(r'.*\.%s$'%(subdomain), _subdomain):
                             _domain = get_domain(fld, _subdomain)
                             if _domain not in blackSet:
                                 subdomain_not_black = True
