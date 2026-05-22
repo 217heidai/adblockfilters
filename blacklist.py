@@ -245,28 +245,21 @@ class BlackList(object):
 
     def __testDomain(self, domainList, nameservers, port=53):
         logger.info("resolve domain...")
-        # 异步检测
-        dnsresolver = DNSResolver()
-        dnsresolver.nameservers = nameservers
-        dnsresolver.port = port
-        # 启动异步循环
-        loop = asyncio.get_event_loop()
-        semaphore = asyncio.Semaphore(self.__maxTask) # 限制并发量为500
-        # 添加异步任务
-        taskList = []
-        for domain in domainList:
-            task = asyncio.ensure_future(self.__pingx(dnsresolver, domain, semaphore))
-            taskList.append(task)
-        # 等待异步任务结束
-        loop.run_until_complete(asyncio.wait(taskList))
-        # 获取异步任务结果
-        domainDict = {}
-        for task in taskList:
-            domain, ipList = task.result()
-            domainDict[domain] = ipList
 
-        logger.info("resolve domain: %d"%(len(domainDict)))
-        return domainDict
+        async def _resolve_all():
+            dnsresolver = DNSResolver()
+            dnsresolver.nameservers = nameservers
+            dnsresolver.port = port
+            semaphore = asyncio.Semaphore(self.__maxTask)
+
+            tasks = [self.__pingx(dnsresolver, domain, semaphore) for domain in domainList]
+            results = await asyncio.gather(*tasks)
+
+            domainDict = {domain: ipList for domain, ipList in results}
+            logger.info("resolve domain: %d" % len(domainDict))
+            return domainDict
+
+        return asyncio.run(_resolve_all())
 
     def __isChinaDomain(self, domain, ipList, fullSet_CN, domainSet_CN, regexpSet_CN, keywordSet_CN, IPDict_CN):
         isChinaDomain = False
