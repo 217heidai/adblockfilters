@@ -30,9 +30,9 @@ class APPBase(ABC):
             for domain in domainList:
                 if domain in ChinaSet:
                     liteList.append(domain)
+            return liteList
         except Exception as e:
             logger.error("%s"%(e))
-        finally:
             return liteList
 
     def __generateFilterLiteList(self, filterDict:Dict[str,str], filterList:List[str], ChinaSet:Set[str]):
@@ -45,9 +45,9 @@ class APPBase(ABC):
                         liteList.append(filter)
                 else:
                     liteList.append(filter)
+            return liteList
         except Exception as e:
             logger.error("%s"%(e))
-        finally:
             return liteList
 
     @abstractmethod

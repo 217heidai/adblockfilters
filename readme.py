@@ -35,7 +35,7 @@ class ReadMe(object):
                     rule = list(map(lambda x: x.strip(), line[1:-1].split('|')))
                     if rule[2].find('(') > 0 and rule[2].find(')') > 0 and rule[1].find('(') < 0:
                         url = rule[2][rule[2].find('(')+1:rule[2].find(')')]
-                        matchObj1 = re.match('(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?', url)
+                        matchObj1 = re.match(r'(http|https)://[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?', url)
                         if matchObj1:
                             self.ruleList.append(Rule(rule[0], rule[1], url, rule[-1]))
         return self.ruleList

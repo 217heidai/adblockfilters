@@ -16,27 +16,23 @@ class Updater(object):
         self.isNeedUpdate = False
 
     def update(self, path:str) -> Tuple[bool,List[Rule]]:
-        # 启动异步循环
-        loop = asyncio.get_event_loop()
-        # 添加异步任务
-        taskList = []
-        for rule in self.ruleList:
-            logger.info("updating %s..."%(rule.name))
-            task = asyncio.ensure_future(self.__Download(rule, path))
-            taskList.append(task)
-        # 等待异步任务结束
-        loop.run_until_complete(asyncio.wait(taskList))
-        # 获取异步任务结果
-        for task in taskList:
-            new:Rule = task.result()
-            for rule in self.ruleList:
-                if new.name == rule.name:
-                    rule.latest = new.latest
-                    rule.update = new.update
-                    if rule.update:
-                        self.isNeedUpdate = rule.update
-                    break
-        return self.isNeedUpdate, self.ruleList
+        async def _update():
+            # 并发执行所有下载任务，并直接拿到结果
+            tasks = [self.__Download(rule, path) for rule in self.ruleList]
+            results = await asyncio.gather(*tasks)
+
+            # 更新规则状态
+            for new in results:
+                for rule in self.ruleList:
+                    if new.name == rule.name:
+                        rule.latest = new.latest
+                        rule.update = new.update
+                        if rule.update:
+                            self.isNeedUpdate = True   # 只要有一个需要更新就标记
+                        break
+            return self.isNeedUpdate, self.ruleList
+
+        return asyncio.run(_update())
 
     def __CalcFileSha256(self, filename):
         with open(filename, "rb") as f:
