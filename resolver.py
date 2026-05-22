@@ -174,7 +174,7 @@ class Resolver(object):
                 # ~example.com##selector
                 # example.com,example.edu##selector
                 # example.com,~mail.example.com##selector
-                connector = '##'
+                connector = r'##'
                 if match(r'.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
                     domain_tmp = filter[ : filter.find(connector)]
                     if domain_tmp.find(',') > 0:
@@ -185,7 +185,7 @@ class Resolver(object):
                 # ~example.com#?#selector
                 # example.com,example.edu#?#selector
                 # example.com,~mail.example.com#?#selector
-                connector = '#\?#'
+                connector = r'#\?#'
                 if match(r'.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
                     domain_tmp = filter[ : filter.find('#?#')] # 需去掉转义符'#\?#' -> '#?#'
                     if domain_tmp.find(',') > 0:
@@ -196,7 +196,7 @@ class Resolver(object):
                 # ~example.com#@#selector
                 # example.com,example.edu#@#selector
                 # example.com,~mail.example.com#@#selector
-                connector = '#@#'
+                connector = r'#@#'
                 if match(r'.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
                     domain_tmp = filter[ : filter.find(connector)]
                     if domain_tmp.find(',') > 0:
@@ -207,7 +207,7 @@ class Resolver(object):
                 # ~example.com#$#selector
                 # example.com,example.edu#$#selector
                 # example.com,~mail.example.com#$#selector
-                connector = '#\$#'
+                connector = r'#\$#'
                 if match(r'.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
                     domain_tmp = filter[ : filter.find('#$#')] # 需去掉转义符'#\$#' -> '#$#'
                     if domain_tmp.find(',') > 0:
@@ -218,7 +218,7 @@ class Resolver(object):
                 # ~example.com#%#selector
                 # example.com,example.edu#%#selector
                 # example.com,~mail.example.com#%#selector
-                connector = '#%#'
+                connector = r'#%#'
                 if match(r'.*%s.*'%(connector), filter) and not filter.startswith(connector) and not filter.endswith(connector):
                     domain_tmp = filter[ : filter.find(connector)]
                     if domain_tmp.find(',') > 0:
