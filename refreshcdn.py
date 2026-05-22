@@ -42,16 +42,12 @@ class RefreshCDN(object):
 
     def refresh(self):
         ruleList = self.__getRuleList(self.pwd)
-        # 启动异步循环
-        loop = asyncio.get_event_loop()
-        # 添加异步任务
-        taskList = []
-        for rule in ruleList:
-            logger.info("refresh %s..."%(rule))
-            task = asyncio.ensure_future(self.__refresh(rule))
-            taskList.append(task)
-        # 等待异步任务结束
-        loop.run_until_complete(asyncio.wait(taskList))
+    
+        async def _refresh_all():
+            tasks = [self.__refresh(rule) for rule in ruleList]
+            await asyncio.gather(*tasks)
+        
+        asyncio.run(_refresh_all())
 
 if __name__ == '__main__':
     cdn = RefreshCDN()
