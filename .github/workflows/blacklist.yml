@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
 
       - name: Setup Python 3.9.x
-        uses: actions/setup-python@main
+        uses: actions/setup-python@v6
         with:
           python-version: '3.9.x'
 
@@ -44,12 +44,12 @@ jobs:
           echo "message=$(date)" >> $GITHUB_OUTPUT
 
       - name: Commit Changes
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: ${{ steps.update.outputs.message }}
           
       - name: Delete workflow runs
-        uses: Mattraks/delete-workflow-runs@main
+        uses: Mattraks/delete-workflow-runs@v2
         with:
           retain_days: 1
           keep_minimum_runs: 5
