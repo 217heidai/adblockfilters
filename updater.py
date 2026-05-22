@@ -71,10 +71,11 @@ class Updater(object):
                 rule.update = True
 
             os.rename(fileName_download, fileName)
-        except Exception as e:
-            logger.error(f'%s download failed: %s' % (rule.name, e))
-        finally:
+
             if rule.update:
                 rule.latest = time.strftime("%Y/%m/%d", time.localtime())
             logger.info("%s: latest=%s, update=%s"%(rule.name,rule.latest,rule.update))
+            return rule
+        except Exception as e:
+            logger.error(f'%s download failed: %s' % (rule.name, e))
             return rule

@@ -44,6 +44,7 @@ class Resolver(object):
             res = get_tld(address, fix_protocol=True, as_object=True)
             fld = res.fld
             subdomain = res.subdomain
+            return ip, fld, subdomain
         except Exception as e:
             try:
                 ip_address = IPy.IP(address)
@@ -51,7 +52,6 @@ class Resolver(object):
                     ip = address
             except Exception as e:
                 pass
-        finally:
             return ip, fld, subdomain
     
     def __analysis(self, address:str) -> Tuple[str]:
@@ -88,9 +88,9 @@ class Resolver(object):
                         block = self.__analysis(domain)
                         break
                 raise Exception('"%s": not keep'%(line))
+            return block
         except Exception as e:
             logger.error("%s"%(e))
-        finally:
             return block
 
     # 从 filter 规则中找出包含的域名
@@ -279,9 +279,9 @@ class Resolver(object):
                         domain = "%s"%(fld)
                 except Exception as e:
                     raise Exception('"%s": not include domain or ip'%(filter))
+            return filter,domain
         except Exception as e:
             logger.error("%s"%(e))
-        finally:
             return filter,domain
 
     # dns 模式
@@ -342,9 +342,9 @@ class Resolver(object):
             
             if filter:
                 filter = self.__resolveFilterDomain(filter)
+            return block,unblock,filter
         except Exception as e:
             logger.error("%s"%(e))
-        finally:
             return block,unblock,filter
 
     # filter 模式
@@ -423,9 +423,9 @@ class Resolver(object):
 
             if filter:
                 filter = self.__resolveFilterDomain(filter)
+            return block,unblock,filter
         except Exception as e:
             logger.error("%s"%(e))
-        finally:
             return block,unblock,filter
 
     def resolveHost(self, rule:Rule) -> Tuple[Dict[str,Set[str]],Dict[str,Set[str]],Dict[str,str]]:
