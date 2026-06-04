@@ -298,12 +298,12 @@ jav224.shop,ttp229.shop,clp126.shop,hsq233.shop#%#//scriptlet('prevent-setTimeou
 ! https://github.com/AdguardTeam/AdguardFilters/issues/228610
 ! https://github.com/AdguardTeam/AdguardFilters/issues/228606
 huaren.live,huavod.com#%#//scriptlet('prevent-setTimeout', 'bait.offsetHeight===0')
-huavod.top,huavod.net,huaren.live,huavod.com#%#//scriptlet('prevent-addEventListener', 'DOMContentLoaded', 'showModal')
-huavod.top,huavod.net,huaren.live,huavod.com##div[id^="anti-adblock-"]
+huavod.cc,huavod.top,huavod.net,huaren.live,huavod.com#%#//scriptlet('prevent-addEventListener', 'DOMContentLoaded', 'showModal')
+huavod.cc,huavod.top,huavod.net,huaren.live,huavod.com##div[id^="anti-adblock-"]
 huaren.live,huavod.com#@#.ad_unit
 ||static.okokserver.com/js/anti/adblocker.js
 !+ PLATFORM(ios, ext_android_cb)
-@@||okokserver.com/uploads/lesi/*.mp4$domain=huavod.net|huavod.com|huaren.live|huavod.top
+@@||okokserver.com/uploads/lesi/*.mp4$domain=huavod.net|huavod.com|huaren.live|huavod.top|huavod.cc
 ! https://github.com/AdguardTeam/AdguardFilters/issues/228259
 verb.tw#$#.adsbygoogle.ad-slot.ad-banner.textads.banner-ads { display: block !important; }
 !+ PLATFORM(ios, ext_android_cb, ext_safari)
@@ -1366,7 +1366,7 @@ jav224.shop,ttp229.shop,clp126.shop,hsq233.shop#%#//scriptlet('abort-current-inl
 surumi.shop###container > .art-video-player + div[id][style^="position: absolute;"][style*="z-index: 999"]
 wnacg.com##a[href*="erodatalabs.com"]
 free.com.tw##.advads-entity-placement
-huavod.top,huaren.live,huavod.com,huavod.net##a[href^="/go/baba/"]
+huavod.cc,huavod.top,huaren.live,huavod.com,huavod.net##a[href^="/go/baba/"]
 *$script,xmlhttprequest,third-party,domain=m.niupizhi.net
 ||m.niupizhi.net/lokedpgdjs
 ||cdn.rrmj.plus/c-next/mapp/*/layout-$script,replace=/firstAdMaxFreeTimes:\d+/firstAdMaxFreeTimes:30000/,domain=yichengwlkj.com
@@ -3435,14 +3435,19 @@ netfly.*,netfly.tv##div[class*="tt-"] > a[target="_blank"] > img
 netfly.*,netfly.tv##div[class*="tt-"] > a[target="_blank"] + span.tt-icon-close
 ! https://github.com/AdguardTeam/AdguardFilters/issues/219444
 ! https://github.com/AdguardTeam/AdguardFilters/issues/210237
-||static.okokserver.com/uploads/lesi/$xmlhttprequest,redirect=nooptext,domain=huaren.live|huavod.net|huavod.com|huavod.top
-huavod.top,huavod.net,huavod.com,huaren.live#%#//scriptlet('set-constant', 'ConFig.ad_duration_ms', '0')
-huavod.top,huavod.net,huavod.com,huaren.live#%#//scriptlet('trusted-set-constant', 'mac_player_info.from', 'ARTVIP')
-huavod.top,huavod.net,huavod.com,huaren.live#%#//scriptlet('trusted-set-constant', 'ConFig.config.ads', '{"pause":{"state":{}}}')
+||static.okokserver.com/uploads/lesi/$xmlhttprequest,redirect=nooptext,domain=huaren.live|huavod.net|huavod.com|huavod.top|huavod.cc
+huavod.cc,huavod.top,huavod.net,huavod.com,huaren.live#%#//scriptlet('set-constant', 'ConFig.ad_duration_ms', '0')
+huavod.cc,huavod.top,huavod.net,huavod.com,huaren.live#%#//scriptlet('trusted-set-constant', 'mac_player_info.from', 'ARTVIPA')
+huavod.cc,huavod.top,huavod.net,huavod.com,huaren.live#%#//scriptlet('trusted-set-constant', 'ConFig.config.ads', '{"pause":{"state":{}}}')
+!+ NOT_PLATFORM(ext_chromium_mv3, ext_ff)
+huavod.cc#%#(()=>{if(!location.href.includes("://huavod.cc/player/index.php"))return;const e=()=>{const e=document.querySelector("body > center > h1");e?.textContent?.includes("404 Not Found")&&(()=>{const e=top.document.querySelector('#playleft > iframe[src^="https://newplayer.huaren.live/player/index.php"]');e&&(e.src=e.src.replace("huaren.live","huavod.top"))})()};"loading"===document.readyState?document.addEventListener("DOMContentLoaded",e):e()})();
+!+ PLATFORM(ext_chromium_mv3, ext_ff)
+huavod.cc#%#//scriptlet('trusted-create-element', 'head', 'script', '', '(()=>{if(!location.href.includes("://huavod.cc/player/index.php"))return;const e=()=>{const e=document.querySelector("body > center > h1");e?.textContent?.includes("404 Not Found")&&(()=>{const e=top.document.querySelector(\'#playleft > iframe[src^="https://newplayer.huaren.live/player/index.php"]\');e&&(e.src=e.src.replace("huaren.live","huavod.top"))})()};"loading"===document.readyState?document.addEventListener("DOMContentLoaded",e):e()})();')
 ! TODO: remove hints when this issue is resolved - https://github.com/AdguardTeam/Scriptlets/issues/517
 !+ NOT_PLATFORM(windows, mac, android, cli)
-huavod.top,huavod.net,huavod.com,huaren.live#%#//scriptlet('trusted-replace-node-text', 'script', 'ConFig', 'let ConFig', 'var ConFig')
+huavod.cc,huavod.top,huavod.net,huavod.com,huaren.live#%#//scriptlet('trusted-replace-node-text', 'script', 'ConFig', 'let ConFig', 'var ConFig')
 !#if (adguard_app_windows || adguard_app_mac || adguard_app_android || adguard_app_cli)
+||huavod.cc/player/$replace=/let ConFig/var ConFig/,document,subdocument
 ||huavod.top/player/$replace=/let ConFig/var ConFig/,document,subdocument
 ||huavod.net/player/$replace=/let ConFig/var ConFig/,document,subdocument
 ||huavod.com/player/$replace=/let ConFig/var ConFig/,document,subdocument
@@ -5678,6 +5683,12 @@ newduba.cn###jq_youxi
 .z.dkt-ib.com
 ||cnzz.trafficmanager.net^
 ||cupfox.app^$third-party
+||branch20.top^
+||m3v8x28jut.com^
+||dd81bp3qbj.com^
+||pxlizduukhnpps.com^
+||va3yq7si6w.com^
+||xgsspao.com^
 ||nbwsj9gnd.com^
 ||t19olm6fd.com^
 ||dukwznn0x.com^
@@ -23245,6 +23256,7 @@ fqsousou.com,kengso.com#@#.user-share
 @@/sensorsdata.$domain=36kr.com|53zaixian.com|binance.com|by56.com|canon.com.cn|chuanglan.com|fenbi.com|guancha.cn|imooc.com|kuque.com|modian.com|saicskoda.com.cn|shanbay.com|tianyancha.com|ttcdw.cn|xinrenxinshi.com|zzjiasuqi.com
 @@/setCookie?$domain=ctrip.com|ctrip.com.hk|pinyin.cn
 @@/urchin.js$domain=on.cc
+@@||jsxx.gds.edu.cn^$genericblock
 @@||10010.com/mall/common/js/fa.js?referer=
 @@||10086.cn/framework/modules/sdc.js
 @@||111.75.255.103/Scripts/Controls/PageView.js
