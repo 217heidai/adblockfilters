@@ -285,6 +285,12 @@
 ! Bad: ||ad.doubleclick.net^ (should be in adservers.txt)
 !
 !
+! https://github.com/AdguardTeam/AdguardFilters/issues/233129
+laosu.tech#%#//scriptlet('prevent-addEventListener', 'DOMContentLoaded', 'detectAdBlocker')
+!#if (adguard_app_ios || adguard_ext_android_cb)
+laosu.tech#@##carbonads
+laosu.tech#@#.ad-block
+!#endif
 ! https://github.com/AdguardTeam/AdguardFilters/issues/230872
 freedidi.com#%#//scriptlet('abort-on-property-read', 'SPM_CONFIG.adblockOnly')
 ||freedidi.com/wp-content/plugins/abn-wall/assets/abn-wall.
@@ -1324,6 +1330,17 @@ $script,xmlhttprequest,third-party,domain=00ksw.com|01zww.com|0biquge.com|114zw.
 !
 ! NOTE: Specific rules
 !
+||pic.deueza.cn/*.gif$domain=mqoeomads.cc
+mqoeomads.cc##div.dx-banner-item
+mqoeomads.cc##.dx-recommend-icons
+mqoeomads.cc##ul.video-items > li:has(> [data-ad_id])
+mqoeomads.cc##.md\:block.hidden:has([data-ad_id])
+mqoeomads.cc##.ad-dialog
+mqoeomads.cc##.modal-backdrop
+mqoeomads.cc##.md\:bg-inherit
+mqoeomads.cc###tip_modal > .modal-dialog
+mqoeomads.cc##.dx-modal
+mqoeomads.cc##.dx-ad-plugin
 aramgg.com##.bg-red-950
 aramgg.com##a[rel^="sponsored"]
 x6g.com##.news-article_container > ul > li[class]:has(> a[href^="/ad.php?aHR0c"])
@@ -5699,6 +5716,9 @@ newduba.cn###jq_youxi
 ||satinwood84.com^
 ||pwvlthpqzonnfe.com^
 ||m8qk101065.com^
+||79ssr9d244.com^
+||uevrhqra7u.com^
+||qf51ho9qtz.com^
 ||7da1aovz6.com^
 ||d5092moci.com^
 ||q0m9dkp5c.com^
