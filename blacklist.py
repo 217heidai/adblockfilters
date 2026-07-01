@@ -125,17 +125,19 @@ class DOMAIN(object):
     def getTimeStamp(self) -> int:
         return self.__timeStamp
 
-    def setBlock(self):
-        if self.__isBlock != 1:
-            self.__isBlock = 1
+    def setBlock(self, isBlock:bool):
+        f = 1 if isBlock else 0
+        if self.__isBlock != f:
+            self.__isBlock = f
             self.__update = True
     
     def getBlock(self) -> bool:
         return True if self.__isBlock else False
     
-    def setChina(self):
-        if self.__isChina != 1:
-            self.__isChina = 1
+    def setChina(self, isChina:bool):
+        f = 1 if isChina else 0
+        if self.__isChina != f:
+            self.__isChina = f
             self.__update = True
     
     def getChina(self) -> bool:
@@ -419,25 +421,25 @@ class BlackList(object):
             if domain.fld:
                 # .cn 域名默认为国内
                 if domain.fld[-3:] == ".cn":
-                    domain.setChina()
+                    domain.setChina(True)
                     return domain
                 # full:
                 if domain.domain in fullSet_CN:
-                    domain.setChina()
+                    domain.setChina(True)
                     return domain
                 # doamin:
                 if domain.fld in domainSet_CN:
-                    domain.setChina()
+                    domain.setChina(True)
                     return domain
                 # regexp:
                 for regexp in regexpSet_CN:
                     if re.match(regexp, domain.domain):
-                        domain.setChina()
+                        domain.setChina(True)
                         return domain
                 # keyword:
                 for keyword in keywordSet_CN:
                     if re.match(r".*%s.*"%(keyword), domain.domain):
-                        domain.setChina()
+                        domain.setChina(True)
                         return domain
 
             # 从 IP 识别
@@ -446,12 +448,14 @@ class BlackList(object):
                 ip = IPy.parseAddress(ip)[0]
                 for k, v in IPDict_CN.items():
                     if (ip ^ k) >> (32 - v)  == 0:
-                        domain.setChina()
+                        domain.setChina(True)
                         return domain
             
+            domain.setChina(False)
             return domain
         except Exception as e: 
             logger.error('"%s": not domain'%(domain))
+            domain.setChina(False)
             return domain
 
     def __getDomainDict_db(self) -> Dict[str, DOMAIN]:
@@ -524,8 +528,10 @@ class BlackList(object):
             for k,v in domainDict.items():
                 ipList = v.getIPList()
                 if len(ipList) == 0:
-                    v.setBlock()
+                    v.setBlock(True)
                     blackList.append(k)
+                else:
+                    v.setBlock(False)
             if len(blackList):
                 blackList.sort()
                 self.__generateBlackList(blackList)
