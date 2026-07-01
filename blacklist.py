@@ -25,7 +25,7 @@ class DomainDatabase(object):
 
     def __execute(self, sql:str):
         try:
-            return self.conn.execute(sql)
+            return self.__conn.execute(sql)
         except (sqlite3.OperationalError, sqlite3.IntegrityError) as e:
             logger.exception(e)
 
@@ -33,7 +33,7 @@ class DomainDatabase(object):
         try:
             sql = "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
             tableList = []
-            for row in self.execute(sql):
+            for row in self.__execute(sql):
                 tableList.append(row[0])
             if tableName in tableList:
                 return True
