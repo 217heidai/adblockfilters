@@ -110,12 +110,14 @@ class DOMAIN(object):
         except Exception as e:
             try:
                 if address.find(":") > 0:
-                    port = address[address.find(":")+1 : ]
                     ip_address = IPy.IP(address[:address.find(":")])
+                    if ip_address.iptype() == "PUBLIC":
+                        ip = address[ : address.find(":")]
+                        port = address[address.find(":")+1 : ]
                 else:
                     ip_address = IPy.IP(address)
-                if ip_address.iptype() == "PUBLIC":
-                    ip = address
+                    if ip_address.iptype() == "PUBLIC":
+                        ip = address
             except Exception as e:
                 logger.error('"%s": not domain or ip'%(address))
             return fld, subdomain, ip, port
