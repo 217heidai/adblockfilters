@@ -8,6 +8,7 @@ env:
   TZ: Asia/Shanghai
   SMARTDNS_URL: https://github.com/pymumu/smartdns/releases/download/Release46.1/smartdns-x86_64
   SMARTDNS_PATH: /tmp/smartdns
+  DB_URL: https://github.com/217heidai/adblockfilters/releases/download/domain/domain.db
 
 jobs:
   Generate_Blacklist:
@@ -36,12 +37,26 @@ jobs:
           cp smartdns.conf $SMARTDNS_PATH/smartdns.conf
           nohup $SMARTDNS_PATH/smartdns -f -x -c $SMARTDNS_PATH/smartdns.conf > /dev/null 2>&1 &
 
+      - name: Download DB
+        run: |
+          wget $DB_URL -O domain.db
+
       - name: Generate Blacklist
         id: update
         run: |
           python blacklist.py
           rm -rf __pycache__
           echo "message=$(date)" >> $GITHUB_OUTPUT
+
+      - name: Upload DB
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          file_glob: true
+          file: domain.db
+          tag: domain
+          body: |
+          overwrite: true
 
       - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v7
