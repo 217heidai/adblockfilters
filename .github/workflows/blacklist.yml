@@ -38,6 +38,7 @@ jobs:
           nohup $SMARTDNS_PATH/smartdns -f -x -c $SMARTDNS_PATH/smartdns.conf > /dev/null 2>&1 &
 
       - name: Download DB
+        continue-on-error: true
         run: |
           wget $DB_URL -O domain.db
 
