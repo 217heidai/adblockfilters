@@ -21,6 +21,7 @@ class DomainDatabase(object):
         self.__init_db()
 
     def close(self):
+        self.__execute('VACUUM')
         self.__conn.close()
 
     def __execute(self, sql:str):
