@@ -130,6 +130,7 @@ class DOMAIN(object):
         f = 1 if isBlock else 0
         if self.__isBlock != f:
             self.__isBlock = f
+            self.__timeStamp = int(time.time())
             self.__update = True
     
     def getBlock(self) -> bool:
@@ -139,6 +140,7 @@ class DOMAIN(object):
         f = 1 if isChina else 0
         if self.__isChina != f:
             self.__isChina = f
+            self.__timeStamp = int(time.time())
             self.__update = True
     
     def getChina(self) -> bool:
@@ -147,6 +149,7 @@ class DOMAIN(object):
     def setIPList(self, ipList:List[str]):
         if set(self.__ipList) != set(ipList):
             self.__ipList = ipList
+            self.__timeStamp = int(time.time())
             self.__update = True
     
     def getIPList(self) -> List[str]:
