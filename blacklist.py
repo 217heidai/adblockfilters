@@ -220,8 +220,9 @@ class BlackList(object):
             logger.error(f'%s download failed: %s' % (fileName, e))
             return False
 
-    def __getDomainDict(self, domainDict:Dict[str, DOMAIN]) -> Dict[str, DOMAIN]:
+    def __getDomainDict(self) -> Dict[str, DOMAIN]:
         logger.info("resolve domain list...")
+        domainDict = dict()
         try:
             if os.path.exists(self.__domainlistFile):
                 with open(self.__domainlistFile, 'r') as f:
@@ -233,10 +234,8 @@ class BlackList(object):
                             continue
                         # 去掉注释
                         if line.startswith('#'):
-                            continue
-                        
-                        if line not in domainDict:
-                            domainDict[line] = DOMAIN(line)
+                            continue                        
+                        domainDict[line] = DOMAIN(line)
 
             logger.info("domain dict: %d"%(len(domainDict)))
             return domainDict
@@ -459,12 +458,12 @@ class BlackList(object):
             domain.setChina(False)
             return domain
 
-    def __getDomainDict_db(self) -> Dict[str, DOMAIN]:
+    def __getDomainDict_db(self, domainDict:Dict[str, DOMAIN]) -> Dict[str, DOMAIN]:
         logger.info("get domain list from db...")
-        domainDict = dict()
         try:
             for line in self.__db.getAll():
-                domainDict[line[0]] = DOMAIN(line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8])
+                if line[0] in domainDict:
+                    domainDict[line[0]] = DOMAIN(line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8])
 
             logger.info("domain dict: %d"%(len(domainDict)))
             return domainDict
@@ -487,13 +486,13 @@ class BlackList(object):
 
     def generate(self):
         try:
-            # 获取数据库域名清单
-            domainDict = self.__getDomainDict_db()
-
             # 获取域名清单 https://raw.githubusercontent.com/217heidai/adblockfilters/refs/heads/main/rules/domain.txt
-            domainDict = self.__getDomainDict(domainDict)
+            domainDict = self.__getDomainDict()
             if len(domainDict) < 1:
                 return
+            
+            # 获取数据库域名清单
+            domainDict = self.__getDomainDict_db(domainDict)
             
             # 获取直连域名清单 https://raw.githubusercontent.com/217heidai/RoutingRules/main/rules/direct.txt
             fullSet_CN,domainSet_CN,regexpSet_CN,keywordSet_CN = self.__getDomainSet_CN()
