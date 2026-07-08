@@ -85,6 +85,7 @@ class DOMAIN(object):
     def __init__(self, domain:str, tld:str=None, fld:str=None, subdomain:str=None, ip:str=None, port:int=None, isBlock:int=None, isChina:int=None, timeStamp:int=None, ipList:str=None):
         self.domain = domain
         if timeStamp:
+            self.__update = False
             self.tld = tld
             self.fld = fld
             self.subdomain = subdomain
@@ -97,14 +98,13 @@ class DOMAIN(object):
             self.__isChina = isChina
             self.__timeStamp = timeStamp
             self.__ipList = ipList.split(',') if ipList else []
-            self.__update = False
         else:
+            self.__update = True
             self.tld, self.fld, self.subdomain, self.ip, self.port = self.__ip_or_domain(self.domain)
             self.__isBlock = 0
             self.__isChina = 0
             self.__timeStamp = int(time.time())
             self.__ipList = []
-            self.__update = True
         
     def __ip_or_domain(self, address:str) -> Tuple[str]: # ip, fld, subdomain
         tld, fld, subdomain, ip, port = None, None, None, None, None
