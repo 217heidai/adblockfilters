@@ -68,33 +68,38 @@ class DomainDatabase(object):
                                                     isBlock INTEGER NOT NULL CHECK (isBlock IN (0, 1)) DEFAULT 0,\
                                                     isChina INTEGER NOT NULL CHECK (isChina IN (0, 1)) DEFAULT 0,\
                                                     timeStamp INTEGER NOT NULL,\
-                                                    ipList TEXT)'%(self.__table_domain))
+                                                    ipList TEXT,\
+                                                    tld TEXT)'%(self.__table_domain))
             self.__execute('CREATE UNIQUE INDEX INDEX_%s_UNIQUE on %s (domain)'%(self.__table_domain, self.__table_domain))
-            self.__execute('CREATE INDEX index_%s on %s (isBlock, isChina, timeStamp, fld, domain, ip, port)'%(self.__table_domain, self.__table_domain))
+            self.__execute('CREATE INDEX index_%s on %s (isBlock, isChina, timeStamp, tld, fld, domain, ip, port)'%(self.__table_domain, self.__table_domain))
     
     def getAll(self) -> List[Tuple]:
-        sql = "SELECT domain,fld,subdomain,ip,port,isBlock,isChina,timeStamp,ipList FROM %s"%(self.__table_domain)
+        sql = "SELECT domain,tld,fld,subdomain,ip,port,isBlock,isChina,timeStamp,ipList FROM %s"%(self.__table_domain)
         return self.__execute(sql)
 
     def updateALL(self, domainList:List[Tuple]):
-        sql = "REPLACE INTO %s (domain, fld, subdomain, ip, port, isBlock, isChina, timeStamp, ipList) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"%(self.__table_domain)
+        sql = "REPLACE INTO %s (domain, fld, subdomain, ip, port, isBlock, isChina, timeStamp, ipList, tld) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"%(self.__table_domain)
         self.__updateData(sql, domainList)
 
 class DOMAIN(object):
-    def __init__(self, domain:str, fld:str=None, subdomain:str=None, ip:str=None, port:int=None, isBlock:int=None, isChina:int=None, timeStamp:int=None, ipList:str=None):
+    def __init__(self, domain:str, tld:str=None, fld:str=None, subdomain:str=None, ip:str=None, port:int=None, isBlock:int=None, isChina:int=None, timeStamp:int=None, ipList:str=None):
         self.domain = domain
         if timeStamp:
+            self.tld = tld
             self.fld = fld
             self.subdomain = subdomain
             self.ip = ip
             self.port = port
+            if self.tld is None and self.fld is not None: # 补充之前缺失的 tld
+                self.tld, self.fld, self.subdomain, self.ip, self.port = self.__ip_or_domain(self.domain)
+                self.__update = True
             self.__isBlock = isBlock
             self.__isChina = isChina
             self.__timeStamp = timeStamp
             self.__ipList = ipList.split(',') if ipList else []
             self.__update = False
         else:
-            self.fld, self.subdomain, self.ip, self.port = self.__ip_or_domain(self.domain)
+            self.tld, self.fld, self.subdomain, self.ip, self.port = self.__ip_or_domain(self.domain)
             self.__isBlock = 0
             self.__isChina = 0
             self.__timeStamp = int(time.time())
@@ -102,12 +107,13 @@ class DOMAIN(object):
             self.__update = True
         
     def __ip_or_domain(self, address:str) -> Tuple[str]: # ip, fld, subdomain
-        fld, subdomain, ip, port = None, None, None, None
+        tld, fld, subdomain, ip, port = None, None, None, None, None
         try:
             res = get_tld(address, fix_protocol=True, as_object=True)
+            tld = res.tld
             fld = res.fld
             subdomain = res.subdomain if len(res.subdomain) else None
-            return fld, subdomain, ip, port
+            return tld, fld, subdomain, ip, port
         except Exception as e:
             try:
                 if address.find(":") > 0:
@@ -119,9 +125,10 @@ class DOMAIN(object):
                     ip_address = IPy.IP(address)
                     if ip_address.iptype() == "PUBLIC":
                         ip = address
+                return tld, fld, subdomain, ip, port
             except Exception as e:
                 logger.error('"%s": not domain or ip'%(address))
-            return fld, subdomain, ip, port
+                return tld, fld, subdomain, ip, port
     
     def getTimeStamp(self) -> int:
         return self.__timeStamp
@@ -169,6 +176,7 @@ class DOMAIN(object):
         L.append(self.__isChina)
         L.append(self.__timeStamp)
         L.append(','.join(map(str, self.__ipList)) if len(self.__ipList) else None)
+        L.append(self.tld)
         return tuple(L)
 
 
@@ -466,7 +474,7 @@ class BlackList(object):
         try:
             for line in self.__db.getAll():
                 if line[0] in domainDict:
-                    domainDict[line[0]] = DOMAIN(line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8])
+                    domainDict[line[0]] = DOMAIN(line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9])
 
             logger.info("domain dict: %d"%(len(domainDict)))
             return domainDict
