@@ -154,10 +154,10 @@ class DOMAIN(object):
         return True if self.__isChina else False
 
     def setIPList(self, ipList:List[str]):
-        if set(self.__ipList) != set(ipList):
-            self.__ipList = ipList
-            self.__timeStamp = int(time.time())
-            self.__update = True
+        # 此处改为强制更新，解决超过 36 天后重新解析出来的 IP 与原记录一致不更新，导致每次都重新解析的问题。
+        self.__ipList = ipList
+        self.__timeStamp = int(time.time())
+        self.__update = True
     
     def getIPList(self) -> List[str]:
         return self.__ipList
