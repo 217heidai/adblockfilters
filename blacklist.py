@@ -9,6 +9,7 @@ from typing import Dict,List,Tuple,Set
 import httpx
 import IPy
 from tld import get_tld
+from tld.utils import update_tld_names
 from loguru import logger
 from dns.asyncresolver import Resolver as DNSResolver
 from dns.rdatatype import RdataType as DNSRdataType
@@ -574,6 +575,9 @@ if __name__ == "__main__":
     ############################################
     '''
 
+    # 更新 tld
+    update_tld_names()
+    
     blackList = BlackList(path)
     blackList.generate()
     blackList.close()
