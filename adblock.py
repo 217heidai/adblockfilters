@@ -1,6 +1,7 @@
 import os
 
 from loguru import logger
+from tld.utils import update_tld_names
 
 from readme import ReadMe
 from updater import Updater
@@ -46,5 +47,8 @@ if __name__ == '__main__':
         os.remove(logFile)
     logger.add(logFile)
     '''
+    # 更新 tld
+    update_tld_names()
+    
     adBlock = ADBlock()
     adBlock.refresh()
