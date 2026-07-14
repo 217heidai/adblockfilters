@@ -3,8 +3,8 @@
 ! Description: 适用于 AdGuard 的去广告合并规则，每 8 个小时更新一次。规则源：AdGuard Base filter、AdGuard Chinese filter、AdGuard Mobile Ads filter、AdGuard DNS filter、AdRules DNS List、CJX's Annoyance List、EasyList、EasyList China、EasyPrivacy、xinggsf mv、jiekouAD、AWAvenue Ads Rule、DNS-Blocklists Light、OISD Basic、StevenBlack hosts、Pollock hosts。
 ! Homepage: https://github.com/217heidai/adblockfilters
 ! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt
-! Version: 20260714015906
-! Last modified: 2026/07/14 01:59:06
+! Version: 20260714105245
+! Last modified: 2026/07/14 10:52:45
 ! Blocked Filters: 102062
 !
 ###AC_ad
@@ -42852,7 +42852,7 @@ cloud.getpczone.com##form > center > a[target="_blank"]
 cloud.tencent.com##.cdc-commercial-swiper
 cloud.tencent.com##.mod-commercial
 cloudbate.com#%#//scriptlet('remove-attr', 'onclick', '.play-now')
-cloudfam.io##.cf-body > .cf-ad-box
+cloudfam.io##.cf-ad-box
 cloudfam.io#%#(()=>{const e={apply:(e,t,n)=>{const o=Reflect.apply(e,t,n);try{o instanceof HTMLIFrameElement&&""===o.src&&o.contentWindow&&(o.contentWindow.fetch=window.fetch,o.contentWindow.getComputedStyle=window.getComputedStyle)}catch(e){}return o}};Node.prototype.appendChild=new Proxy(Node.prototype.appendChild,e)})();
 cloudfam.io#%#//scriptlet('abort-current-inline-script', 'EventTarget.prototype.addEventListener', '/delete window|window\.open/')
 cloudfam.io#%#//scriptlet('abort-on-stack-trace', 'document.createElement', '/openAdWithFallback|getNativeApis/')
@@ -42861,6 +42861,7 @@ cloudfam.io#%#//scriptlet('prevent-fetch', '/pagead|adserve|adsbygoogle/')
 cloudfam.io#%#//scriptlet('prevent-fetch', 'method:HEAD')
 cloudfam.io#%#//scriptlet('prevent-window-open')
 cloudfam.io#%#//scriptlet('trusted-replace-argument', 'Blob', '0', 'emptyArr', '/\(.+\.data\.url/')
+cloudfam.io#%#//scriptlet('trusted-replace-node-text', 'script', 'blocked', '/if\s*\(!blocked\)/g', 'if(!0)')
 cloudfam.io#?#.text-center:contains(Advertisement)
 cloudflareinsights.com$third-party
 cloudgallery.net,imgair.net#%#//scriptlet("abort-current-inline-script", "document.getElementById", "shouldFire")
@@ -65204,8 +65205,8 @@ nodejs.cn#%#//scriptlet('set-constant', 'adRender', 'noopFunc')
 nodejs.cn#%#//scriptlet('set-constant', 'adsbygoogle', 'emptyObj')
 nodejs.cn#%#//scriptlet('set-constant', 'adsbygoogle.loaded', 'true')
 nodejs.libhunt.com##.saashub-ad
-nodeloc.com###wghtml
 nodeloc.com##.AfruxWidgets-sideNavAlt
+nodeloc.com##.sidebar-ads-wrapper
 nodeseek.com###nsk-right-panel-container > div.category-list + div:not([class])
 nodeseek.com##.promotation-item
 nodevice.com###ndad_top
@@ -70224,6 +70225,7 @@ radio.de,radio.at,radio.net###sticky-reklame-header
 radio.de,radio.at,radio.net##.relative[data-testid="page-holder"] > section.content-visibility-auto:not([id]):not([data-testid]):has(.ad-container)
 radio.de,radio.at,radio.net##body > .items-center:has(> .super-reklame-header-holder)
 radio.net###section-ad
+radio.net###sticky-reklame-header
 radio.net##.lg\:h-\[270px\]
 radio.net##.topASp
 radio.net##.topAdSpacer
@@ -74834,10 +74836,7 @@ startribune.com##div[data-testid="sponsored-list-ad"]
 startup.ch##.smallbanner
 startupcafe.ro###block-views-block-events-block-2
 startupcafe.ro##.main-partners
-startuphub.ai#?#.duration-700.bg-card:contains(Partner)
-startuphub.ai#?#.duration-700.bg-card:has-text(Partner)
-startuphub.ai#?#.group.block:contains(Partner)
-startuphub.ai#?#.group.block:has-text(Partner)
+startuphub.ai##a[href*="/go/"]
 startups.co.uk##.headline-sponsor
 starwank.com##.content > .top > center
 starwank.com,faptor.com##.zpot-horizontal-img
@@ -88935,6 +88934,7 @@ zzzyk.com###Tinfo
 ||cloudbet.com/ad/
 ||cloudconvert.com/build/assets/plausible-CoqwX5KR.js
 ||clouddn.com/960x60.gif
+||cloudfam.io^$replace=/if\s*\(!blocked\)/if(!0)/,document
 ||cloudflare-analiytics.pages.dev/analytics.js
 ||cloudflare-quic.com/cdn-cgi/trace
 ||cloudflare.com/_cf/analytics.js
