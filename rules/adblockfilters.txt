@@ -3,9 +3,9 @@
 ! Description: 适用于 AdGuard 的去广告合并规则，每 8 个小时更新一次。规则源：AdGuard Base filter、AdGuard Chinese filter、AdGuard Mobile Ads filter、AdGuard DNS filter、AdRules DNS List、CJX's Annoyance List、EasyList、EasyList China、EasyPrivacy、xinggsf mv、jiekouAD、AWAvenue Ads Rule、DNS-Blocklists Light、OISD Basic、StevenBlack hosts、Pollock hosts。
 ! Homepage: https://github.com/217heidai/adblockfilters
 ! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt
-! Version: 20260715012000
-! Last modified: 2026/07/15 01:20:00
-! Blocked Filters: 106097
+! Version: 20260715093223
+! Last modified: 2026/07/15 09:32:23
+! Blocked Filters: 106112
 !
 ###AC_ad
 ###AD_160
@@ -4982,6 +4982,7 @@
 ##._popIn_recommend_article_ad
 ##._popIn_recommend_article_ad_reserved
 ##._table_ad_div_wide
+##._v_ad_container
 ##.a-ad
 ##.a-adhesion
 ##.a-d-250
@@ -16271,7 +16272,9 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 .jp/static/js/track.js
 .js?*&ssid=$third-party
 .js?advertID=
+.js?i=*&referrer_url=
 .js?id=GTM-
+.js?rh=*&bh=
 .js?ssid=_$script,third-party
 .js?tg=$~third-party
 .k618.cn/sytab/
@@ -22997,7 +23000,7 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 18moe.org##.alignnone[alt="恰饭广告"]
 18moe.vip##a[href^="http"]:not([href*="18moe.vip"]) > img[src*="tc.18moe.net"]
 18porn.sex,18teensex.tv,429men.com,4kporn.xxx,4wank.com,alotporn.com,amateur8.com,amateurporn.co,amateurporn.me,bigtitslust.com,camwhores.tv,danude.com,daporn.com,epicgfs.com,fapnow.xxx,fpo.xxx,freeporn8.com,fuqer.com,gayck.com,hentai-moon.com,hentai0day.com,heroero.com,hoes.tube,intporn.com,japaneseporn.xxx,javwind.com,jizzberry.com,mmshub.online,multi.xxx,onlyhentaistuff.com,porndr.com,sexjav.tv,sextubespot.com,sortporn.com,tabootube.xxx,trueamateurporn.org,vilevideos.com,watchmygf.xxx,watchporn.to,xcavy.com,xgroovy.com,xmateur.com,xxxshake.com##.table
-18porn.sex,amateur8.com,anyporn.com,area51.porn,bigtitslust.com,eachporn.com,fapster.xxx,fpo.xxx,freeporn8.com,hentai-moon.com,hentai0day.com,its.porn,izlesimdiporno.com,mmshub.online,pervertslut.com,porngem.com,pornmeka.com,porntop.com,sexvid.xxx,sortporn.com,tktube.com,uiporn.com,xhamster.com##.sponsor
+18porn.sex,anyporn.com,area51.porn,bigtitslust.com,eachporn.com,fapster.xxx,fpo.xxx,freeporn8.com,hentai-moon.com,hentai0day.com,its.porn,izlesimdiporno.com,mmshub.online,pervertslut.com,porngem.com,pornmeka.com,porntop.com,sexvid.xxx,sortporn.com,tktube.com,uiporn.com,xhamster.com##.sponsor
 18porno.tv##.toplist
 18pornsex.com##.video-page > .ad
 18pornvideos.net##.content > .spots-wr
@@ -37696,13 +37699,15 @@ amateur-couples.com#%#//scriptlet('set-constant', 'dclm_ajax_var.disclaimer_redi
 amateur-vids.eu,bestjavporn.com,deepfucks.com,mature.community,milf.community,milf.plus##.happy-footer
 amateur-vids.eu,camgirl-video.com,mature.community,milf.community,milf.plus##.happy-under-player
 amateur8.com###A8-Under-Video
-amateur8.com##.inp__wrapper
 amateur8.com##.is-av
+amateur8.com##.item.pignu
+amateur8.com##.pignu[style="width: 100%; max-width:800px; aspect-ratio: auto; margin:0 auto; margin-bottom: 10px;"]
+amateur8.com##li.pignu
 amateur8.com,bigtitslust.com,freeporn8.com###lotal
+amateur8.com,bigtitslust.com,freeporn8.com#%#//scriptlet('abort-on-property-write', '__spotSettings')
 amateur8.com,bigtitslust.com,maturetubehere.com,lesbian8.com,sortporn.com,freeporn8.com#%#//scriptlet("abort-on-property-read", "Q433")
 amateur8.com,ebony8.com,freeporn8.com##li.pignr
 amateur8.com,lesbian8.com##.kt-api-btn-start
-amateur8.com,maturetubehere.com###nopp
 amateurest.com##.under-player-text
 amateurfapper.com,iceporn.tv,pornmonde.com##.sources
 amateurphotographer.com,cryptoslate.com,techspot.com##.cta
@@ -40776,6 +40781,8 @@ bianity.net##.bn-lg-sidebar
 bianity.net##.bn-lg.bn-p-b
 bibgame.com##.topicContent > font[color="red"]:last-child
 biblehub.com##div[align="center"]:has(> div[id^="div-gpt-ad"])
+biblestudytools.com##a[target="_blank"] > img
+biblestudytools.com##div:has(> a[target="_blank"]:only-child > img:only-child)
 biblestudytools.com##featuredtopicslistviewcomponent
 biblestudytools.com#?#.mb-5 > div.content-center:has(> div.a-d-90)
 biblestudytools.com#?#.mx-auto > div.content-center:has(> div[id*="varxvar"])
@@ -41402,10 +41409,12 @@ blog.aming.info#%#//scriptlet("prevent-window-open")
 blog.csdn.net###article_content > link + a
 blog.csdn.net###kp_box_www_swiper_ban
 blog.csdn.net##.blog-slide-ad-box
+blog.csdn.net##.passport-login-container
 blog.csdn.net##.programmer1Box
 blog.csdn.net##.t0
 blog.csdn.net##.toolbar-advert
 blog.csdn.net##SCRIPT[src^="https://csdnimg.cn/release/phoenix/vendor/linkCatcher/linkCatcher.js"] + .t0
+blog.csdn.net##[class^='mobileContainer_']
 blog.csdn.net##div[style="min-height:250px;"]
 blog.csdn.net##dl[id^="yd_a_d_feed_"]
 blog.hubspot.com###hs_cos_wrapper_blog_post_sticky_cta
@@ -47034,6 +47043,7 @@ domaingang.com##.domai-target
 domaingang.com##.widget_execphp
 domainincite.com##div[style*="margin-bottom:"][style*="margin-left:"] > a > img
 domainnamewire.com##.after-header
+domainnamewire.com##.g-single
 domainnamewire.com##.sidebar-primary
 domainnamewire.com##div[class^="bg-ad-"]
 domainnamewire.com#?#h4.widget-title:contains(/^Advertisement$/)
@@ -47424,6 +47434,8 @@ dramacool.*##.sidebar.mCS-autoHide
 dramacool.*#?#.content-right > div.block-tab > div.block > div.tab-content:has(> div.ads_place_160)
 dramacool.*#?#.content-right > div.block-tab > ul.tab > li:contains(/^Ads$/)
 dramacool9.io##a[href^="https://bodelen.com/"]
+dramaflix.cc#$#.dfx-shield-root { display: none !important; }
+dramaflix.cc#$#body { overflow: auto !important; }
 dramaflix.cc#%#//scriptlet('abort-on-stack-trace', 'document.createElement', 'loadPopunder')
 dramaflix.cc#%#//scriptlet('prevent-fetch', 'adsbygoogle')
 dramaflix.cc#%#//scriptlet('prevent-setTimeout', 'offsetHeight')
@@ -62892,6 +62904,7 @@ matureporn.com##.b-spot-section
 matureporn.com,machotube.tv##.b-randoms-col
 maturesex.fun,teenpornvideo.fun,xteensex.net,oosex.net,theteensexy.com,nakedteens.fun###spot-holder
 maturetubehere.com###lotal
+maturetubehere.com###nopp
 matzoo.pl##.reklamy
 matzoo.pl#%#//scriptlet('prevent-setInterval', 'bait.offsetParent')
 mavink.com##.adgrid
@@ -68809,6 +68822,7 @@ people.com.cn##.ipc_none
 people.com.cn##.zh_left
 peoplematters.in##.alertBar
 pep.ph##.c-ad__item
+pepper.com##div[data-t="bannerAd"]
 pepper.com,pepper.pl##.listLayout-box:has(> .ad:only-child)
 pepper.pl###sidebarContentPortal .listLayout-box:has(> .slot)
 pepper.pl##.box--content > .flex:has(> .slot--bg:only-child)
@@ -88742,7 +88756,6 @@ zzzyk.com###Tinfo
 ||amateur.tv/cacheableContent/GetWContentV3/device/pc/target/normal/contentKey/affbmr/
 ||amateur.tv/freecam/$third-party
 ||amateur.tv/misc/mYcLBNp7fx.js
-||amateur8.com/ffd5/afb.js
 ||amateurs-fuck.com/kutstelers.js
 ||amateursubs.com/wp-content/special/
 ||amatrck.com^$popup
@@ -89239,6 +89252,7 @@ zzzyk.com###Tinfo
 ||aqlife.com/data/attachment/portal/
 ||aquete.com^$popup
 ||aqy103.com/js/aqy/
+||ar.prd.content.itv.com/media/$domain=itv.com
 ||aramuz.net/frontapi/*/analyticsEvent?
 ||arbiscan.io/images/gen/*_StylusBlitz_Arbiscan_Ad.png
 ||arborerplanful.shop^$popup
@@ -91757,6 +91771,7 @@ zzzyk.com###Tinfo
 ||content.sinpartycdn.com/resources/pre-roll-ads/
 ||content.sinpartycdn.com/videos-ads/*.mp4$media,redirect=noopmp3-0.1s
 ||content.spmediacdn.com/site/banner.html
+||content.swncdn.com/zcast/oneplace/
 ||content.tupaki.com//*/news/Virupaksha-Movie-*.jpg
 ||content.uplynk.com/api/*/preplay/*.json?$replace=/("ads": {"breaks": \[)[\s\S]*?(\]\}\\, "prefix":)/\$1\$2/,domain=abc7chicago.com|abc7ny.com
 ||content.uplynk.com/api/v*/preplay/*.json$replace=/\{"boundaries": \[\{"[\s\S]*?"content_type": "ad"[\s\S]*?"ads": \{"breaks":[\s\S]*?"playURL":/{"playURL":/,domain=cwtv.com
