@@ -20,6 +20,9 @@ class SingBox(APPBase):
                 fileName = self.fileName
                 blockList = self.blockList
             
+            tmpList = [x for x in blockList if self.isDomain(x)]
+            blockList = tmpList
+
             if os.path.exists(fileName):
                 os.remove(fileName)
             
