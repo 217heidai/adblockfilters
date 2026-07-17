@@ -2,6 +2,8 @@ import time
 from typing import List, Set, Dict
 from abc import ABC, abstractmethod
 
+from tld import get_tld
+
 from loguru import logger
 
 
@@ -63,3 +65,11 @@ class APPBase(ABC):
                 self.generate(isLite=True)
         except Exception as e:
             logger.error("%s"%(e))
+    
+    def isDomain(self, address:str) -> bool:
+        try:
+            get_tld(address, fix_protocol=True, as_object=True)
+            return True
+        except Exception as e:
+            logger.error("%s"%(e))
+            return False
