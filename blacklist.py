@@ -82,6 +82,32 @@ class DomainDatabase(object):
         sql = "REPLACE INTO %s (domain, fld, subdomain, ip, port, isBlock, isChina, timeStamp, ipList, tld) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"%(self.__table_domain)
         self.__updateData(sql, domainList)
 
+    def deleteBatch(self, domainList, batch_size=500):
+        """
+        分批删除域名，避免 too many SQL variables 错误
+        """
+        total_deleted = 0
+
+        if len(domainList) < 1:
+            return total_deleted  # 没有要删除的
+
+        # 开启显式事务（提高性能并保证原子性）
+        self.__conn.execute("BEGIN TRANSACTION")
+        try:
+            for i in range(0, len(domainList), batch_size):
+                batch = domainList[i:i+batch_size]
+                placeholders = ','.join(['?'] * len(batch))
+                sql = f"DELETE FROM {self.__table_domain} WHERE domain IN ({placeholders})"
+                cursor = self.__conn.execute(sql, batch)
+                total_deleted += cursor.rowcount
+            # 提交事务
+            self.__conn.commit()
+        except Exception as e:
+            # 出现异常则回滚
+            self.__conn.rollback()
+
+        return total_deleted
+
 class DOMAIN(object):
     def __init__(self, domain:str, tld:str=None, fld:str=None, subdomain:str=None, ip:str=None, port:int=None, isBlock:int=None, isChina:int=None, timeStamp:int=None, ipList:str=None):
         self.domain = domain
@@ -470,18 +496,20 @@ class BlackList(object):
             domain.setChina(False)
             return domain
 
-    def __getDomainDict_db(self, domainDict:Dict[str, DOMAIN]) -> Dict[str, DOMAIN]:
+    def __getDomainDict_db(self, domainDict:Dict[str, DOMAIN]) -> Tuple[Dict[str, DOMAIN], List[str]]:
         logger.info("get domain list from db...")
+        deleteList = list()
         try:
             for line in self.__db.getAll():
                 if line[0] in domainDict:
                     domainDict[line[0]] = DOMAIN(line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9])
-
+                else:
+                    deleteList.append(line[0])
             logger.info("domain dict: %d"%(len(domainDict)))
-            return domainDict
+            return domainDict, deleteList
         except Exception as e:
             logger.error("%s"%(e))
-            return domainDict
+            return domainDict, deleteList
     
     def __updateDomainDict_db(self, domainDict:Dict[str, DOMAIN]):
         logger.info("update domain list to db...")
@@ -496,6 +524,13 @@ class BlackList(object):
         except Exception as e:
             logger.error("%s"%(e))
 
+    def __deleteDomian_db(self, domainList:List[str]):
+            logger.info("delete domain from db...")
+            try:
+                self.__db.deleteBatch(domainList)
+            except Exception as e:
+                logger.error("%s"%(e))
+
     def generate(self):
         try:
             # 获取域名清单 https://raw.githubusercontent.com/217heidai/adblockfilters/refs/heads/main/rules/domain.txt
@@ -504,7 +539,7 @@ class BlackList(object):
                 return
             
             # 获取数据库域名清单
-            domainDict = self.__getDomainDict_db(domainDict)
+            domainDict, deleteList = self.__getDomainDict_db(domainDict)
             
             # 获取直连域名清单 https://raw.githubusercontent.com/217heidai/RoutingRules/main/rules/direct.txt
             fullSet_CN,domainSet_CN,regexpSet_CN,keywordSet_CN = self.__getDomainSet_CN()
@@ -559,6 +594,10 @@ class BlackList(object):
             
             # 更新数据库域名清单
             self.__updateDomainDict_db(domainDict)
+
+            # 移除多余域名
+            if len(deleteList):
+                self.__deleteDomian_db(deleteList)
             
         except Exception as e:
             logger.error("%s"%(e))
