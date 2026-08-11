@@ -15,12 +15,23 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
+      
+      - name: Checkout domain-list-community
+        uses: actions/checkout@v7
+        with:
+          repository: v2fly/domain-list-community
+          path: domain-list-community
 
-      - name: Setup Python 3.14
+      - name: Setup Python
         uses: actions/setup-python@v6
         with:
           python-version: '3.14'
+      
+      - name: Setup Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: domain-list-community/go.mod
 
       - name: Install Dependencies
         run: |
@@ -55,6 +66,22 @@ jobs:
           ./mihomo-linux-amd64-v${{env.MIHOMO_VERSION}} convert-ruleset domain yaml rules/adblockmihomo.yaml     rules/adblockmihomo.mrs
           ./mihomo-linux-amd64-v${{env.MIHOMO_VERSION}} convert-ruleset domain yaml rules/adblockmihomolite.yaml rules/adblockmihomolite.mrs
           rm -rf mihomo*
+      
+      - name: Compile v2ray/xray filters
+        run: |
+          mkdir -p domain-list-community/adblock
+          cp rules/adblockv2ray.txt domain-list-community/adblock/category-ads-all
+          cd domain-list-community
+          go run ./ --datapath=adblock
+          cd ..
+          cp domain-list-community/dlc.dat rules/adblockv2ray.dat
+          mkdir -p domain-list-community/adblocklite
+          cp rules/adblockv2raylite.txt domain-list-community/adblocklite/category-ads-all
+          cd domain-list-community
+          go run ./ --datapath=adblocklite
+          cd ..
+          cp domain-list-community/dlc.dat rules/adblockv2raylite.dat
+          rm -rf domain-list-community
       
       - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v7

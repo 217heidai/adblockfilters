@@ -6,7 +6,7 @@ from typing import List,Dict,Set,Tuple
 from loguru import logger
 from tld import get_tld
 
-from app import APPBase, AdGuard, AdGuardHome, DNSMasq, Hosts, InviZible, Loon, Mihomo, MosDNS, QuantumultX, Shadowrocket, ShadowrocketModule, SingBox, SmartDNS, Surge
+from app import APPBase, AdGuard, AdGuardHome, DNSMasq, Hosts, InviZible, Loon, Mihomo, MosDNS, QuantumultX, Shadowrocket, ShadowrocketModule, SingBox, SmartDNS, Surge, V2ray
 from readme import Rule
 from resolver import Resolver
 
@@ -242,6 +242,7 @@ class Filter(object):
             SingBox           (blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblocksingbox.json",          sourceRule),
             SmartDNS          (blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblocksmartdns.conf",         sourceRule),
             Surge             (blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblocksurge.list",            sourceRule),
+            V2ray             (blockList, unblockList, filterDict, filterList, filterList_var, ChinaSet, self.path + "/adblockv2ray.txt",             sourceRule),
         ]
         for g in generaterList:
             g.generateAll()

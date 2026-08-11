@@ -13,3 +13,4 @@ from .shadowrocket_module import ShadowrocketModule
 from .singbox import SingBox
 from .smartdns import SmartDNS
 from .surge import Surge
+from .v2ray import V2ray
