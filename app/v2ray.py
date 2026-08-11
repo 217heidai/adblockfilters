@@ -40,7 +40,7 @@ class V2ray(APPBase):
                 f.write("#\n")
                 for domain in blockList:
                     if domain.find('_') < 0: # domain-list-community 工具在生成 geosite.dat 时，会进行严格的主机名校验
-                        f.write("domain:%s @ads\n"%(domain))
+                        f.write("%s @ads\n"%(domain))
 
             if isLite:
                 logger.info("adblock V2ray/Xray Lite: block=%d" % (len(blockList)))
