@@ -3,9 +3,9 @@
 ! Description: 适用于 AdGuard 的去广告合并规则，每 8 个小时更新一次。规则源：AdGuard Base filter、AdGuard Chinese filter、AdGuard Mobile Ads filter、AdGuard DNS filter、AdRules DNS List、CJX's Annoyance List、EasyList、EasyList China、EasyPrivacy、xinggsf mv、jiekouAD、AWAvenue Ads Rule、DNS-Blocklists Light、OISD Basic、StevenBlack hosts、Pollock hosts。
 ! Homepage: https://github.com/217heidai/adblockfilters
 ! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt
-! Version: 20260815163447
-! Last modified: 2026/08/15 16:34:47
-! Blocked Filters: 106498
+! Version: 20260816003016
+! Last modified: 2026/08/16 00:30:16
+! Blocked Filters: 106507
 !
 ###AC_ad
 ###AD_160
@@ -43216,6 +43216,8 @@ chatgpt.com##div[data-testid] div[class^="max-"] > div[data-ad-card-root]
 chatgpt.com##div[data-testid] div[class^="max-"] > div[data-testid="image-card-v2"]:has(button[aria-label="Sponsored options"])
 chatgpt.com##div[data-testid] div[class^="relative max-"]:has(> div[data-testid="image-card-v2"] + .pointer-events-none button[aria-label="Sponsored options"])
 chatgpt.com##section:has(> [aria-label="Sponsored"])
+chatgpt.com#%#(()=>{const e={apply:(e,r,s)=>{const t=Reflect.apply(e,r,s);try{return s[0]&&"string"==typeof s[0]&&s[0].includes("renderedAdsHtml")&&t.messages&&(t.hideAllAds=!0),t}catch(e){}return Reflect.apply(e,r,s)}};window.JSON.parse=new Proxy(window.JSON.parse,e)})();
+chatgpt.com#%#(()=>{const e={apply:(e,t,d)=>{try{const e=d[1];e?.ads&&e?.renderedAdsHtml&&(e.hidden=!0,delete e.ads,delete e.renderedAdsHtml)}catch(e){}return Reflect.apply(e,t,d)}};window.Map.prototype.set=new Proxy(window.Map.prototype.set,e)})();
 chatgpt.com#%#//scriptlet('json-prune', 'messages.*.ads messages.*.renderedAdsHtml')
 chatgpt.com#%#//scriptlet('trusted-json-set', 'WeakMap.prototype.set', '$[?(@.ads_response_id)].*', '$remove$', '', 'arg:1')
 chatgpt.com#%#//scriptlet('trusted-replace-outbound-text', 'TextDecoder.prototype.decode', '/^{"type":\s*"ads",\s*"content":\s*{"ads_request_id":.*?"ads_response_id":.*}$|^{"type":\s*"ads",.*"ads_response_id":.*"ads_request_id":.*}$/', '{}')
@@ -89447,6 +89449,7 @@ zzzyk.com###Tinfo
 ||api.gleap.io/sessions/ping
 ||api.gplinks.com/track/js/power-cdn.js$replace=/function _0x[a-z0-9]{3}536\(\)\{[\s\S]*?\}/function _0x242536(){};/
 ||api.headliner.link/api/v1/b/receive
+||api.heikeji.me/api/logs/check
 ||api.helloextend.com/mintsight
 ||api.hotscope.tv/snaps/top
 ||api.ig.com/statistics/
@@ -91504,6 +91507,7 @@ zzzyk.com###Tinfo
 ||chata.quickcep.com/video/app/video/page
 ||chatfuel.com/cf-analytics/
 ||chatgpt.com/backend-api/bazaar/conversation/*/ads|$xmlhttprequest
+||chatgpt.com/backend-api/sentinel/ping
 ||chatroll.com/t.gif
 ||chaturbate.com*popunder$popup
 ||chaturbate.com/affiliates/
@@ -92270,6 +92274,7 @@ zzzyk.com###Tinfo
 ||cricxtasy.com/static/*/images/Blog-Banner
 ||cript.to/dlm.png
 ||cript.to/z-
+||crjugate.com^$popup
 ||crm-vwg.com/tracker/
 ||crmmetrixwris.com^$third-party
 ||crn.com.au/scripts/js_$script
@@ -92875,6 +92880,7 @@ zzzyk.com###Tinfo
 ||docodoco.jp^$third-party
 ||docomo.ne.jp/scripts/retargeting/retargeting.js
 ||docs.github.com/events
+||doct-umb.org^$popup
 ||doczj.com/js/common.js
 ||doda.jp/DodaCommon/Html/js/RtoasterTrack.js
 ||doda.jp/DodaFront/Html/js/dodaPrime_pc_aaTag.js
@@ -93088,6 +93094,10 @@ zzzyk.com###Tinfo
 ||dykshao.cn/image/$third-party
 ||dyktanda.pl/static/js/main.*.chunk.js$replace=/src:"https:\/\/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js"/src:"\/"/
 ||dymmt.com/skin/mzitu/js/foot.
+||dynacrems.wp.pl/ad/
+||dynacrems.wp.pl/ad/$replace=/.+//,important
+||dynacrems.wp.pl/script/?id=*&placement_id=$replace=/.+//,important
+||dynacrems.wp.pl/staticad/$replace=/.+//,important
 ||dynamic-manifest.hulustream.com/hulu*playlist.m3u8$replace=/#EXT-X-DATERANGE:ID=".*?ad".*?\n[\s\S]*?(?=#EXT-X-DATERANGE:ID=)//,domain=hulu.com
 ||dynamicyield.com/batch?
 ||dynamicyield.com/clog
@@ -93778,7 +93788,6 @@ zzzyk.com###Tinfo
 ||fetishshrine.com/jsb/js_script.js
 ||fetishshrine.com/plugin.js
 ||fetlife.com/ads/
-||fewcents.co^$third-party
 ||feyorra.top/next.js
 ||ffdm*.cc/dd.js
 ||ffdm2.cc/ht_cpc.js
@@ -102880,6 +102889,7 @@ zzzyk.com###Tinfo
 ||static.primacdn.cz/sas/sas/sasspa.js
 ||static.purexbox.com/javascript/gn/prebid*.js
 ||static.qiyi.com/js/pingback/
+||static.rebelboost.com/tracking/
 ||static.republicworld.com/assets/js/ads.min.js
 ||static.republika.co.id/js/tracker.js
 ||static.rolex.com/clocks/$third-party
@@ -104519,7 +104529,6 @@ zzzyk.com###Tinfo
 ||uploady.io/sw.js
 ||uplynk.com/*.m3u8$hls=/#UPLYNK-SEGMENT:.*\,ad/t,domain=foxsports.com
 ||uplynk.com/*.m3u8$replace=/#UPLYNK-SEGMENT: \S*\\,ad\s[\s\S]+?((#UPLYNK-SEGMENT: \S+\\,segment)|(#EXT-X-ENDLIST))/\$1/,domain=hgtv.com|diynetwork.com|abc11.com|abc7.com|abc7news.com|abc13.com|6abc.com|abc7chicago.com|discovery.com|fox.com|investigationdiscovery.com|sciencechannel.com|motortrend.com|tlc.com|abc7ny.com,important
-||uponomanytetor.com^$popup
 ||upornia.com/yxpffpuqtjc/
 ||uppit.ml/bootstrap.js
 ||uprinting.com/muffins/UPTracker-
