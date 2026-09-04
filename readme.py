@@ -153,12 +153,5 @@ class ReadMe(object):
                 f.write("| %s | %s |%s %s |\n" % (rule.name, rule.type, self.__subscribeLink(rule.filename, rule.url),rule.latest))
             f.write("\n")
 
-            '''
             f.write("## Star History\n")
-            f.write("[![Star History Chart](https://api.star-history.com/svg?repos=217heidai/adblockfilters&type=Date)](https://star-history.com/#217heidai/adblockfilters&Date)\n")
-            
-            f.write("\n")
-            f.write("## 以下是广告\n")
-            f.write('感兴趣的可以看下，DartNode 免费 VPS, [点击申请](https://dartnode.com?aff=PudgyBurrito637)\n')
-            f.write('[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")\n')
-            '''
+            f.write("[![Star History Chart](https://star-history.dera.page/svg?repos=217heidai/adblockfilters)](https://star-history.dera.page/#217heidai/adblockfilters)\n")
