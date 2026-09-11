@@ -3,9 +3,9 @@
 ! Description: 适用于 AdGuard 的去广告合并规则，每 8 个小时更新一次。规则源：AdGuard Base filter、AdGuard Chinese filter、AdGuard Mobile Ads filter、AdGuard DNS filter、AdRules DNS List、CJX's Annoyance List、EasyList、EasyList China、EasyPrivacy、xinggsf mv、jiekouAD、AWAvenue Ads Rule、DNS-Blocklists PRO mini、OISD Basic、StevenBlack hosts、Pollock hosts。
 ! Homepage: https://github.com/217heidai/adblockfilters
 ! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt
-! Version: 20260911204358
-! Last modified: 2026/09/11 20:43:58
-! Blocked Filters: 106460
+! Version: 20260912030442
+! Last modified: 2026/09/12 03:04:42
+! Blocked Filters: 106475
 !
 ###AC_ad
 ###AD_160
@@ -24781,6 +24781,7 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 @@.adserver.$domain=litv.tv
 @@.amazon.*/sample/$stealth=referrer
 @@.b-cdn.net/*.m3u8?$xmlhttprequest,stealth=referrer
+@@.cfd/hls/*.jpg$stealth=referrer
 @@.cn:8005/$domain=www.ntdm9.com|www.mxdm9.com|mxdm6.com|ntdm6.com
 @@.co.uk/wp-banners.js$domain=advertiserandtimes.co.uk|northern-scot.co.uk|suffolknews.co.uk|kentonline.co.uk|cambridgeindependent.co.uk|fenlandcitizen.co.uk|granthamjournal.co.uk|stratford-herald.com|spaldingtoday.co.uk
 @@.com/*/*.avif$image,stealth=referrer,domain=bilimanga.net
@@ -25220,6 +25221,8 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 @@://html-load.com/loader.min.js$domain=dogdrip.net|smsonline.cloud
 @@://localhost/$generichide
 @@://localhost:$generichide
+@@://m1.*.*/v/*/*.css$xmlhttprequest,stealth=referrer
+@@://m1.*.*/v/*/*/*-*.$xmlhttprequest,stealth=referrer
 @@://streamcdn.xyz/hls/$stealth=referrer
 @@://www.bet365.com/|$jsinject,elemhide,extension
 @@://www.coinbase.com^$stealth=webrtc
@@ -36867,8 +36870,10 @@ acquavivalive.it##[class^="mkt-"]
 acronymfinder.com###anchorad
 acronymfinder.com##.sc
 acronymfinder.com##.search-results > .tab-content > .result-list > tbody > tr > td[colspan="3"]:not([id]):not([class])
+acronymfinder.com##.ts
 acronymfinder.com##div[style="display:inline-block;width:320px;height:265px"]
 acronymfinder.com##img[style="max-width:728px;width:100%"]
+acronymfinder.com##tr:has(.ts)
 actionnetwork.com##.promotion-table
 active.com###med_rec_bottom
 active.com###med_rec_top
@@ -46227,6 +46232,7 @@ dcode.fr#%#//scriptlet("prevent-eval-if", "google_ad_client")
 dcode.fr#%#//scriptlet("set-constant", "dCode.adBlock", "false")
 dcode.fr#?#div[id^="right"] > .heading_bar:contains(Sponsored ads)
 dcrainmaker.com,fijisun.com.fj##.widget-1
+dd.master.spot.js$domain=xhamster.com
 ddav.org###adv-2
 dday.it##div[id^="offer-"][id$="-slider"]
 ddbelchatow.pl,portalplock.pl,kutno.net.pl,portalplock.pl#?#.flex-column > .h-100 > div > h6:contains(/^ Promocja $/)
@@ -50061,6 +50067,7 @@ fcportables.com##.sidebar > div[id^="ai_widget-"]:has(> .code-block > .adsbygoog
 fcportables.com##div[class^="popup"][class$="wrap"][id]
 fcportables.com,ps2-bios.com##div[id$="____equal"]:not(.ad)
 fctables.com##.box-width > .hidden-xs
+fctables.com##.boxOverContentRevive__placeholder
 fctables.com##body > div[style^="background:#e3e3e3;"][style*="height:110px;"]
 fctables.com##div[style^="background:#e3e3e3;position:fixed"]
 fcw45.com##.bottom-adv
@@ -57226,6 +57233,8 @@ imagetwist.com###grip
 imagetwist.com##.text-center > a[href][target="_blank"] > video
 imagetwist.com##[href^="https://imagetwist.com/pxt/"]
 imagetwist.com##a[href*="/par/"]
+imagetwist.com##a[href*="/track?v="]
+imagetwist.com##a[href^="https://landing.candynetwork.ai/"]
 imagetwist.com#%#//scriptlet("abort-current-inline-script", "$", "window.open")
 imagetwist.com#%#//scriptlet("abort-current-inline-script", "document.attachEvent", "initBCPopunder")
 imagetwist.com#%#//scriptlet('abort-on-property-write', 'shouldShowAd')
@@ -57946,6 +57955,7 @@ internxt.com##div.items-center.bg-primary:has(a.button-primary[href^="https://ww
 interpals.net##div[style^="float: right;"][style*="min-height: 600px;"]
 interracial.com##.twocolumns > .aside > div[align="center"]
 interracial.com#%#//scriptlet("prevent-window-open", "about:blank")
+interstitial.ts.js$domain=xhamster.com
 interviewbit.com##div[data-el="ibpp-ribbon"]
 interviewmania.com#$#.container > div[style^="background"] > div[style="min-width: 250px;min-height:250px;"] { min-height: 0 !important; }
 interviews.adultdvdtalk.com##.widget_adt_performer_buy_links_widget
@@ -66439,6 +66449,7 @@ netmovies.to#%#//scriptlet('remove-attr', 'onclick', '#play')
 netmovies.to#%#//scriptlet('remove-attr', 'onclick', 'a[href][id^="post-"][onclick]')
 netplayz.top,cinelove.live#%#//scriptlet('set-local-storage-item', 'adagda', 'emptyObj')
 netronline.com#%#//scriptlet('abort-current-inline-script', 'addEventListener', 'user-modal')
+netspeed.com.tr#@##adWrapper
 nettavisen.no###article-body > .rel-article
 nettavisen.no##.am-bazaar-ad
 nettavisen.no##.background-na-commercial
@@ -78768,6 +78779,7 @@ telecomasia.net,meta.reviews##.ratings-bo
 telecomasia.net,meta.reviews##.seo-link
 telecomasia.net,meta.reviews##.users-preferences
 telecomtalk.info##.second_post_adv_main
+telecomtalk.info##.tt-ad
 telefonguru.hu##div[style] > a[href^="https://www.arukereso.hu/mobiltelefon-"]
 telefonino.forumfree.it##div[style]:has(> div.OUTBRAIN)
 telefonino.net#?#.table-layout > .fixed-width-300:has(> .sidebar-spacer:first-child .banner-content)
@@ -83241,7 +83253,6 @@ videos.tybito.com,videos.pornototale.com,videos.eispop.com,videos.porndig.com#$#
 videos.tybito.com,videos.pornototale.com,videos.eispop.com,videos.porndig.com#%#//scriptlet('abort-on-stack-trace', 'document.querySelector', 'checkVisibility')
 videosalon.jp#@#.adwidget
 videosdemadurasx.com##.link
-videosdemadurasx.com,an1.com,getsetclean.in,sexgames.cc##a[rel^="sponsored"]
 videosection.com##.faphouse-adv
 videosection.com##.header__nav-item--adv-link
 videosection.com##.iframe-adv
@@ -83757,6 +83768,7 @@ vpsdx.com##.gsfha3-form
 vpsdx.com##.gthfdsa
 vpser.net##.ab_cpb
 vpser.net##.ab_cpr
+vpsmetrics.com,videosdemadurasx.com,an1.com,getsetclean.in,sexgames.cc##a[rel^="sponsored"]
 vpstop.cn##a[href*="/ClickAd"]
 vpstop.cn##a[target="_blank"] > img[style^="width: 100%;max-height:"]
 vpstop.cn#?#.sidebar > div.uk-card:contains(赞助商家)
@@ -93089,8 +93101,8 @@ zzzyk.com###Tinfo
 ||dl.qcash.ws
 ||dlapk4all.com/img/1xbet.gif
 ||dlhd.*/rs4k-adbanner.html
-||dlhd.st/rs4k-adbanner.html
 ||dlili.tv/ufile/22222.js
+||dlive.sx/rs4k-adbanner.html
 ||dljnjom9md7c.cloudfront.net/02/zara.js
 ||dlkoo.cc/down/$subdocument
 ||dlkoo.cc/down/*.htm$popup
@@ -99841,6 +99853,7 @@ zzzyk.com###Tinfo
 ||ossshucklean.com^$popup
 ||osswc.pplive.cn/cccms/$image
 ||ostjob.ch/public/statistic/teaser/hit/
+||osuper.com.br/beta/bundles/analytics/analytics-$script
 ||osuskinner.com/check|$xmlhttprequest
 ||otcash.com/images/
 ||otg.mblycdn.com/bundles/cmp.js
@@ -104464,6 +104477,7 @@ zzzyk.com###Tinfo
 ||unity3d.com/v1/events
 ||unknowncheats.me/forum/images/ez^
 ||unleash.zenchef.com/api/frontend/client/metrics
+||unlimplay.com/vast-resolve.php
 ||unmoor.com/config.json
 ||unpkg.com/@topsort/analytics.js
 ||unpkg.com/hjadu/
@@ -104628,6 +104642,7 @@ zzzyk.com###Tinfo
 ||valoplant.gg/other/bet_gg_ad.html
 ||vanilladev.com/analytics.
 ||vanityfair.com/user-context?referrer
+||vannacci.gay/~flock.js
 ||vanpeople.com/gg/
 ||vansky.com/agdg/Individual/
 ||vansky.com/agdg/homegg/
