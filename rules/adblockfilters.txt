@@ -3,9 +3,9 @@
 ! Description: 适用于 AdGuard 的去广告合并规则，每 8 个小时更新一次。规则源：AdGuard Base filter、AdGuard Chinese filter、AdGuard Mobile Ads filter、AdGuard DNS filter、AdRules DNS List、CJX's Annoyance List、EasyList、EasyList China、EasyPrivacy、xinggsf mv、jiekouAD、AWAvenue Ads Rule、DNS-Blocklists PRO mini、OISD Basic、StevenBlack hosts、Pollock hosts。
 ! Homepage: https://github.com/217heidai/adblockfilters
 ! Source: https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockfilters.txt
-! Version: 20260916211851
-! Last modified: 2026/09/16 21:18:51
-! Blocked Filters: 102425
+! Version: 20260917032834
+! Last modified: 2026/09/17 03:28:34
+! Blocked Filters: 102432
 !
 ###AC_ad
 ###AD_160
@@ -10106,6 +10106,7 @@
 ##.content-ad-left
 ##.content-ad-right
 ##.content-ad-side
+##.content-ad-stack
 ##.content-ad-widget
 ##.content-ad-wrapper
 ##.content-ads
@@ -14612,6 +14613,7 @@
 ##a.checkNum[target="_blank"] > img[data-src]
 ##a.gggg[href^="https"]
 ##a.hengfu > img.hengfu
+##a[class="home-ad-banner"]
 ##a[clickmode="ad"]
 ##a[clickmode="cpt"]
 ##a[data-ad_type="1"]
@@ -21285,7 +21287,9 @@ $~third-party,xmlhttprequest,script,redirect-rule=nooptext,domain=zertalious.xyz
 /static/js/gold_daddy.js
 /static/js/headad.js
 /static/js/miniyyrtv-config.js
+/static/js/pages/dialogAd.js
 /static/js/pop_promotion.js?v=
+/static/js/squarePromo.
 /static/lbsite/*/*.js?v=$third-party
 /static/tb/kyqp.gif
 /statics/govv.js$~third-party
@@ -52242,10 +52246,7 @@ gleaks.pro#?#.p-body-header:has(> div.p-title > h1:contains(Resources))
 gleaks.pro#@##google-ads
 gleaks.pro$$script:contains(fuckAdBlock)
 glebbahmutov.com#?##sidebar > div.widget-wrap:has(> div.widget > script[src^="//cdn.carbonads.com/"])
-gledaitv.live###abDetectorModal
-gledaitv.live##div[id^="anti-adblock-"]
-gledaitv.live#%#//scriptlet('prevent-setTimeout', 'advertisement')
-gledaitv.live#%#//scriptlet('set-constant', 'ABDetector', 'noopFunc')
+gledaitv.live###abort-overlay
 gledajcrtace.xyz###header-wrap-reklama
 gledajcrtace.xyz###sidebar > #HTML8
 gledajcrtace.xyz###sidebar-two > #HTML4
@@ -55045,6 +55046,7 @@ huamu.cn##.banner_Ad
 huamu.cn##.midle-ad-list
 huanggua22.com##[href^="https://oxs31.pdom3k.icu/"]
 huanggua22.com##[src^="https://tutu.facaiimage.com/"]
+huangguoai.com##.hg-ssp-slot
 huanqiu.com###winNext
 huanqiu.com##.aa_250
 huanqiu.com##.ad_all
@@ -55736,6 +55738,7 @@ iiv.pl#$#.pub_300x250.pub_300x250m.pub_728x90.text-ad.textAd.text_ad.text_ads.te
 ijavtorrent.com#%#//scriptlet('prevent-window-open')
 ijiandao.cn,ijiandao.com,jojf.cn##.index-ad
 ikan6.vip,www.1111modruba.cc##IMG[src$='.gif']
+ikanbot.com#%#//scriptlet('prevent-window-open', '_blank')
 ikandy.fun##.stui-banner__pic[href="/statics/js/ky-a.html"]
 ikisahil.az###gkTopMenu > .custom
 ikjzd.com##.article-banner-wrap
@@ -68178,6 +68181,8 @@ pinterest.*#?#div > div[style] > div[data-grid-item="true"]:has(div[data-test-pi
 pinterest.*#?#div > div[style] > div[data-grid-item="true"]:has(div[data-test-pin-id] a[rel] div[class][style] > div[class]:last-child:matches-css(before, content:/Promoted\s*by|Promowane\s*przez|Sponsorisée\s*par|Рекламный\s*пин|Рекламодатель|Gesponsord\s*door|広告|Promocionado\s*por|Promovido\s*por/))
 pinterest.com##a[href*="&epik="]
 pinterest.com##div[data-grid-item]:has([data-test-pin-id] [data-test-id^="one-tap-desktop"] > a[href^="http"][rel="nofollow"]):not(body > div)
+pinterest.com##div[data-grid-item]:has(a[rel="nofollow"][href^="http"])
+pinterest.com##div[data-grid-item]:has(div[data-test-id="pinrep-video"]):has(a[rel="nofollow"][href^="http"])
 piotrkowski24.pl###block-3
 piotrkowski24.pl##.stream-item
 pipeflare.io#@#div[id^="amzn-assoc-ad"]
@@ -93028,6 +93033,7 @@ zzzyk.com###Tinfo
 ||iindiaxxx.b-cdn.net/disk2/Buaksib-IPL-PROMO-4.mp4$media,redirect=noopmp3-0.1s,domain=111.90.150.149
 ||iis7.com/ys/css2018/ggw.js
 ||ikaka.com/globalad/
+||ikanbot.com/resources/common.js?v=$script
 ||ikisahil.az/iframe/banner
 ||ikisahil.az/images/banner^
 ||ikkdm.com/mg/show2.js
@@ -100799,6 +100805,7 @@ zzzyk.com###Tinfo
 ||vadaszapro.net/banners/
 ||vagrantup.com/api/auth/_log
 ||vaitotoo.net^$popup
+||valentine.xhamster.*^
 ||valoplant.gg/other/bet_gg_ad.html
 ||vanityfair.com/user-context?referrer
 ||vannacci.gay/~flock.js
