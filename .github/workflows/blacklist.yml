@@ -39,18 +39,18 @@ jobs:
 
       - name: Download DB
         run: |
-          # 三级兜底：上游源仓库 → fork 自身 → 空文件（空 sqlite 库可正常初始化，保证流程可继续）
-          curl -fsSL --retry 3 -o domain.db "$DB_URL" \
-            || curl -fsSL --retry 3 -o domain.db \
-              "https://github.com/${{ github.repository }}/releases/download/domain/domain.db" \
+          # 三级兜底：fork 自身 release（fork 复制资产/自更新）→ 上游源仓库 → 空文件（空 sqlite 库可正常初始化）
+          curl -fsSL --retry 3 -o domain.db \
+            "https://github.com/${{ github.repository }}/releases/download/domain/domain.db" \
+            || curl -fsSL --retry 3 -o domain.db "$DB_URL" \
             || : > domain.db
 
       - name: Download domain list
         run: |
           curl -fsSL --retry 3 -o domain.txt \
-            "https://github.com/217heidai/adblockfilters/releases/download/domain/domain.txt" \
+            "https://github.com/${{ github.repository }}/releases/download/domain/domain.txt" \
             || curl -fsSL --retry 3 -o domain.txt \
-              "https://github.com/${{ github.repository }}/releases/download/domain/domain.txt" \
+              "https://github.com/217heidai/adblockfilters/releases/download/domain/domain.txt" \
             || : > domain.txt
 
       - name: Generate Blacklist
