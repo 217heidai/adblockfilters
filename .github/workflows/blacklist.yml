@@ -1,0 +1,71 @@
+name: Generate Blacklist
+on: 
+  workflow_dispatch:
+  schedule:
+  - cron: 0 1 * * *
+
+env:
+  TZ: Asia/Shanghai
+  SMARTDNS_URL: https://github.com/pymumu/smartdns/releases/download/Release46.1/smartdns-x86_64
+  SMARTDNS_PATH: /tmp/smartdns
+  DB_URL: https://github.com/217heidai/adblockfilters/releases/download/domain/domain.db
+
+jobs:
+  Generate_Blacklist:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v7
+
+      - name: Setup Python 3.14
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+
+      - name: Install Dependencies
+        run: |
+          sudo timedatectl set-timezone "$TZ"
+          python -m pip install --upgrade pip
+          pip install -U tld IPy dnspython httpx loguru
+      
+      - name: Setup SmartDNS
+        run: |
+          mkdir -p $SMARTDNS_PATH
+          wget $SMARTDNS_URL -O $SMARTDNS_PATH/smartdns
+          chmod +x $SMARTDNS_PATH/smartdns
+          cp smartdns.conf $SMARTDNS_PATH/smartdns.conf
+          nohup $SMARTDNS_PATH/smartdns -f -x -c $SMARTDNS_PATH/smartdns.conf > /dev/null 2>&1 &
+
+      - name: Download DB
+        continue-on-error: true
+        run: |
+          wget $DB_URL -O domain.db
+
+      - name: Download domain list
+        continue-on-error: true
+        run: |
+          wget https://github.com/217heidai/adblockfilters/releases/download/domain/domain.txt -O domain.txt || true
+
+      - name: Generate Blacklist
+        id: update
+        run: |
+          python blacklist.py
+          rm -rf __pycache__
+          echo "message=$(date)" >> $GITHUB_OUTPUT
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: domain
+          files: |
+            domain.db
+            black.txt
+            china.txt
+          overwrite: true
+
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          retain_days: 1
+          keep_minimum_runs: 5

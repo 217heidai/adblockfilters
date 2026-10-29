@@ -1,0 +1,133 @@
+name: Update Filters
+on: 
+  workflow_dispatch:
+  schedule:
+  - cron: 0 */8 * * *
+
+env:
+  TZ: Asia/Shanghai
+  SINGBOX_VERSION: 1.12.12
+  MIHOMO_VERSION: 1.19.16
+
+jobs:
+  Update_Filters:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v7
+      
+      - name: Checkout domain-list-community
+        uses: actions/checkout@v7
+        with:
+          repository: v2fly/domain-list-community
+          path: domain-list-community
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      
+      - name: Setup Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: domain-list-community/go.mod
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y wget gzip
+          sudo timedatectl set-timezone "$TZ"
+          python -m pip install --upgrade pip
+          pip install -U tld IPy dnspython httpx loguru
+
+      - name: Prepare domain inputs
+        continue-on-error: true
+        run: |
+          mkdir -p .cache/domain .cache/source
+          curl -L --retry 3 -o .cache/domain/black.txt https://github.com/217heidai/adblockfilters/releases/download/domain/black.txt || true
+          curl -L --retry 3 -o .cache/domain/china.txt https://github.com/217heidai/adblockfilters/releases/download/domain/china.txt || true
+          cp rules/white.txt .cache/domain/ || true
+          cp rules/myblock.txt .cache/source/ || true
+
+      - name: Update Filters
+        id: update
+        run: |
+          python adblock.py
+          rm -rf __pycache__
+          rm -rf app/__pycache__
+          echo "message=$(date)" >> $GITHUB_OUTPUT
+
+      - name: Compile Sing-Box filters
+        run: |
+          wget https://github.com/SagerNet/sing-box/releases/download/v${{env.SINGBOX_VERSION}}/sing-box-${{env.SINGBOX_VERSION}}-linux-amd64.tar.gz
+          tar -zxvf sing-box-${{env.SINGBOX_VERSION}}-linux-amd64.tar.gz
+          chmod +x sing-box-${{env.SINGBOX_VERSION}}-linux-amd64/sing-box
+          ./sing-box-${{env.SINGBOX_VERSION}}-linux-amd64/sing-box rule-set compile --output .cache/out/adblocksingbox.srs     .cache/out/adblocksingbox.json
+          ./sing-box-${{env.SINGBOX_VERSION}}-linux-amd64/sing-box rule-set compile --output .cache/out/adblocksingboxlite.srs .cache/out/adblocksingboxlite.json
+          rm -rf sing-box*
+      
+      - name: Compile mihomo filters
+        run: |
+          wget https://github.com/MetaCubeX/mihomo/releases/download/v${{env.MIHOMO_VERSION}}/mihomo-linux-amd64-v${{env.MIHOMO_VERSION}}.gz
+          gzip -d mihomo-linux-amd64-v${{env.MIHOMO_VERSION}}.gz
+          chmod +x mihomo-linux-amd64-v${{env.MIHOMO_VERSION}}
+          ./mihomo-linux-amd64-v${{env.MIHOMO_VERSION}} convert-ruleset domain yaml .cache/out/adblockmihomo.yaml     .cache/out/adblockmihomo.mrs
+          ./mihomo-linux-amd64-v${{env.MIHOMO_VERSION}} convert-ruleset domain yaml .cache/out/adblockmihomolite.yaml .cache/out/adblockmihomolite.mrs
+          rm -rf mihomo*
+      
+      - name: Compile v2ray/xray filters
+        run: |
+          mkdir -p domain-list-community/adblock
+          cp .cache/out/adblockv2ray.txt domain-list-community/adblock/category-ads-all
+          cd domain-list-community
+          go run ./ --datapath=adblock
+          cd ..
+          cp domain-list-community/dlc.dat .cache/out/adblockv2ray.dat
+          mkdir -p domain-list-community/adblocklite
+          cp .cache/out/adblockv2raylite.txt domain-list-community/adblocklite/category-ads-all
+          cd domain-list-community
+          go run ./ --datapath=adblocklite
+          cd ..
+          cp domain-list-community/dlc.dat .cache/out/adblockv2raylite.dat
+          rm -rf domain-list-community
+      
+      - name: Upload rules to release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: rule
+          files: .cache/out/*
+          overwrite: true
+          fail_on_unmatched_files: false
+
+      - name: Upload sources to release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: source
+          files: .cache/source/*
+          overwrite: true
+          fail_on_unmatched_files: false
+
+      - name: Upload domain backup
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: domain
+          files: .cache/domain/domain.txt
+          overwrite: true
+          fail_on_unmatched_files: false
+
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: ${{ steps.update.outputs.message }}
+
+  Delete_Workflow_Runs:
+    needs: [ Update_Filters ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          retain_days: 1
+          keep_minimum_runs: 5
