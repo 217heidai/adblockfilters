@@ -42,11 +42,19 @@ jobs:
           pip install -U tld IPy dnspython httpx loguru
 
       - name: Prepare domain inputs
-        continue-on-error: true
         run: |
           mkdir -p .cache/domain .cache/source
-          curl -L --retry 3 -o .cache/domain/black.txt https://github.com/217heidai/adblockfilters/releases/download/domain/black.txt || true
-          curl -L --retry 3 -o .cache/domain/china.txt https://github.com/217heidai/adblockfilters/releases/download/domain/china.txt || true
+          # 下载 black/china 作为 filter 输入。三级兜底：上游源仓库 release → fork 自身 release → 空文件（保证流程可继续）
+          curl -fsSL --retry 3 -o .cache/domain/black.txt \
+            "https://github.com/217heidai/adblockfilters/releases/download/domain/black.txt" \
+            || curl -fsSL --retry 3 -o .cache/domain/black.txt \
+            "https://github.com/${{ github.repository }}/releases/download/domain/black.txt" \
+            || : > .cache/domain/black.txt
+          curl -fsSL --retry 3 -o .cache/domain/china.txt \
+            "https://github.com/217heidai/adblockfilters/releases/download/domain/china.txt" \
+            || curl -fsSL --retry 3 -o .cache/domain/china.txt \
+            "https://github.com/${{ github.repository }}/releases/download/domain/china.txt" \
+            || : > .cache/domain/china.txt
           cp rules/white.txt .cache/domain/ || true
           cp rules/myblock.txt .cache/source/ || true
 

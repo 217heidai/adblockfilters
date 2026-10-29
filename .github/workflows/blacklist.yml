@@ -38,14 +38,20 @@ jobs:
           nohup $SMARTDNS_PATH/smartdns -f -x -c $SMARTDNS_PATH/smartdns.conf > /dev/null 2>&1 &
 
       - name: Download DB
-        continue-on-error: true
         run: |
-          wget $DB_URL -O domain.db
+          # 三级兜底：上游源仓库 → fork 自身 → 空文件（空 sqlite 库可正常初始化，保证流程可继续）
+          curl -fsSL --retry 3 -o domain.db "$DB_URL" \
+            || curl -fsSL --retry 3 -o domain.db \
+              "https://github.com/${{ github.repository }}/releases/download/domain/domain.db" \
+            || : > domain.db
 
       - name: Download domain list
-        continue-on-error: true
         run: |
-          wget https://github.com/217heidai/adblockfilters/releases/download/domain/domain.txt -O domain.txt || true
+          curl -fsSL --retry 3 -o domain.txt \
+            "https://github.com/217heidai/adblockfilters/releases/download/domain/domain.txt" \
+            || curl -fsSL --retry 3 -o domain.txt \
+              "https://github.com/${{ github.repository }}/releases/download/domain/domain.txt" \
+            || : > domain.txt
 
       - name: Generate Blacklist
         id: update
