@@ -60,18 +60,28 @@ class Updater(object):
             return None
 
     async def __QueryLastModified(self, url: str) -> str:
-        """通过 GitHub API 查询 raw.githubusercontent.com 文件的最后修改日期（返回 YYYY/MM/DD，失败返回空串）"""
+        """查询 raw.githubusercontent.com 文件的最后修改日期（返回 YYYY/MM/DD，失败返回空串）
+        优先 GitHub API（带 GITHUB_TOKEN），403/失败回退 GitHub commits .atom 网页端点（无 API 限流）"""
         match = re.match(r"https://raw\.githubusercontent\.com/([^/]+)/([^/]+)/([^/]+)/(.+)", url)
         if not match:
             return ""
         owner, repo, branch, path = match.group(1), match.group(2), match.group(3), match.group(4)
+
+        dt = await self.__QueryApiDate(owner, repo, branch, path)
+        if dt:
+            return dt
+        dt = await self.__QueryAtomDate(owner, repo, branch, path)
+        if dt:
+            return dt
+        return ""
+
+    async def __QueryApiDate(self, owner: str, repo: str, branch: str, path: str) -> str:
         api = "https://api.github.com/repos/%s/%s/commits?path=%s&sha=%s&per_page=1" % (owner, repo, path, branch)
         headers = {"Accept": "application/vnd.github+json"}
         token = os.environ.get("GITHUB_TOKEN", "")
         if token:
             headers["Authorization"] = "token " + token
         try:
-            # 限制 API 查询并发，避免无认证限流
             sem = getattr(self, "_apiSem", None)
             if sem is not None:
                 await sem.acquire()
@@ -81,21 +91,35 @@ class Updater(object):
                     if resp.status_code == 200:
                         data = resp.json()
                         if data:
-                            commitDate = data[0]["commit"]["committer"]["date"]
-                            dt = self.__ParseDate(commitDate)
+                            dt = self.__ParseDate(data[0]["commit"]["committer"]["date"])
                             if dt:
                                 return dt.astimezone().strftime("%Y/%m/%d")
-                            else:
-                                logger.error(f'query last-modified invalid date: %s %s' % (url, commitDate))
-                        else:
-                            logger.error(f'query last-modified empty result: %s' % (url))
+                    elif resp.status_code == 403:
+                        logger.warning("query api 403（限流或权限不足）, 回退 atom: %s/%s %s" % (owner, repo, path))
                     else:
-                        logger.error(f'query last-modified http %s: %s' % (resp.status_code, url))
+                        logger.error(f'query api http %s: %s' % (resp.status_code, api))
             finally:
                 if sem is not None:
                     sem.release()
         except Exception as e:
-            logger.error(f'query last-modified failed: %s [%s] %s' % (url, type(e).__name__, e))
+            logger.error(f'query api failed: %s [%s] %s' % (api, type(e).__name__, e))
+        return ""
+
+    async def __QueryAtomDate(self, owner: str, repo: str, branch: str, path: str) -> str:
+        url = "https://github.com/%s/%s/commits/%s/%s.atom" % (owner, repo, branch, path)
+        try:
+            async with httpx.AsyncClient() as client:
+                resp = await client.get(url, headers={"User-Agent": "Mozilla/5.0"})
+                if resp.status_code == 200:
+                    m = re.search(r"<updated>([^<]+)</updated>", resp.text)
+                    if m:
+                        dt = self.__ParseDate(m.group(1))
+                        if dt:
+                            return dt.astimezone().strftime("%Y/%m/%d")
+                else:
+                    logger.error(f'query atom http %s: %s' % (resp.status_code, url))
+        except Exception as e:
+            logger.error(f'query atom failed: %s [%s] %s' % (url, type(e).__name__, e))
         return ""
 
     async def __Download(self, rule:Rule, path:str) -> Rule:
