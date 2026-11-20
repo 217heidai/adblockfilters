@@ -36,6 +36,13 @@ jobs:
           chmod +x $SMARTDNS_PATH/smartdns
           cp smartdns.conf $SMARTDNS_PATH/smartdns.conf
           nohup $SMARTDNS_PATH/smartdns -f -x -c $SMARTDNS_PATH/smartdns.conf > /dev/null 2>&1 &
+          # 等 SmartDNS 就绪（最多 30 秒）：发一个真实 DNS 查询，收到任何响应即就绪
+          ready=0
+          for i in $(seq 1 30); do
+            if python3 -c "import socket,sys; s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM); s.settimeout(2); s.sendto(bytes.fromhex('00000100000100000000000003777777076578616d706c6503636f6d0000010001'),('127.0.0.1',5053)); s.recvfrom(1024); sys.exit(0)" 2>/dev/null; then ready=1; break; fi
+            sleep 1
+          done
+          if [ "$ready" = "0" ]; then echo "SmartDNS not ready after 30s"; exit 1; fi
 
       - name: Download DB
         run: |
@@ -56,9 +63,17 @@ jobs:
       - name: Generate Blacklist
         id: update
         run: |
-          python blacklist.py
+          set -o pipefail
+          python blacklist.py 2>&1 | tee blacklist.log
           rm -rf __pycache__
           echo "message=$(date)" >> $GITHUB_OUTPUT
+
+      - name: Upload log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: blacklist-log
+          path: blacklist.log
 
       - name: Upload to release
         uses: softprops/action-gh-release@v3

@@ -66,6 +66,21 @@ jobs:
           rm -rf app/__pycache__
           echo "message=$(date)" >> $GITHUB_OUTPUT
 
+      - name: Check whitelist regression
+        run: |
+          # 白名单里的域名不应出现在产物中，否则说明生成逻辑改坏了
+          [ -f .cache/out/adblockdns.txt ] || exit 0
+          fail=0
+          while IFS= read -r domain || [ -n "$domain" ]; do
+            domain="${domain%$'\r'}"
+            case "$domain" in \#*|"") continue;; esac
+            if grep -qxF "||${domain}^" .cache/out/adblockdns.txt; then
+              echo "whitelist regression: $domain still in adblockdns.txt"
+              fail=1
+            fi
+          done < rules/white.txt
+          exit $fail
+
       - name: Compile Sing-Box filters
         run: |
           wget https://github.com/SagerNet/sing-box/releases/download/v${{env.SINGBOX_VERSION}}/sing-box-${{env.SINGBOX_VERSION}}-linux-amd64.tar.gz
