@@ -15,7 +15,7 @@
 1. 规则x’为规则x的 Lite 版，仅针对国内域名拦截，体积较小（如添加完整规则报错数量限制，请尝试 Lite 规则）
 2. AdGuard 等浏览器插件使用规则1 + 规则2（规则2为规则1的补充，仅适用浏览器插件）
 
-| 规则 | 原始链接 | 直链 | 加速链接1 | 加速链接2 | 加速链接3 | 适配说明 |
+| 规则 | 原始链接 | 加速链接1 | 加速链接2 | 加速链接3 | 适配说明 |
 |:-|:-|:-|:-|:-|:-|:-|
 | 规则1 | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/dist/adblockdns.txt) | [加速链接1](https://gh-proxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/dist/adblockdns.txt) | [加速链接2](https://ghfast.top/https://raw.githubusercontent.com/217heidai/adblockfilters/dist/adblockdns.txt) | [加速链接3](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/dist/adblockdns.txt) | AdGuard、AdGuard Home 等 |
 | 规则1' | [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/dist/adblockdnslite.txt) | [加速链接1](https://gh-proxy.com/https://raw.githubusercontent.com/217heidai/adblockfilters/dist/adblockdnslite.txt) | [加速链接2](https://ghfast.top/https://raw.githubusercontent.com/217heidai/adblockfilters/dist/adblockdnslite.txt) | [加速链接3](https://github.boki.moe/https://raw.githubusercontent.com/217heidai/adblockfilters/dist/adblockdnslite.txt) | AdGuard、AdGuard Home 等 |
