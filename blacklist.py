@@ -3,6 +3,7 @@ import time
 import asyncio
 import re
 import sqlite3
+from bisect import bisect_right
 from concurrent.futures import ThreadPoolExecutor,as_completed
 from typing import Dict,List,Tuple,Set
 
@@ -13,6 +14,11 @@ from tld.utils import update_tld_names
 from loguru import logger
 from dns.asyncresolver import Resolver as DNSResolver
 from dns.rdatatype import RdataType as DNSRdataType
+
+def _ip_in_ranges(ip_int:int, starts:List[int], ends:List[int]) -> bool:
+    # starts/ends 为已排序且无重叠的 [起始, 结束] 区间，二分查找 O(log N)
+    i = bisect_right(starts, ip_int) - 1
+    return i >= 0 and ip_int <= ends[i]
 
 class DomainDatabase(object):
     def __init__(self, dbFile: str):
@@ -318,9 +324,9 @@ class BlackList(object):
             logger.error("%s"%(e))
             return fullSet,domainSet,regexpSet,keywordSet
         
-    def __getIPDict_CN(self) -> Dict[int, int]:
+    def __getIPDict_CN(self) -> Tuple[List[int], List[int]]:
         logger.info("resolve China IP list...")
-        IPDict = dict()
+        starts, ends = [], []
         try:
             self.__download(self.__IPlistFile, self.__IPlistUrl)            
             if os.path.exists(self.__IPlistFile):
@@ -328,13 +334,18 @@ class BlackList(object):
                     for line in f.readlines():
                         row = line.replace('\r', '').replace("\n", "").split("/")
                         ip, offset = row[0], int(row[1])
-                        IPDict[IPy.parseAddress(ip)[0]] = offset
-            
-            logger.info("China IP list: %d"%(len(IPDict)))
-            return IPDict
+                        start = IPy.parseAddress(ip)[0]
+                        starts.append(start)
+                        ends.append(start + (1 << (32 - offset)) - 1)
+            # 上游文件已排序且无重叠，这里再排一次，去掉对文件顺序的隐含依赖
+            pairs = sorted(zip(starts, ends))
+            starts = [p[0] for p in pairs]
+            ends = [p[1] for p in pairs]
+            logger.info("China IP list: %d"%(len(starts)))
+            return starts, ends
         except Exception as e:
             logger.error("%s"%(e))
-            return IPDict
+            return starts, ends
     
     async def __resolve(self, dnsresolver, domain):
         ipList = []
@@ -453,7 +464,7 @@ class BlackList(object):
 
         return asyncio.run(_resolve_all())
 
-    def __isChinaDomain(self, domain:DOMAIN, fullSet_CN:Set[str], domainSet_CN:Set[str], regexpSet_CN:Set[str], keywordSet_CN:Set[str], IPDict_CN:Set[str]):
+    def __isChinaDomain(self, domain:DOMAIN, fullSet_CN:Set[str], domainSet_CN:Set[str], regexpSet_CN:Set[str], keywordSet_CN:Set[str], IPRanges_CN:Tuple[List[int], List[int]]):
         try:
             # 从域名识别
             if domain.fld:
@@ -481,13 +492,12 @@ class BlackList(object):
                         return domain
 
             # 从 IP 识别
+            ip_starts, ip_ends = IPRanges_CN
             ipList = domain.getIPList()
             for ip in ipList:
-                ip = IPy.parseAddress(ip)[0]
-                for k, v in IPDict_CN.items():
-                    if (ip ^ k) >> (32 - v)  == 0:
-                        domain.setChina(True)
-                        return domain
+                if _ip_in_ranges(IPy.parseAddress(ip)[0], ip_starts, ip_ends):
+                    domain.setChina(True)
+                    return domain
             
             domain.setChina(False)
             return domain
@@ -545,7 +555,7 @@ class BlackList(object):
             fullSet_CN,domainSet_CN,regexpSet_CN,keywordSet_CN = self.__getDomainSet_CN()
 
             # 获取国内 IP 清单 https://raw.githubusercontent.com/217heidai/RoutingRules/main/rules/ipv4_china.txt
-            IPDict_CN = self.__getIPDict_CN()
+            IPRanges_CN = self.__getIPDict_CN()
             
             # 域名解析
             '''
@@ -564,7 +574,7 @@ class BlackList(object):
             for _,v in domainDict.items():
                 ipList = v.getIPList()
                 if len(ipList):
-                    taskList.append(thread_pool.submit(self.__isChinaDomain, v, fullSet_CN, domainSet_CN, regexpSet_CN, keywordSet_CN, IPDict_CN))
+                    taskList.append(thread_pool.submit(self.__isChinaDomain, v, fullSet_CN, domainSet_CN, regexpSet_CN, keywordSet_CN, IPRanges_CN))
             for future in as_completed(taskList):
                 domain:DOMAIN = future.result()
                 if domain.getChina():
