@@ -79,9 +79,12 @@ class ReadMe(object):
 
         with open(self.filename, 'a') as f:
             f.write("# AdBlock DNS Filters\n")
-            f.write("> **重要公告（2026-10-29）**：本项目已完成存储结构调整，规则文件不再提交至 Git 仓库，改由 GitHub Releases 分发（`rule`=生成规则、`source`=上游规则、`domain`=过程文件）。原 `raw.githubusercontent.com/.../main/rules/...` 与 jsdelivr `@main/rules/...` 订阅链接已失效，请改用下方新订阅链接（已内置加速通道）。\n")
             f.write("去广告合并规则，每8个小时更新一次。  \n")
             f.write("个人收藏了不少广告过滤规则，但是每次往新设备添加的时候很是头疼，于是写了这个项目，定时自动获取各规则源更新，生成合并规则库。\n")
+            f.write("\n")
+
+            f.write("## 重要公告\n")
+            f.write("1. 20261120：为解决仓库不断膨胀变大问题，本项目调整了存储结构，后续生成的规则文件将通过 dist 分支和 Releases 分发。请及时更新订阅链接！！！\n")
             f.write("\n")
 
             f.write("## 说明\n")
