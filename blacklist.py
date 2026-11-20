@@ -248,9 +248,9 @@ class BlackList(object):
                 logger.info(f'download %s[%s]' % (os.path.basename(fileName), url))
                 response = client.get(url)
                 response.raise_for_status()
-                contentType = response.headers.get("Content-Type")
-                if contentType.find("text/plain") < 0:
-                    raise Exception("Content-Type[%s] error"%(contentType))
+                contentType = response.headers.get("Content-Type") or ""
+                if "text/plain" not in contentType:
+                    logger.warning("download %s: unexpected Content-Type[%s]"%(fileName, contentType))
                 with open(fileNameDownload,'wb') as f:
                     f.write(response.content)
             

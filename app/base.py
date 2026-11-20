@@ -1,3 +1,4 @@
+import os
 import time
 from typing import List, Set, Dict
 from abc import ABC, abstractmethod
@@ -12,6 +13,9 @@ class APPBase(ABC):
         self.homepage:str = "https://github.com/217heidai/adblockfilters"
         self.source:str = "https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules"
         self.version:str = "%s"%(time.strftime("%Y%m%d%H%M%S", time.localtime()))
+        _sha = os.environ.get("GITHUB_SHA", "")[:7]
+        if _sha:
+            self.version += "-%s"%(_sha)
         self.time:str = "%s"%(time.strftime("%Y/%m/%d %H:%M:%S", time.localtime()))
         self.blockList:List[str] = blockList
         self.unblockList:List[str] = unblockList

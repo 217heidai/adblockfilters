@@ -72,7 +72,7 @@ class Filter(object):
         if os.path.exists(fileName):
             with open(fileName, 'r') as f:
                 for line in f.readlines():
-                    if not line.startswith("#") and len(line.replace("\n", "")) > 4:
+                    if not line.startswith("#") and len(line.replace("\n", "")) > 0:
                         whiteSet.add(line.replace("\n", ""))
         logger.info("white list: %d"%(len(whiteSet)))
         return whiteSet
@@ -90,7 +90,7 @@ class Filter(object):
                 else:
                     whiteDict[fld] |= {subdomain}
             except Exception as e:
-                pass
+                logger.warning("white list parse failed: %s (%s)"%(address, e))
         
         return whiteDict
     
