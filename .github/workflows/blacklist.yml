@@ -75,6 +75,16 @@ jobs:
           name: blacklist-log
           path: blacklist.log
 
+      - name: Write summary
+        if: always()
+        run: |
+          {
+            echo "### Blacklist"
+            echo "- domain.txt: $(test -f domain.txt && wc -l < domain.txt || echo 0) 条"
+            echo "- black.txt: $(test -f black.txt && wc -l < black.txt || echo 0) 条"
+            echo "- china.txt: $(test -f china.txt && wc -l < china.txt || echo 0) 条"
+          } >> $GITHUB_STEP_SUMMARY
+
       - name: Upload to release
         uses: softprops/action-gh-release@v3
         with:

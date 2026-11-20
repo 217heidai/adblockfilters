@@ -33,6 +33,14 @@ jobs:
         with:
           go-version-file: domain-list-community/go.mod
 
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('.github/workflows/update.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install Dependencies
         run: |
           sudo apt-get update -y
@@ -60,6 +68,8 @@ jobs:
 
       - name: Update Filters
         id: update
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python adblock.py
           rm -rf __pycache__
@@ -80,6 +90,16 @@ jobs:
             fi
           done < rules/white.txt
           exit $fail
+
+      - name: Write summary
+        if: always()
+        run: |
+          {
+            echo "### 生成结果"
+            echo "- adblockdns.txt: $(test -f .cache/out/adblockdns.txt && wc -l < .cache/out/adblockdns.txt || echo 0) 条"
+            echo "- adblockfilters.txt: $(test -f .cache/out/adblockfilters.txt && wc -l < .cache/out/adblockfilters.txt || echo 0) 条"
+            echo "- 白名单: $(grep -vc '^#\|^$' rules/white.txt 2>/dev/null || echo 0) 条"
+          } >> $GITHUB_STEP_SUMMARY
 
       - name: Compile Sing-Box filters
         run: |
