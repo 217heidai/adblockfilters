@@ -1,5 +1,4 @@
 import os
-import re
 from concurrent.futures import ThreadPoolExecutor,as_completed
 from typing import List,Dict,Set,Tuple
 
@@ -109,19 +108,20 @@ class Filter(object):
     # 去重、排序
     def __domainSort(self, domainDict:Dict[str, Set[str]], blackSet:Set[str], whiteDict:Dict[str,Set[str]]) -> Tuple[List[str], Set[str]]:
         def repetition(l): # 短域名已被拦截，则干掉所有长域名。如'a.example'、'b.example'、'example'，则只保留'example'
-            l = sorted(l, key = lambda item:len(item), reverse=False) # 按从短到长排序
-            if len(l) < 2:
-                return l
-            if l[0] == '':
-                return l[:1]
-            tmp = set()
-            for i in range(len(l) - 1):
-                for j in range(i+1, len(l)):
-                    if re.match(r'.*\.%s$'%(l[i]), l[j]):
-                        tmp.add(l[j])
-            l = list(set(l)-tmp)
-            l.sort()
-            return l
+            s = set(l)
+            if len(s) < 2:
+                return sorted(s)
+            if '' in s:
+                return ['']
+            out = []
+            for item in sorted(s, key=len): # 按从短到长排序
+                labels = item.split('.')
+                # 任一父后缀已被拦截，则干掉它
+                if any('.'.join(labels[k:]) in s for k in range(1, len(labels))):
+                    continue
+                out.append(item)
+            out.sort()
+            return out
         def get_domain(fld, subdomain):
             if len(subdomain) > 0:
                 domain = ("%s.%s")%(subdomain, fld)
@@ -136,11 +136,12 @@ class Filter(object):
         for fld in fldList:
             subdomainList_origin = list(domainDict[fld] - whiteDict.get(fld, set())) # 去除需要保留的白名单域名
             subdomainList = repetition(subdomainList_origin) # 短域名已被拦截，则干掉所有长域名。如'a.example'、'b.example'、'example'，则只保留'example'
+            removedList = set(subdomainList_origin) - set(subdomainList) # 被 repetition 干掉的子域名，每个 FLD 只算一次
             for subdomain in subdomainList:
                 subdomain_not_black = False
-                for _subdomain in list(set(subdomainList_origin) - set(subdomainList)):
+                for _subdomain in removedList:
                     if len(subdomain) > 0:
-                        if re.match(r'.*\.%s$'%(subdomain), _subdomain):
+                        if _subdomain.endswith('.' + subdomain):
                             _domain = get_domain(fld, _subdomain)
                             if _domain not in blackSet:
                                 subdomain_not_black = True
