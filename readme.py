@@ -103,7 +103,7 @@ class ReadMe(object):
                 tmp += " 加速链接%d |" % (i)
             tmp += " 适配说明 |\n"
             f.write(tmp)
-            tmp = "|" + ":-|" * ( 2 + len(self.proxyList) + 1) + "\n"
+            tmp = "|" + ":-|" * ( 2 + len(self.proxyList)) + "\n"
             f.write(tmp)
             f.write("| 规则1 |" + self.__subscribeLink("adblockdns.txt", "rule") + " AdGuard、AdGuard Home 等 |\n")
             f.write("| 规则1' |" + self.__subscribeLink("adblockdnslite.txt", "rule") + " AdGuard、AdGuard Home 等 |\n")
