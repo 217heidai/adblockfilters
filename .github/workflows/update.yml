@@ -173,6 +173,9 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout --orphan dist
           git rm -rf . || true
+          # git rm 只删已跟踪文件，.gitignore 也被删了，未跟踪的 .cache/ 会留下来并被 git add -A 收入；
+          # clean 掉所有未跟踪文件（runner 用完即弃，此步已是任务最后一步），只留刚拷入的产物
+          git clean -fdx
           cp /tmp/dist-out/* .
           git add -A
           [ -n "$(git status --porcelain)" ] || exit 0
