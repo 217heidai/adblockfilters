@@ -164,6 +164,21 @@ jobs:
         with:
           commit_message: ${{ steps.update.outputs.message }}
 
+      - name: Publish to dist branch
+        # 必须放在 Commit Changes 之后：孤儿分支切换会清空工作区（含刚生成的 README），
+        # 若放前面，README 更新会丢失。dist 为孤儿分支，每轮 force-push 单提交，不产生历史。
+        run: |
+          cp -r .cache/out /tmp/dist-out
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan dist
+          git rm -rf . || true
+          cp /tmp/dist-out/* .
+          git add -A
+          [ -n "$(git status --porcelain)" ] || exit 0
+          git commit -m "Publish rules $(date -u +%Y%m%d%H%M)"
+          git push -f origin dist
+
   Delete_Workflow_Runs:
     needs: [ Update_Filters ]
     runs-on: ubuntu-latest

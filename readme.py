@@ -54,14 +54,21 @@ class ReadMe(object):
     def __subscribeLink(self, fileName:str, tag:str, url:str=None):
         link = ""
 
-        if url:
-            link += " [原始链接](%s) |" % (url)
-        else:
-            link += " [原始链接](https://github.com/217heidai/adblockfilters/releases/download/%s/%s) |" % (tag, fileName)
+        if tag == "rule":
+            link += " [原始链接](https://raw.githubusercontent.com/217heidai/adblockfilters/dist/%s) |" % (fileName)
 
-        for i in range(1, len(self.proxyList)):
-            proxy = self.proxyList[i]
-            link += " [加速链接%d](%s/https://github.com/217heidai/adblockfilters/releases/download/%s/%s) |" % (i, proxy, tag, fileName)
+            for i in range(1, len(self.proxyList)):
+                proxy = self.proxyList[i]
+                link += " [加速链接%d](%s/https://raw.githubusercontent.com/217heidai/adblockfilters/dist/%s) |" % (i, proxy, fileName)
+        else:
+            if url:
+                link += " [原始链接](%s) |" % (url)
+            else:
+                link += " [原始链接](https://github.com/217heidai/adblockfilters/releases/download/%s/%s) |" % (tag, fileName)
+
+            for i in range(1, len(self.proxyList)):
+                proxy = self.proxyList[i]
+                link += " [加速链接%d](%s/https://github.com/217heidai/adblockfilters/releases/download/%s/%s) |" % (i, proxy, tag, fileName)
 
         return link
 
@@ -81,19 +88,19 @@ class ReadMe(object):
             f.write("1. 定时从上游各规则源获取更新，合并去重。\n")
             f.write("2. 使用国内、国外各 3 组 DNS 服务，分别对上游各规则源拦截的域名进行解析，去除已无法解析的域名。（上游各规则源中存在大量已无法解析的域名，无需加入拦截规则）\n")
             f.write("3. 本项目仅对上游规则进行合并、去重、去除无效域名，不做任何修改。如发现误拦截情况，可临时添加放行规则（如 `@@||www.example.com^$important`），并向上游规则反馈。\n")
-            f.write("4. 规则文件托管于 GitHub Releases，加速通道为 gh-proxy.com / ghfast.top / github.boki.moe，请根据网络情况选择。\n")
+            f.write("4. 规则文件托管于 GitHub Releases，加速通道为 gh-proxy.com / ghfast.top / github.boki.moe，请根据网络情况选择。手机浏览器（Via、X）订阅失败时请改用直链列。\n")
             f.write("\n")
 
             f.write("## 订阅链接\n")
             f.write("1. 规则x’为规则x的 Lite 版，仅针对国内域名拦截，体积较小（如添加完整规则报错数量限制，请尝试 Lite 规则）\n")
             f.write("2. AdGuard 等浏览器插件使用规则1 + 规则2（规则2为规则1的补充，仅适用浏览器插件）\n")
             f.write("\n")
-            tmp = "| 规则 | 原始链接 |"
+            tmp = "| 规则 | 原始链接 | 直链 |"
             for i in range(1, len(self.proxyList)):
                 tmp += " 加速链接%d |" % (i)
             tmp += " 适配说明 |\n"
             f.write(tmp)
-            tmp = "|" + ":-|" * ( 1 + len(self.proxyList) + 1) + "\n"
+            tmp = "|" + ":-|" * ( 2 + len(self.proxyList) + 1) + "\n"
             f.write(tmp)
             f.write("| 规则1 |" + self.__subscribeLink("adblockdns.txt", "rule") + " AdGuard、AdGuard Home 等 |\n")
             f.write("| 规则1' |" + self.__subscribeLink("adblockdnslite.txt", "rule") + " AdGuard、AdGuard Home 等 |\n")
