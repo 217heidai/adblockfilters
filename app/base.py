@@ -1,4 +1,5 @@
 import os
+import re
 import time
 from typing import List, Set, Dict
 from abc import ABC, abstractmethod
@@ -49,12 +50,29 @@ class APPBase(ABC):
                 if domain:
                     if domain in ChinaSet:
                         liteList.append(filter)
-                else:
+                elif self.__isChinaFilter(filter, ChinaSet):
                     liteList.append(filter)
             return liteList
         except Exception as e:
             logger.error("%s"%(e))
             return liteList
+
+    # 通用 $ 规则无域名：解析 domain= 列表，只有含国内域（或不限域）才进 Lite
+    def __isChinaFilter(self, filter:str, ChinaSet:Set[str]) -> bool:
+        m = re.search(r'domain=([^,]+)', filter)
+        if not m:
+            return True  # 不限域，无法证明是国外规则，保留
+        domains = [d for d in m.group(1).split('|') if not d.startswith('~')]
+        if not domains:
+            return True  # 全是排除项，规则适用范围不限于所列域名，保留
+        return any(self.__isChinaDomain(d, ChinaSet) for d in domains)
+
+    def __isChinaDomain(self, domain:str, ChinaSet:Set[str]) -> bool:
+        labels = domain.split('.')
+        for i in range(len(labels)):
+            if '.'.join(labels[i:]) in ChinaSet:
+                return True
+        return False
 
     @abstractmethod
     def generate(self, isLite=False):

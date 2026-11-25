@@ -590,6 +590,10 @@ class BlackList(object):
                 else:
                     v.setBlock(False)
             if len(blackList):
+                # smartdns 中途挂掉时全部域名都解析失败，黑名单会虚涨到 ~100%；
+                # 正常约 16%，超过 50% 直接报错退出，不写文件、不上传
+                if len(blackList) > len(domainDict) // 2:
+                    raise Exception("blacklist abnormal: %d/%d domains unresolved" % (len(blackList), len(domainDict)))
                 blackList.sort()
                 self.__generateBlackList(blackList)
 
@@ -611,6 +615,7 @@ class BlackList(object):
             
         except Exception as e:
             logger.error("%s"%(e))
+            raise  # 失败必须传出：否则 workflow 绿着跑完，还会上传坏结果
 
 if __name__ == "__main__":
     path = os.getcwd()

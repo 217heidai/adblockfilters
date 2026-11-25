@@ -12,31 +12,6 @@ from readme import Rule
 class Resolver(object):
     def __init__(self, path:str):
         self.path = path
-        self.options = {# Adblock Plus filter options
-                        'script',         '~script',
-                        'image',          '~image',
-                        'stylesheet',     '~stylesheet',
-                        'object',         '~object',
-                        'subdocument',    '~subdocument',
-                        'xmlhttprequest', '~xmlhttprequest',
-                        'websocket',      '~websocket',
-                        'webrtc',         '~webrtc',
-                        'popup',
-                        'generichide',
-                        'genericblock',
-                        'document',
-                        'elemhide',
-                        'third-party', '~third-party',
-                        'ping',
-                        'other',
-                        'match-case',
-                        # AdGuard Advanced capabilities
-                        'ctag',
-                        'all',
-                        'redirect',
-                        'stealth',
-                        'domain'
-                    }
     
     def __ip_or_domain(self, address:str) -> Tuple[str]: # ip, fld, subdomain
         ip, fld, subdomain = None, None, None
@@ -123,14 +98,12 @@ class Resolver(object):
 
                 # ||example.org^$option
                 # @@||example.org^$option
-                if match(r'^\|\|.*\^\$.*', filter) or match(r'^@@\|\|.*\^\$.*', filter):
-                    for opt in self.options:
-                        if match(r'^\|\|.*\^\$%s'%(opt), filter):
-                            domain_tmp = filter[len('||'):filter.find('^$%s'%(opt))]
-                            break
-                        if match(r'^@@\|\|.*\^\$%s'%(opt), filter):
-                            domain_tmp = filter[len('@@||'):filter.find('^$%s'%(opt))]
-                            break
+                # 域名恒在 ^$ 之前，与选项名无关，直接截取，不再枚举选项
+                if match(r'^\|\|.*\^\$.*', filter):
+                    domain_tmp = filter[len('||'):filter.find('^$')]
+                    break
+                if match(r'^@@\|\|.*\^\$.*', filter):
+                    domain_tmp = filter[len('@@||'):filter.find('^$')]
                     break
                 # ||example.org
                 if match(r'^\|\|.*', filter):
@@ -308,6 +281,9 @@ class Resolver(object):
                 # ||example.org^
                 if match(r'^\|\|.*\^$', line):
                     domain = line[2:-1]
+                    if domain.find('/') >= 0:
+                        filter = line
+                        break
                     if domain.find('*') >= 0:
                         if domain.startswith('*.') and domain[2:].find('*')<0:
                             domain = domain[2:]
@@ -320,6 +296,9 @@ class Resolver(object):
                 # @@||example.org^
                 if match(r'^@@\|\|.*\^$', line):
                     domain = line[4:-1]
+                    if domain.find('/') >= 0:
+                        filter = line
+                        break
                     if domain.find('*') >= 0:
                         if domain.startswith('*.') and domain[2:].find('*')<0:
                             domain = domain[2:]
@@ -343,6 +322,10 @@ class Resolver(object):
                     break
                 # ||example. or ||example.org^$ctag=device_tv
                 if match(r'^\|\|.*', line):
+                    filter = line
+                    break
+                # @@||example.org...（无结尾 ^）：保留为 filter 规则
+                if match(r'^@@\|\|.*', line):
                     filter = line
                     break
                 # other
