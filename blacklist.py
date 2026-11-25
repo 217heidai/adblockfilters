@@ -20,6 +20,10 @@ def _ip_in_ranges(ip_int:int, starts:List[int], ends:List[int]) -> bool:
     i = bisect_right(starts, ip_int) - 1
     return i >= 0 and ip_int <= ends[i]
 
+def _blacklist_abnormal(black_count:int, total:int) -> bool:
+    # 黑名单占比超过一半即异常（正常约 16%）；刚好一半不算异常
+    return black_count > total // 2
+
 class DomainDatabase(object):
     def __init__(self, dbFile: str):
         self.__table_domain = "T_DOMAIN"
@@ -250,7 +254,9 @@ class BlackList(object):
                 response.raise_for_status()
                 contentType = response.headers.get("Content-Type") or ""
                 if "text/plain" not in contentType:
-                    logger.warning("download %s: unexpected Content-Type[%s]"%(fileName, contentType))
+                    # 非文本内容基本是错误页，写进去会被当成域名解析出空集合，静默发坏数据
+                    logger.error("download %s: unexpected Content-Type[%s], refuse to use it"%(fileName, contentType))
+                    return False
                 with open(fileNameDownload,'wb') as f:
                     f.write(response.content)
             
@@ -290,8 +296,10 @@ class BlackList(object):
     def __getDomainSet_CN(self) -> Tuple[Set]:
         logger.info("resolve China domain list...")
         fullSet,domainSet,regexpSet,keywordSet = set(),set(),set(),set()
+        # 下载失败且本地无文件时直接报错：空集合会把所有国内域名判成国外，静默发坏数据
+        if not self.__download(self.__directlistFile, self.__directlistUrl) and not os.path.exists(self.__directlistFile):
+            raise Exception("direct.txt unavailable: download failed and no local copy")
         try:
-            self.__download(self.__directlistFile, self.__directlistUrl)
             if os.path.exists(self.__directlistFile):
                 with open(self.__directlistFile, 'r') as f:
                     for line in f.readlines():
@@ -327,8 +335,10 @@ class BlackList(object):
     def __getIPDict_CN(self) -> Tuple[List[int], List[int]]:
         logger.info("resolve China IP list...")
         starts, ends = [], []
+        # 下载失败且本地无文件时直接报错：空 IP 段会关掉全部 IP 侧国内识别
+        if not self.__download(self.__IPlistFile, self.__IPlistUrl) and not os.path.exists(self.__IPlistFile):
+            raise Exception("ipv4_china.txt unavailable: download failed and no local copy")
         try:
-            self.__download(self.__IPlistFile, self.__IPlistUrl)            
             if os.path.exists(self.__IPlistFile):
                 with open(self.__IPlistFile, 'r') as f:
                     for line in f.readlines():
@@ -546,7 +556,7 @@ class BlackList(object):
             # 获取域名清单 https://raw.githubusercontent.com/217heidai/adblockfilters/refs/heads/main/rules/domain.txt
             domainDict = self.__getDomainDict()
             if len(domainDict) < 1:
-                return
+                raise Exception("domain list empty: %s" % self.__domainlistFile)
             
             # 获取数据库域名清单
             domainDict, deleteList = self.__getDomainDict_db(domainDict)
@@ -592,7 +602,7 @@ class BlackList(object):
             if len(blackList):
                 # smartdns 中途挂掉时全部域名都解析失败，黑名单会虚涨到 ~100%；
                 # 正常约 16%，超过 50% 直接报错退出，不写文件、不上传
-                if len(blackList) > len(domainDict) // 2:
+                if _blacklist_abnormal(len(blackList), len(domainDict)):
                     raise Exception("blacklist abnormal: %d/%d domains unresolved" % (len(blackList), len(domainDict)))
                 blackList.sort()
                 self.__generateBlackList(blackList)

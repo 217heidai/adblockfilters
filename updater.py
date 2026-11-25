@@ -17,6 +17,7 @@ class Updater(object):
     def __init__(self, ruleList:List[Rule]):
         self.ruleList = ruleList
         self.isNeedUpdate = False
+        self.failedSources:List[str] = []  # 下载失败的上游源名（只记日志不够，summary 里要能看到）
 
     def update(self, path:str) -> Tuple[bool,List[Rule]]:
         async def _update():
@@ -171,4 +172,5 @@ class Updater(object):
             return rule
         except Exception as e:
             logger.error(f'%s download failed: %s' % (rule.name, e))
+            self.failedSources.append(rule.name)
             return rule

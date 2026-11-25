@@ -18,6 +18,10 @@ class ADBlock(object):
     def refresh(self):
         for d in (self.sourceDir, self.outDir, self.domainDir):
             os.makedirs(d, exist_ok=True)
+        # 先清掉上次残留的失败记录，免得本次没失败还显示旧的
+        failedFile = os.path.join(self.cacheDir, 'failed_sources.txt')
+        if os.path.exists(failedFile):
+            os.remove(failedFile)
 
         readme = ReadMe(self.pwd + '/README.md')
         ruleList = readme.getRules()
@@ -34,6 +38,12 @@ class ADBlock(object):
         # 更新上游规则（下载到 .cache/source）
         updater = Updater(ruleList)
         update, ruleList = updater.update(self.sourceDir)
+        # 下载失败的源记到 .cache/failed_sources.txt，供 summary 展示；
+        # 放 .cache 根目录而不是 out：无更新时 out 是空目录，写进去会骗过 updated 门控
+        if updater.failedSources:
+            with open(failedFile, 'w') as f:
+                for name in updater.failedSources:
+                    f.write("%s\n" % name)
         if not update:
             return
 

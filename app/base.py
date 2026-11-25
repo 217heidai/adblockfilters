@@ -1,12 +1,20 @@
 import os
 import re
 import time
+from functools import lru_cache
 from typing import List, Set, Dict
 from abc import ABC, abstractmethod
 
 from tld import get_tld
 
 from loguru import logger
+
+
+@lru_cache(maxsize=None)
+def _cached_get_tld(address:str):
+    # 同一域名在 full/Lite 两遍生成里各算一次，缓存后第二遍基本免费；
+    # 进程内 TLD 表不变（启动时 update_tld_names 只跑一次），缓存安全
+    return get_tld(address, fix_protocol=True, as_object=True)
 
 
 class APPBase(ABC):
@@ -90,7 +98,7 @@ class APPBase(ABC):
     
     def isDomain(self, address:str) -> bool:
         try:
-            get_tld(address, fix_protocol=True, as_object=True)
+            _cached_get_tld(address)
             return True
         except Exception as e:
             logger.error("%s"%(e))
