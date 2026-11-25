@@ -101,6 +101,7 @@ jobs:
             echo "- adblockdns.txt: $(test -f .cache/out/adblockdns.txt && wc -l < .cache/out/adblockdns.txt || echo 0) 条"
             echo "- adblockfilters.txt: $(test -f .cache/out/adblockfilters.txt && wc -l < .cache/out/adblockfilters.txt || echo 0) 条"
             echo "- 白名单: $(grep -vc '^#\|^$' rules/white.txt 2>/dev/null || echo 0) 条"
+            echo "- 上游源下载失败: $(test -f .cache/failed_sources.txt && paste -sd', ' .cache/failed_sources.txt || echo 无)"
           } >> $GITHUB_STEP_SUMMARY
 
       - name: Compile Sing-Box filters
