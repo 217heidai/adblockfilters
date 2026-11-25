@@ -75,6 +75,8 @@ jobs:
           rm -rf __pycache__
           rm -rf app/__pycache__
           echo "message=$(date)" >> $GITHUB_OUTPUT
+          # 无更新时 refresh() 直接返回，.cache/out 为空目录；下游步骤用 updated 门控
+          if [ -n "$(ls -A .cache/out 2>/dev/null)" ]; then echo "updated=true" >> $GITHUB_OUTPUT; else echo "updated=false" >> $GITHUB_OUTPUT; fi
 
       - name: Check whitelist regression
         run: |
@@ -102,6 +104,7 @@ jobs:
           } >> $GITHUB_STEP_SUMMARY
 
       - name: Compile Sing-Box filters
+        if: steps.update.outputs.updated == 'true'
         run: |
           wget https://github.com/SagerNet/sing-box/releases/download/v${{env.SINGBOX_VERSION}}/sing-box-${{env.SINGBOX_VERSION}}-linux-amd64.tar.gz
           tar -zxvf sing-box-${{env.SINGBOX_VERSION}}-linux-amd64.tar.gz
@@ -111,6 +114,7 @@ jobs:
           rm -rf sing-box*
       
       - name: Compile mihomo filters
+        if: steps.update.outputs.updated == 'true'
         run: |
           wget https://github.com/MetaCubeX/mihomo/releases/download/v${{env.MIHOMO_VERSION}}/mihomo-linux-amd64-v${{env.MIHOMO_VERSION}}.gz
           gzip -d mihomo-linux-amd64-v${{env.MIHOMO_VERSION}}.gz
@@ -120,6 +124,7 @@ jobs:
           rm -rf mihomo*
       
       - name: Compile v2ray/xray filters
+        if: steps.update.outputs.updated == 'true'
         run: |
           mkdir -p domain-list-community/adblock
           cp .cache/out/adblockv2ray.txt domain-list-community/adblock/category-ads-all
@@ -136,6 +141,7 @@ jobs:
           rm -rf domain-list-community
       
       - name: Upload rules to release
+        if: steps.update.outputs.updated == 'true'
         uses: softprops/action-gh-release@v3
         with:
           tag_name: rule
@@ -144,6 +150,7 @@ jobs:
           fail_on_unmatched_files: false
 
       - name: Upload sources to release
+        if: steps.update.outputs.updated == 'true'
         uses: softprops/action-gh-release@v3
         with:
           tag_name: source
@@ -152,6 +159,7 @@ jobs:
           fail_on_unmatched_files: false
 
       - name: Upload domain backup
+        if: steps.update.outputs.updated == 'true'
         uses: softprops/action-gh-release@v3
         with:
           tag_name: domain
@@ -160,11 +168,13 @@ jobs:
           fail_on_unmatched_files: false
 
       - name: Commit Changes
+        if: steps.update.outputs.updated == 'true'
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: ${{ steps.update.outputs.message }}
 
       - name: Publish to dist branch
+        if: steps.update.outputs.updated == 'true'
         # 必须放在 Commit Changes 之后：孤儿分支切换会清空工作区（含刚生成的 README），
         # 若放前面，README 更新会丢失。dist 为孤儿分支，每轮 force-push 单提交，不产生历史。
         run: |
