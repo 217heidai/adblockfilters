@@ -329,6 +329,14 @@ class Resolver(object):
                         break
                     unblock = self.__analysis(domain)
                     break
+                # @@||example.org^|：锚定放行，语义同 @@||example.org^
+                if match(r'^@@\|\|.*\^\|$', line):
+                    domain = line[4:-2]
+                    if domain.find('*') >= 0 or domain.find('/') >= 0:
+                        filter = line
+                        break
+                    unblock = self.__analysis(domain)
+                    break
                 # /REGEX/
                 if match(r'^/.*/$', line):
                     filter = line
